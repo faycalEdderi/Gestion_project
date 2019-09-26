@@ -1,0 +1,98 @@
+
+     
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <a href="./pointages" class="btn expleoColorB">Pointage</a>
+          <a href="./historique" class="btn expleoColorB ">Historique</a>
+
+          
+          
+          <span class="ui-button-icon ui-icon ui-icon-gear"></span>
+          <div class="row">
+      {% include 'filtresPointage.html' %}
+      
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title  ">Table pointage</h4>
+                 
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" expleoColorT">
+                        <!--  AFFICHER POUR RT
+                          <th>
+                          LIV/Ch. VALID
+                        </th>
+                      -->
+                      
+                        <th>
+                          n° UO
+                        </th>
+                        <th>
+                          Type UO
+                        </th>
+                        <th>
+                         Niveau UO
+                        </th>
+                        <th>
+                          Projet
+                        </th>
+                        <th>
+                          Fonction
+                        </th>
+                       
+                        <!--POUR RT 
+                        <th>Statut </th>
+                        -->
+                        <th>Consommé </th>
+                        <th>Pointage</th>
+                        <th>Avancement </th>
+                         <!--POUR RT 
+                        <th>Description</th>
+                        <th>Pilote UO</th>
+                        -->
+                        <th>Etat </th>
+                        
+                        
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            1
+                          </td>
+                          <td>
+                            Dakota Rice
+                          </td>
+                          <td>
+                            Niger
+                          </td>
+                          <td>
+                            Oud-Turnhout
+                          </td>
+                          <td class="text-primary">
+                            $36,738
+                          </td>
+                          <td>Assistance freinage</td>
+                          <td> 20% </td>
+                          <td><div class="w-75 progressbar" ><div class="progress-label"></div>  </div><button class="moins">-</button><button class="plus">+</button></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <!--POUR RT                          
+                          <td> <a class="btn btn-success" href="">Valider</a> </td>
+                          <td> <a class="btn btn-danger" href="">Rejeter</a> </td>
+                           -->
+                        </tr>
+
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+     
