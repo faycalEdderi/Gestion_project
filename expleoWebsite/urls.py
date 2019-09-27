@@ -19,14 +19,18 @@ from .import views
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Uos),
     path('profil', views.profil),
     path('diagramme', views.diagramme),
-    path('pointages', views.pointages),
-    path('Uo', views.Uo),
+    path('pointages', views.pointages, name='pointages'),
+    path('Uo', views.Uo, name="Uo"),
     path('historique', views.historique),
-    path('connexion', views.connexion), 
+    path('connexion', views.connexion, name='connexion'),
+    path("logout/", LogoutView.as_view(), name="logout"),
+    
+     
 ]
