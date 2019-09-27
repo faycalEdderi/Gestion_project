@@ -28,4 +28,5 @@ urlpatterns = [
     path('pointages', views.pointages),
     path('Uo', views.Uo),
     path('historique', views.historique),
+    path('connexion', views.connexion), 
 ]

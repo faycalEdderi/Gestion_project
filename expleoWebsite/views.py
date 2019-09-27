@@ -31,3 +31,7 @@ def historique(request):
 
     return render(request,'pages/historique.html')
 
+def connexion(request):
+
+    return render(request,'pages/connexion.html')
+
