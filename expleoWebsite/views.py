@@ -52,10 +52,10 @@ def connexion(request):
                 return redirect('Uo')
 
         else:
-            messages.error(request,'username or password not correct')
+            messages.error(request,'username or password not correct')  #essyeye de mettre tout en français 
             return redirect('connexion')
 
-        return render(request,'pages/pointage.html')
+        return render(request,'pages/pointage.html')  #la page a renvoyé c'est celles de Uo 
     else:
         form = AuthenticationForm()
     return render(request, 'pages/connexion.html', {'form': form})   
