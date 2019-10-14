@@ -42,13 +42,15 @@
                     <h1 class="h4 text-gray-900 mb-4">Bienvenue !</h1>
                   </div>
                   {% if form.errors %}
-                    <p>username or password not correct</p>
+                    <p>Nom d'utilisateur ou mot de passe incorrect</p>
                     {% endif %}
                   
                     <form class="user" method="post">
                         {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit">Connexion</button>
+                       <div class="d-flex ">{{ form.as_p }} </div> 
+                        <div class=" text-center"> 
+                          <button class="btn btn-primary " type="submit">Connexion</button>
+                        </div>
                     </form>
 
                   

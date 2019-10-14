@@ -52,7 +52,7 @@ def connexion(request):
                 return redirect('Uo')
 
         else:
-            messages.error(request,'username or password not correct')  #essyeye de mettre tout en français 
+            messages.error(request,'Nom d\'utilisateur ou mot de passe incorrect')  #essyeye de mettre tout en français 
             return redirect('connexion')
 
         return render(request,'pages/pointage.html')  #la page a renvoyé c'est celles de Uo 
