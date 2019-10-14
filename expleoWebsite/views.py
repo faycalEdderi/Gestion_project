@@ -55,7 +55,7 @@ def connexion(request):
             messages.error(request,'Nom d\'utilisateur ou mot de passe incorrect')  #essyeye de mettre tout en français 
             return redirect('connexion')
 
-        return render(request,'pages/pointage.html')  #la page a renvoyé c'est celles de Uo 
+        return render(request,'pages/Uo.html')  #la page a renvoyé c'est celles de Uo 
     else:
         form = AuthenticationForm()
     return render(request, 'pages/connexion.html', {'form': form})   
