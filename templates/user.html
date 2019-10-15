@@ -20,8 +20,8 @@
                         </a>
                       </div>
                       <div class="card-body">
-                        <h6 class="card-category text-gray">NOM & Prénom</h6>
-                        <h4 class="card-title">Poste</h4>
+                        <h6 class="card-category text-gray">{{ user.last_name }} {{ user.first_name }}</h6>
+                        <h4 class="card-title">{{ user.userprofile.poste | capfirst  }}</h4>
                         
                       </div>
                     </div>
@@ -34,13 +34,13 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               <label class="bmd-label-floating">Nom</label>
-                              <input type="text" class="form-control">
+                              <input type="text" class="form-control" value="{{ user.last_name | capfirst }}">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label class="bmd-label-floating">Prénom</label>
-                              <input type="text" class="form-control">
+                              <input type="text" class="form-control" value="{{ user.first_name | capfirst }}">
                             </div>
                           </div>
                         </div>
@@ -49,7 +49,7 @@
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Email</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" value="{{ user.email }}">
                               </div>
                             </div>
                             <div class="col-md-6">

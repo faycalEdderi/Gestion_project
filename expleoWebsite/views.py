@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -18,6 +19,7 @@ def Uos(request):
 
     #return render(request,'Uos.html')
 
+#@login_required(login_url="connexion")
 def profil(request):
 
     return render(request,'pages/profil.html')
