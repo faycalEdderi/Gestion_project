@@ -51,7 +51,7 @@ def connexion(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect('Uo')
+                return redirect('uo')
 
         else:
             messages.error(request,'Nom d\'utilisateur ou mot de passe incorrect')  #essyeye de mettre tout en français 

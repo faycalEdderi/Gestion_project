@@ -13,6 +13,7 @@ from profil import views as profil_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.uo),
     path('profil', views.profil),
     path('diagramme', views.diagramme),
     path('pointages', views.pointages, name='pointages'),

@@ -1,6 +1,7 @@
 {% load static %}
-{% include 'theme.html' %}                    
-                    
+
+{% block body %}
+
       <div class="content">
         <div class="container-fluid">
           <div class="row">
@@ -9,7 +10,7 @@
             <div class="col-md-12">
                <div class="card">
                 <div class="card-header ">
-                  <h4 class="card-title">Création de compte</h4>
+                  <h4 class="card-title">Register</h4>
                   
              
                   
@@ -43,7 +44,7 @@
                     <p><label for="id_poste">Poste&nbsp;:</label> 
                     <input class="form-control" type="text" name="poste" maxlength="150" required="" id="id_poste"></p>
 
-                    <p><label  for="id_image">Photo de profile: </label> 
+                    <p><label  for="id_image">Image&nbsp;:</label> 
                     <input  type="file" name="image" id="id_image" accept="image/*"></p>
                     
                     <button class="btn btn-primary" type="submit"> Valider </button>
@@ -56,32 +57,5 @@
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-
-<p>Registration form</p>
-
-{% block body %}
-<div class="container">
-    <h1>Register</h1>
-    <form method="post" enctype='multipart/form-data'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        {{ profile_form.as_p }}
-        <button type="submit"> Submit </button>
-    </form>
-</div>
-{% endblock %}-->
+{% endblock %}
+      
