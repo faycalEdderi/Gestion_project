@@ -6,6 +6,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
 
 from profil import views as profil_views
 
@@ -20,4 +22,7 @@ urlpatterns = [
     path('connexion', views.connexion, name='connexion'),
     path("logout/", LogoutView.as_view(), name="logout"),
     path('register', profil_views.register, name='register'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+

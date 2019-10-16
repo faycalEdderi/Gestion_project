@@ -7,7 +7,7 @@ from .forms import UserProfileForm, UserCreationForm
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
+        profile_form = UserProfileForm(request.POST, request.FILES or None)
 
         if form.is_valid() and profile_form.is_valid():
 
@@ -22,6 +22,6 @@ def register(request):
     else:
         form = RegistrationForm()
         profile_form = UserProfileForm()
-        
+
     context = {'form' : form, 'profile_form' : profile_form}
     return render(request, 'accounts/register.html', context)

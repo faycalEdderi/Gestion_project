@@ -16,7 +16,11 @@
                     <div class="card card-profile">
                       <div class="card-avatar">
                         <a href="#pablo">
-                          <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" />
+                        {% if user.userprofile.image %}
+                          <img class="img-fluid"  src="{{ user.userprofile.image.url }}" alt="photo de profile" />
+                          {% else %}
+                          <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" alt="photo de profile" />
+                        {% endif %}
                         </a>
                       </div>
                       <div class="card-body">
