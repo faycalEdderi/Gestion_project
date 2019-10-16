@@ -10,9 +10,9 @@ from django.contrib.auth.decorators import login_required
 
 
 
-def Uos(request):
+def theme(request):
 
-    template = loader.get_template('Uos.html')
+    template = loader.get_template('theme.html')
     return HttpResponse(template.render(request=request))
 
 #def Uos(request):
@@ -32,9 +32,9 @@ def pointages(request):
 
     return render(request,'pages/pointages.html')
 
-def Uo(request):
+def uo(request):
 
-    return render(request,'pages/Uo.html')
+    return render(request,'pages/uo.html')
 
 def historique(request):
 

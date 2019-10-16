@@ -13,11 +13,10 @@ from profil import views as profil_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.Uos),
     path('profil', views.profil),
     path('diagramme', views.diagramme),
     path('pointages', views.pointages, name='pointages'),
-    path('Uo', views.Uo, name="Uo"),
+    path('uo', views.uo, name="uo"),
     path('historique', views.historique),
     path('connexion', views.connexion, name='connexion'),
     path("logout/", LogoutView.as_view(), name="logout"),
