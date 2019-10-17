@@ -15,13 +15,12 @@ def theme(request):
     template = loader.get_template('theme.html')
     return HttpResponse(template.render(request=request))
 
-#def Uos(request):
 
-    #return render(request,'Uos.html')
+
 
 #@login_required(login_url="connexion")
 def profil(request):
-
+    
     return render(request,'pages/profil.html')
 
 def diagramme(request):
@@ -33,14 +32,16 @@ def pointages(request):
     return render(request,'pages/pointages.html')
 
 def uo(request):
-
-    return render(request,'pages/uo.html')
+   # if request.user.userprofile.role == "rt":
+        return render(request,'pages/uo.html')
+    #else :
+    #    return render(request,'pages/error404.html')
 
 def historique(request):
 
     return render(request,'pages/historique.html')
 
-#FONCTION LOGIN FONCTIONNELLE MAIS A AMELIORER NE PAS TOUCHER :)
+
 def connexion(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
@@ -54,10 +55,10 @@ def connexion(request):
                 return redirect('uo')
 
         else:
-            messages.error(request,'Nom d\'utilisateur ou mot de passe incorrect')  #essyeye de mettre tout en français 
+            messages.error(request,'Nom d\'utilisateur ou mot de passe incorrect') 
             return redirect('connexion')
 
-        return render(request,'pages/Uo.html')  #la page a renvoyé c'est celles de Uo 
+        return render(request,'pages/uo.html')   
     else:
         form = AuthenticationForm()
     return render(request, 'pages/connexion.html', {'form': form})   

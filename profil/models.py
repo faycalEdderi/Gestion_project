@@ -17,13 +17,20 @@ def upload_location(instance, filename):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    ROLES = (
+        ('rt', 'RT'),
+        ('liv', 'LIV ')
+    ) 
+
     poste = models.CharField(max_length=150)
     image = models.ImageField(
             upload_to=upload_location,
             null=True,
             blank=True, 
         )
+    role = models.CharField( max_length=9 ,choices=ROLES, default='liv')
 
+  
 
     def __str__(self):
         return self.user.username
