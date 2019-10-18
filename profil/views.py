@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from profil.forms import RegistrationForm, EditProfileForm
+from profil.forms import RegistrationForm, EditProfileForm, EditProfileUserForm
 
 
 from .forms import UserProfileForm
@@ -39,15 +39,21 @@ def register(request):
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
+        form_user = EditProfileUserForm(request.POST, instance=request.user)
         
-        if form.is_valid():
+        if form.is_valid() and form_user.is_valid():
             form.save()
+            form_user.save()
             return redirect('profil')
     else :
         form = EditProfileForm(instance=request.user)
-        args = {'form' : form}
+        form_user = EditProfileUserForm(instance=request.user)
+        args = {'form' : form, 'form_user' : form_user}
 
         return render(request, 'accounts/edit_profile.html', args)
+
+
+
 
 def change_pwd(request):
     if request.method == 'POST':

@@ -38,7 +38,7 @@ class UserProfileForm(forms.ModelForm):
             'image'
             
         )
-class EditProfileForm(UserChangeForm):
+class EditProfileForm(UserProfileForm):
 
     class Meta:
         model = User
@@ -47,6 +47,18 @@ class EditProfileForm(UserChangeForm):
             
             'first_name',
             'last_name',
+            
+            
+        )
+class EditProfileUserForm(UserProfileForm):
+
+    class Meta:
+        model = UserProfile
+        
+        fields = ( 
+            
+           
+            'image',
             
             
         )
