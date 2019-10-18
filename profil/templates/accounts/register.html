@@ -16,9 +16,11 @@
               
 
                 <div class="card-body">
+
                     <form method="post" enctype='multipart/form-data'>
+                    {% csrf_token %}
                 
-                    <input type="hidden" name="csrfmiddlewaretoken" value="9aQPla4JjQgGHzST6ryx9fIXQxQutwZJ4HUmuXc2OMupdSNAXtUUXaAfwEJCTUnI">
+                   
                     
                     <p><label for="id_username">Nom d'utilisateur&nbsp;:</label> <input class="form-control" type="text" name="username" maxlength="150" required="" id="id_username" autofocus=""> <span class="helptext">Requis. 150 caractères maximum. Uniquement des lettres, nombres et les caractères «&nbsp;@&nbsp;», «&nbsp;.&nbsp;», «&nbsp;+&nbsp;», «&nbsp;-&nbsp;» et «&nbsp;_&nbsp;».</span></p>
 

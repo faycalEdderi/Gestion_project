@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import UserProfile
+from django.forms import ModelForm
 
 
 class RegistrationForm(UserCreationForm):
@@ -38,7 +39,9 @@ class UserProfileForm(forms.ModelForm):
             'image'
             
         )
-class EditProfileForm(UserProfileForm):
+
+
+class EditProfileForm(forms.ModelForm):
 
     class Meta:
         model = User
@@ -46,22 +49,22 @@ class EditProfileForm(UserProfileForm):
         fields = ( 
             
             'first_name',
-            'last_name',
-            
-            
+            'last_name', 
         )
-class EditProfileUserForm(UserProfileForm):
+class EditProfileUserForm(ModelForm):
 
     class Meta:
         model = UserProfile
         
         fields = ( 
             
-           
-            'image',
-            
-            
+            'image', 
+            'role',
         )
+
+
+
+
 
     
 
