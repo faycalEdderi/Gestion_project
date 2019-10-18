@@ -14,8 +14,8 @@ def register(request):
    
 
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        profile_form = UserProfileForm(request.POST, request.FILES or None)
+        form = RegistrationForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST or None, request.FILES or None, instance=request.user.userprofile)
 
         if form.is_valid() and profile_form.is_valid():
 
@@ -40,7 +40,7 @@ def register(request):
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
-        form_profile = EditProfileUserForm(request.POST, request.FILES, instance=request.user.userprofile)
+        form_profile = EditProfileUserForm(request.POST, request.FILES  or None, instance=request.user.userprofile)
        
         
         if form.is_valid() and form_profile.is_valid() :
