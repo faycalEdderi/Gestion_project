@@ -14,8 +14,8 @@ def register(request):
    
 
     if request.method == 'POST':
-        form = RegistrationForm(request.POST, instance=request.user)
-        profile_form = UserProfileForm(request.POST or None, request.FILES or None, instance=request.user.userprofile)
+        form = RegistrationForm(request.POST,)
+        profile_form = UserProfileForm(request.POST or None, request.FILES or None)
 
         if form.is_valid() and profile_form.is_valid():
 

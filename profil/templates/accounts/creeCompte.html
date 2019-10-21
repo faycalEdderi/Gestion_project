@@ -1,26 +1,4 @@
-{% load static %}
-{% include 'theme.html' %}                    
-                    
-      <div class="content">
-        <div class="container-fluid">
-          <div class="row">
-
-       
-            <div class="col-md-12">
-               <div class="card">
-                <div class="card-header ">
-                  <h4 class="card-title">Création de compte</h4>
-                  
-             
-                  
-              
-
-                <div class="card-body">
-
-                    <form method="post" enctype='multipart/form-data'>
-                    {% csrf_token %}
-                
-                                  
+            
                     <p><label for="id_username">Nom d'utilisateur&nbsp;:</label> <input class="form-control" type="text" name="username" maxlength="150" required="" id="id_username" autofocus=""> <span class="helptext">Requis. 150 caractères maximum. Uniquement des lettres, nombres et les caractères «&nbsp;@&nbsp;», «&nbsp;.&nbsp;», «&nbsp;+&nbsp;», «&nbsp;-&nbsp;» et «&nbsp;_&nbsp;».</span></p>
 
                     <p><label for="id_first_name">Prénom&nbsp;:</label> <input class="form-control" type="text" name="first_name" maxlength="30" id="id_first_name"></p>
@@ -46,45 +24,3 @@
 
                     <p><label  for="id_image">Photo de profile: </label> 
                     <input  type="file" name="image" id="id_image" accept="image/*"></p>
-    
-        
-                    
-                    <button class="btn btn-primary" type="submit"> Valider </button>
-                    </form>
-                 
-                </div>
-              </div>
-            </div>
-      
-          </div>
-        </div>
-      </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-
-<p>Registration form</p>
-
-{% block body %}
-<div class="container">
-    <h1>Register</h1>
-    <form method="post" enctype='multipart/form-data'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        {{ profile_form.as_p }}
-        <button type="submit"> Submit </button>
-    </form>
-</div>
-{% endblock %}-->
