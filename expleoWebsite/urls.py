@@ -25,6 +25,8 @@ urlpatterns = [
     path('register', profil_views.register, name='register'),
     path('edit_profile', profil_views.edit_profile, name='edit_profile'),
     path('modifMdp', profil_views.change_pwd, name='modifMdp'),
+    path('userList', profil_views.user_list, name='user_list'),
+    path('user/<int:id>/update/', profil_views.update_user, name='update_user')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
