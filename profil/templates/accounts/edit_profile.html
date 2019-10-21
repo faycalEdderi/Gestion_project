@@ -1,8 +1,9 @@
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {{ form_profile.as_p }}
-    
-    
-    <button>Valider</button>
-</form>
+
+
+{% include 'theme.html' %}
+
+
+{% include 'updateUser.html' %}
+
+
+{% include 'footer.html' %}

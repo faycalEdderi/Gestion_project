@@ -1,6 +1,7 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from profil.forms import RegistrationForm, EditProfileForm, EditProfileUserForm
-
+from .models import UserProfile
 from django.contrib.auth.models import User
 from .forms import UserProfileForm
 from django.contrib.auth.forms import UserCreationForm,  PasswordChangeForm
@@ -73,20 +74,18 @@ def edit_profile(request):
 
         return render(request, 'accounts/edit_profile.html', args)
 
-def update_user(request, id=None):
-    userUpdate = get_object_or_404(User, id=id)
-    form = EditProfileForm(request.POST or None, instance=userUpdate)
-    profil_update = EditProfileUserForm(request.POST, request.FILES  or None, instance=userUpdate)
 
-    if form.is_valid()  and profil_update.is_valid() :
+
+def update_user(request, id=None):
+    userUpdate =User.objects.get(id= id)
+    form = EditProfileForm(request.POST or None, instance=userUpdate)    
+    if form.is_valid()   :
+
         userUpdate = form.save(commit=False)
-        custom_form = profil_update.save(False)
-        custom_form.user = userUpdate
-        custom_form.save()
-       
         userUpdate.save()
         return redirect('user_list')
-    context ={'form' : form, 'form_profile' : profil_update, }
+  
+    context ={'form' : form}
     return render(request, "accounts/edit_profile.html", context)
     
 

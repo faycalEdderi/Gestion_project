@@ -37,7 +37,7 @@
                         <td>{{user.email}}</td>
                         <td>{{user.userprofile.poste}}</td>
                        
-                        <td><button class="btn btn-info">Modifier</button></td>
+                        <td><a href="{% url 'update_user' user.id %}" class="btn btn-info">Modifier</button></a>
 
                         <td>{{user.id}}</td>
                       
