@@ -77,6 +77,7 @@ def edit_profile(request):
 
 
 def update_user(request, id=None):
+    
     userUpdate =User.objects.get(id= id)
     form = EditProfileForm(request.POST or None, instance=userUpdate)    
     if form.is_valid()   :
@@ -86,7 +87,7 @@ def update_user(request, id=None):
         return redirect('user_list')
   
     context ={'form' : form}
-    return render(request, "accounts/edit_profile.html", context)
+    return render(request, "accounts/edit_profileRT.html", context)
     
 
 

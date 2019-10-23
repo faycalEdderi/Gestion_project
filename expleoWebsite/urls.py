@@ -9,6 +9,9 @@ from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+
+
 from profil import views as profil_views
 
 urlpatterns = [

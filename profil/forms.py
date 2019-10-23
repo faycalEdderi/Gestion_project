@@ -3,6 +3,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import UserProfile
 from django.forms import ModelForm
+from django.views.generic import (
+    ListView,
+    DetailView, 
+    CreateView, 
+    UpdateView
+)
 
 
 class RegistrationForm(UserCreationForm):
@@ -41,7 +47,7 @@ class UserProfileForm(forms.ModelForm):
         )
 
 
-class EditProfileForm(forms.ModelForm):
+class EditProfileForm(forms.ModelForm, UpdateView):
 
     class Meta:
         model = User
