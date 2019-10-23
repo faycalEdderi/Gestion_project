@@ -3,16 +3,35 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import UserProfile
 from django.forms import ModelForm
-from django.views.generic import (
-    ListView,
-    DetailView, 
-    CreateView, 
-    UpdateView
-)
 
 
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(
+        required=True,
+        error_messages={'required': 'Veuillez entrer une Adresse Mail'},
+        )
+    first_name = forms.CharField(
+        required=True,
+        error_messages={'required': 'Veuillez entrer un Nom'}, 
+         
+        )
+    last_name = forms.CharField(
+        required=True,
+        error_messages={'required': 'Veuillez entrer un Prénom'},
+        
+        )
+
+    password1 = forms.CharField(
+        required=True,
+        error_messages={'required': 'Les deux mots de passes ne sont pas identiques'}, 
+      
+        )
+    password2 = forms.CharField(
+        required=True,
+        error_messages={'required': 'Les deux mots de passes ne sont pas identiques'}, 
+      
+        )
+    
     
     class Meta:
         model = User
@@ -47,7 +66,7 @@ class UserProfileForm(forms.ModelForm):
         )
 
 
-class EditProfileForm(forms.ModelForm, UpdateView):
+class EditProfileForm(forms.ModelForm):
 
     class Meta:
         model = User

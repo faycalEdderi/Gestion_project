@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from .forms import UserProfileForm
 from django.contrib.auth.forms import UserCreationForm,  PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, get_user_model
+from django.contrib import messages
 
 
 
@@ -41,6 +42,12 @@ def register(request):
             profile.save()
 
             return redirect('connexion')
+        else:
+            messages.error(request, form['first_name'].errors)
+            messages.error(request, form['last_name'].errors)
+            messages.error(request, form['email'].errors)
+            messages.error(request, form['password1'].errors)
+            
     else:
         form = RegistrationForm()
         profile_form = UserProfileForm()
@@ -64,6 +71,9 @@ def edit_profile(request):
             custom_form.user = user_form
             custom_form.save()
             return redirect('profil')
+        else:
+            messages.error(request) 
+            return redirect('edit_profile')
     else :
         form = EditProfileForm(instance=request.user)
         form_profile = EditProfileUserForm(instance=request.user.userprofile)
@@ -80,12 +90,13 @@ def update_user(request, id=None):
     
     userUpdate =User.objects.get(id= id)
     form = EditProfileForm(request.POST or None, instance=userUpdate)    
-    if form.is_valid()   :
+    if form.is_valid() and form.data['first_name']   :
 
         userUpdate = form.save(commit=False)
         userUpdate.save()
         return redirect('user_list')
-  
+    
+        
     context ={'form' : form}
     return render(request, "accounts/edit_profileRT.html", context)
     

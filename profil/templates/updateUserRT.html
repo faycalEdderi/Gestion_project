@@ -7,19 +7,26 @@
                <div class="card">
                 <div class="card-header ">
                   <h4 class="card-title">Création de compte</h4>
+                  {% for message in messages %}
+                  <div class="alert alert-danger text-center">
+                      <a class="close " href="#" data-dismiss="alert">×</a>
 
+                      {{ message }}
+
+                  </div>
+                    {% endfor %}
 
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                     
                         
 
-                        <p><label   for="id_first_name">Prénom&nbsp;:</label>
+                        <p><label   for="id_first_name">Nom&nbsp;:</label>
                              <input class="form-control" type="text" value="{{form.first_name.value }}" name="first_name"  maxlength="30" id="id_first_name"></p>
 
                         <p>
                                 
-                        <label  for="id_last_name">Nom&nbsp;:</label> 
+                        <label  for="id_last_name">Prénom&nbsp;:</label> 
                         
                         <input class="form-control" type="text" name="last_name"  value="{{form.last_name.value }}"  maxlength="150" id="id_last_name"></p>
 
