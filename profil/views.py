@@ -72,8 +72,14 @@ def edit_profile(request):
             custom_form.save()
             return redirect('profil')
         else:
-            messages.error(request) 
+             
+            
+        
+            messages.error(request, form['first_name'].errors)
+            messages.error(request, form['last_name'].errors)
+
             return redirect('edit_profile')
+           
     else :
         form = EditProfileForm(instance=request.user)
         form_profile = EditProfileUserForm(instance=request.user.userprofile)

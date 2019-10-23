@@ -67,6 +67,19 @@ class UserProfileForm(forms.ModelForm):
 
 
 class EditProfileForm(forms.ModelForm):
+   
+    first_name = forms.CharField(
+        required=True,
+        error_messages={'required': 'Veuillez entrer un Nom'}, 
+         
+        )
+    last_name = forms.CharField(
+        required=True,
+        error_messages={'required': 'Veuillez entrer un Prénom'},
+        
+        )
+
+   
 
     class Meta:
         model = User

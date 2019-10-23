@@ -16,15 +16,8 @@
               
 
                 <div class="card-body">
-
-                    {% for message in messages %}
-                    <div class="alert alert-danger">
-                        <a class="close" href="#" data-dismiss="alert">×</a>
-  
-                        {{ message }}
-  
-                    </div>
-                {% endfor %}
+                    <!--Inclus les messages d'erreurs-->
+                    {% include 'error_message.html' %}
 
                     <form method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
