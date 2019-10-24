@@ -19,7 +19,7 @@
                         {% if user.userprofile.image %}
                           <img class="img-fluid"  src="{{ user.userprofile.image.url }}" alt="photo de profile" />
                           {% else %}
-                          <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" alt="photo de profile" />
+                          <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" alt="photo de profile par défaut" />
                         {% endif %}
                         </a>
                       </div>
@@ -38,13 +38,13 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               <label class="bmd-label-floating">Nom</label>
-                              <input type="text" class="form-control" value="{{ user.last_name | capfirst }}">
+                              <input type="text" class="form-control" value="{{ user.last_name | capfirst }}" disabled>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label class="bmd-label-floating">Prénom</label>
-                              <input type="text" class="form-control" value="{{ user.first_name | capfirst }}">
+                              <input type="text" class="form-control" value="{{ user.first_name | capfirst }}" disabled>
                             </div>
                           </div>
                         </div>
@@ -53,37 +53,33 @@
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Email</label>
-                                <input type="text" class="form-control" value="{{ user.email }}">
+                                <input type="text" class="form-control" value="{{ user.email }}" disabled>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Poste</label>
-                                <input type="text" class="form-control" value="{{ user.userprofile.poste | capfirst  }}">
+                                <input type="text" class="form-control" value="{{ user.userprofile.poste | capfirst  }}" disabled>
                               </div>
                             </div>
                             
                           </div>
-                    
-                    <div class="row">
-                      
-                      <div class="col-md-6">
-                       
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Mot de passe  &emsp; &emsp;</label>
-                          
-                          <a  class="bmd-label-floating" data-toggle="modal" data-target="#exampleModal" href="#">
-                              <span class="glyphicon glyphicon-pencil"></span> 
-                          </a>
-                          <input type="text" class="form-control">
-                          
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                  <a href="{% url 'modifMdp' %}">Modifier mot de passe</a>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <a href="{% url 'edit_profile' %}">Modifier mes informations</a>
+                                </div>
+                            </div>
+                          </div>
                               
-                          </a>
-                        </div>
-                      
-                      </div>
-                      
-                    </div>
+                          
+                    
+                    
                    
                     
                   </form>

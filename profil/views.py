@@ -59,7 +59,7 @@ def register(request):
 
 
     
-#Fonctin modification de profile par USER sur son profil personnel
+#Fonction modification de profile par USER sur son profil personnel
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
@@ -111,6 +111,9 @@ def update_user(request, id=None):
         userUpdate.save()
         
         return redirect('user_list')
+    else : 
+        messages.error(request, form_profile['poste'].errors)
+        
     context ={'form' : form, 'form_profile' : form_profile,}
     return render(request, "accounts/edit_profileRT.html", context)
 
@@ -134,6 +137,6 @@ def change_pwd(request):
         form = PasswordChangeForm(user=request.user)
         args = {'form' : form}
 
-        return render(request, 'accounts/edit_profile.html', args)
+        return render(request, 'accounts/change_password.html', args)
 
 

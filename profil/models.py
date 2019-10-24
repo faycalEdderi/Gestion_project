@@ -1,3 +1,4 @@
+from django import forms
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -28,6 +29,7 @@ class UserProfile(models.Model):
             null=True,
             blank=True, 
         )
+    image.widget = forms.TextInput(attrs={'class': 'form-control',})
     role = models.CharField( max_length=9 ,choices=ROLES, default='liv')
 
   

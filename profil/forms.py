@@ -73,11 +73,15 @@ class EditProfileForm(forms.ModelForm):
         error_messages={'required': 'Veuillez entrer un Nom'}, 
          
         )
+    #ajout de class bootstrap pour modifier le style de l'input
+    first_name.widget = forms.TextInput(attrs={'class': 'form-control',})
+    
     last_name = forms.CharField(
         required=True,
         error_messages={'required': 'Veuillez entrer un Prénom'},
         
         )
+    last_name.widget = forms.TextInput(attrs={'class': 'form-control',})
 
    
 
@@ -91,13 +95,21 @@ class EditProfileForm(forms.ModelForm):
         )
 class EditProfileUserForm(ModelForm):
 
+    poste = forms.CharField(
+        required=True,
+        error_messages={'required': 'Veuillez selectionner un poste'}, 
+         
+        )
+    poste.widget = forms.TextInput(attrs={'class': 'form-control',})
+  
+
     class Meta:
         model = UserProfile
         
         fields = ( 
             
             'image', 
-            'role',
+            'poste',
         )
 
 
