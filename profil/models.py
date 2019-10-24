@@ -27,9 +27,10 @@ class UserProfile(models.Model):
     image = models.ImageField(
             upload_to=upload_location,
             null=True,
-            blank=True, 
+            blank=True,
+            
         )
-    image.widget = forms.TextInput(attrs={'class': 'form-control',})
+   
     role = models.CharField( max_length=9 ,choices=ROLES, default='liv')
 
   

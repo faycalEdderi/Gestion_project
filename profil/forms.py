@@ -59,6 +59,7 @@ class RegistrationForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta : 
         model = UserProfile
+        
         fields = (
             'poste',
             'image'
@@ -101,6 +102,13 @@ class EditProfileUserForm(ModelForm):
          
         )
     poste.widget = forms.TextInput(attrs={'class': 'form-control',})
+
+    image = forms.ImageField(
+        required=False,
+        error_messages = {'invalid': "Veuillez selectionner uniquement un fichier de type image" }, 
+        widget=forms.FileInput,  
+         
+        )
   
 
     class Meta:

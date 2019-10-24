@@ -18,24 +18,30 @@
                     
                         
 
-                        <p><label   for="id_first_name">Nom :</label>
-                             <input class="form-control" type="text" value="{{form.first_name.value }}" name="first_name"  maxlength="30" id="id_first_name"></p>
-
                         <p>
-                                
-                        <label  for="id_last_name">Prénom  :</label> 
-                        
-                        <input class="form-control" type="text" name="last_name"  value="{{form.last_name.value }}"  maxlength="150" id="id_last_name"></p>
-
-                        <p>
-                            <label for="id_image">Photo de profile  :</label>
-                             <input class="custom-file" type="file" name="image"  id="id_image">
+                            <label for="{{ form.last_name.id_for_label }}">Nom:</label>
+                            {{ form.last_name }}
                         </p>
-                    
+    
+                        
+                                    
+                        <p>
+                            <label for="{{ form.first_name.id_for_label }}">Prénom:</label>
+                            {{ form.first_name }}
 
-                    <p>
-                        <label for="id_poste">Poste  :</label>
-                        <input class="form-control" type="text" name="poste" value="{{form_profile.poste.value }}" id="id_poste" maxlength="150" ></p>
+                        </p>
+                        
+                        <p>
+                            <label for="{{ form_profile.image.id_for_label }}">Image:</label>
+                            {{ form_profile.image }}
+
+                        </p>
+                        
+                        <p>
+                            <label for="{{ form_profile.poste.id_for_label }}">Image:</label>
+                            {{ form_profile.poste }}
+
+                        </p>
                         
                         
                     

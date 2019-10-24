@@ -21,37 +21,57 @@
 
                     <form method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
-                
-                                  
-                    <p><label for="id_username">Nom d'utilisateur  :</label> <input class="form-control" type="text" name="username" maxlength="150"  id="id_username" autofocus=""> <span class="helptext">Requis. 150 caractères maximum. Uniquement des lettres, nombres et les caractères «  @  », «  .  », «  +  », «  -  » et «  _  ».</span></p>
 
-                    <p><label for="id_last_name">Nom  :</label> <input class="form-control" type="text" name="last_name" maxlength="150" id="id_last_name"></p>
-                    
-                    <p><label for="id_first_name">Prénom  :</label> <input class="form-control" type="text" name="first_name" maxlength="30" id="id_first_name"></p>
+                    <p>
+                        <label for="{{ form.username.id_for_label }}">Nom d'utilisateur:</label>
+                        {{ form.username }}
+                    </p>
+
+                    <p>
+                        <label for="{{ form.last_name.id_for_label }}">Nom:</label>
+                        {{ form.last_name }}
+                    </p>
 
                     
+                                
+                    <p>
+                        <label for="{{ form.first_name.id_for_label }}">Prénom:</label>
+                        {{ form.first_name }}
 
-                    <p><label for="id_email">Email  :</label> <input class="form-control" type="email" name="email"  id="id_email"></p>
-                    <p><label for="id_password1">Mot de passe  :</label> 
+                    </p>
                     
-                    <input type="password" class="form-control" name="password1"  id="id_password1"> <span class="helptext"></span></p>
+                    <p>
+                        <label for="{{ form.email.id_for_label }}">Email:</label>
+                        {{ form.email }}
+
+                    </p>
+                    <p>
+                        <label for="{{ form.first_name.id_for_label }}">Mot de passe:</label>
+                        {{ form.password1 }}
+
+                    </p>
                     <ul>
                         <li>Votre mot de passe ne peut pas trop ressembler à vos autres informations personnelles.</li><li>Votre mot de passe doit contenir au minimum 8 caractères.</li>
                         <li>Votre mot de passe ne peut pas être un mot de passe couramment utilisé.</li>
                         <li>Votre mot de passe ne peut pas être entièrement numérique.</li>
                     </ul>
-                    <p></p>
 
-                    <p><label for="id_password2">Confirmation du mot de passe  :</label> 
-                    <input class="form-control" type="password" name="password2"  id="id_password2"> 
-                    <span class="helptext">Saisissez le même mot de passe que précédemment, pour vérification.</span></p>
 
-                    <p><label for="id_poste">Poste  :</label> 
-                    <input class="form-control" type="text" name="poste" maxlength="150"  id="id_poste"></p>
+                    <p>
+                        <label for="{{ form.first_name.id_for_label }}">Confirmer le mot de passe:</label>
+                        {{ form.password2 }}
 
-                    <p><label  for="id_image">Photo de profile: </label> 
-                    <input  type="file" name="image" id="id_image" accept="image/*"></p>
-    
+                        <span class="helptext">Saisissez le même mot de passe que précédemment, pour vérification.</span></p>
+
+                    </p>
+                    
+                   
+                    
+                    <p>
+                        <label for="{{  profile_form.poste.id_for_label }}">Poste:</label>
+                        {{ profile_form.poste }}
+
+                    </p>
         
                     
                     <button class="btn btn-primary" type="submit"> Valider </button>

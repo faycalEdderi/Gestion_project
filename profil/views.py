@@ -25,7 +25,7 @@ def user_list(request):
            # else :
          #   return render(request,'pages/error404.html')
 
-  #Fonction de creation de compte UIQUEMENT POUR RT ET +
+  #Fonction de creation de compte UNIQUEMENT POUR RT ET +
   # Ajouter la condition ci dessus pour restreindre accès a RT  
 def register(request):
    
@@ -49,6 +49,7 @@ def register(request):
             messages.error(request, form['last_name'].errors)
             messages.error(request, form['email'].errors)
             messages.error(request, form['password1'].errors)
+            messages.error(request, profile_form['poste'].errors)
             
     else:
         form = RegistrationForm()
