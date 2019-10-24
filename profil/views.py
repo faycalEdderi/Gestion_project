@@ -24,7 +24,9 @@ def user_list(request):
       #if request.user.userprofile.role == "rt":
            # else :
          #   return render(request,'pages/error404.html')
-    
+
+  #Fonction de creation de compte UIQUEMENT POUR RT ET +
+  # Ajouter la condition ci dessus pour restreindre accès a RT  
 def register(request):
    
 
@@ -57,7 +59,7 @@ def register(request):
 
 
     
-
+#Fonctin modification de profile par USER sur son profil personnel
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
@@ -91,24 +93,32 @@ def edit_profile(request):
         return render(request, 'accounts/edit_profile.html', args)
 
 
-
+#Fonction de update user par RT : 
+# !!!!!Reste a definir un accès restreint uniquement pour RT ET + !!!!!
 def update_user(request, id=None):
     
     userUpdate =User.objects.get(id= id)
-    form = EditProfileForm(request.POST or None, instance=userUpdate)    
-    if form.is_valid() and form.data['first_name']   :
-
-        userUpdate = form.save(commit=False)
-        userUpdate.save()
-        return redirect('user_list')
     
+    form = EditProfileForm(request.POST or None, instance=userUpdate) 
+    form_profile = EditProfileUserForm(request.POST or None,request.FILES  or None, instance=userUpdate.userprofile)    
+
+    if form.is_valid() and form_profile.is_valid()   :
+
         
-    context ={'form' : form}
+        userUpdate = form.save(commit=False)
+
+        userUpdate.userprofile.save()
+        userUpdate.save()
+        
+        return redirect('user_list')
+    context ={'form' : form, 'form_profile' : form_profile,}
     return render(request, "accounts/edit_profileRT.html", context)
+
+
     
 
 
-
+#Fonction de modification de mot de passe a parir du profil User.
 
 def change_pwd(request):
     if request.method == 'POST':
