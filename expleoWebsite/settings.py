@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -120,7 +119,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'profil_pic/photo')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'profile_pic/photo')
 
 STATICFILES_DIRS=(
     os.path.join(BASE_DIR,'static'),

@@ -1,58 +1,65 @@
 
 <div class="content">
     <div class="container-fluid">
+      <div class="col-md-12">
+        <div class="card">
+         <div class="card-header card-header-primary">
+          <h4 class="card-title ">Liste des utilisateurs</h4>
+          <p class="card-category"> </p>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" expleoColorT">
+                  <th>Nom </th>
+                  <th>Prénom</th>
+                  <th>Email</th>
+                  <th>Poste</th>
+                  <th>Modifier</th>
+              </thead>
+              <tbody>
+              {% for user in user %}
+                <tr class="{{ user.userprofile.is_active }}">
+              
+                  <td class="{{ user.userprofile.is_active }}">{{user.last_name}}</td>
+                  <td>{{user.first_name}}</td>
+                  
+                  
+                  <td>{{user.email}}</td>
+                  <td>{{user.userprofile.poste}}</td>
+                
+                  <td><a href="{% url 'update_user' user.id %}" class="btn btn-info">Modifier</button></a>
+                <input type="text"  value="{{ user.id }}">
+                 <!-- <td>{{user.id}}</td>-->
+                
+                 <td>
+                   
+                      {{ user.userprofile.is_active }}
+                      
+                  </td>
+                  <td><input type="checkbox" class="btn check btn-dark" ></input></td>
+                  
+                  
+
+                 
+                 
+
+                </tr>
+                
+                {% endfor %}
+
+                
 
 
 
-
-<div class="col-md-12">
-            <div class="card">
-              <div class="card-header card-header-primary">
-                <h4 class="card-title ">Liste des utilisateurs</h4>
-                <p class="card-category"> </p>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class=" expleoColorT">
-                        <th>Nom </th>
-                        <th>Prénom</th>
-                        <th>Email</th>
-                        <th>Poste</th>
-                        <th>Modifier</th>
-                       
-                        
-                        
-
-                    </thead>
-                    <tbody>
-                    {% for user in user %}
-                      <tr>
-                    
-                        <td>{{user.last_name}}</td>
-                        <td>{{user.first_name}}</td>
-                        
-                        <td>{{user.email}}</td>
-                        <td>{{user.userprofile.poste}}</td>
-                       
-                        <td><a href="{% url 'update_user' user.id %}" class="btn btn-info">Modifier</button></a>
-
-                        <td>{{user.id}}</td>
-
-                      </tr>
-                      {% endfor %}
-
-
-
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
+              </tbody>
+            </table>
           </div>
-          
-          </div>
-          </div>
+        </div>
+      </div>
+    </div>    
+  </div>
+</div>
 
          
 

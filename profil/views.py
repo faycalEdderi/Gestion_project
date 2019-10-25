@@ -13,15 +13,14 @@ from django.contrib import messages
 
 def user_list(request):
     userList = User.objects.all()
-    
-
+      
     context = {
-        "user": userList
+        "user": userList, 
     }
     return render(request, "accounts/users.html", context)
-    
-    
-      #if request.user.userprofile.role == "rt":
+
+
+      #if request.user.userprofile.role == "rt" and "chf_project":
            # else :
          #   return render(request,'pages/error404.html')
 
@@ -60,7 +59,7 @@ def register(request):
 
 
     
-#Fonction modification de profile par USER sur son profil personnel
+#Fonction modification de profile par USER sur son profile personnel
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
@@ -122,7 +121,7 @@ def update_user(request, id=None):
     
 
 
-#Fonction de modification de mot de passe a parir du profil User.
+#Fonction de modification de mot de passe a parir du profile User.
 
 def change_pwd(request):
     if request.method == 'POST':

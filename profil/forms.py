@@ -4,7 +4,8 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import UserProfile
 from django.forms import ModelForm
 
-
+# FORM DE CREATION DE COMPTE 
+#Uniquement pour RT et +
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(
         required=True,
@@ -65,6 +66,9 @@ class UserProfileForm(forms.ModelForm):
             'image'
             
         )
+#########################FIN DE CREATION DE COMPTE #####################
+
+#FORM MODIFICATION DE PROFIL ACCESSIBLE PAR TOUS USER 
 
 
 class EditProfileForm(forms.ModelForm):
@@ -94,6 +98,8 @@ class EditProfileForm(forms.ModelForm):
             'first_name',
             'last_name', 
         )
+
+
 class EditProfileUserForm(ModelForm):
 
     poste = forms.CharField(
@@ -118,6 +124,7 @@ class EditProfileUserForm(ModelForm):
             
             'image', 
             'poste',
+            'is_active',
         )
 
 

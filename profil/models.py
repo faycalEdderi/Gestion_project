@@ -19,8 +19,13 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     ROLES = (
+        #AJOUTER Ch valid
         ('rt', 'RT'),
         ('liv', 'LIV ')
+    ) 
+    IS_ACTIVE = (
+        ('activate', 'actif'),
+        ('desactivate', 'desactive ')
     ) 
 
     poste = models.CharField(max_length=150)
@@ -32,6 +37,8 @@ class UserProfile(models.Model):
         )
    
     role = models.CharField( max_length=9 ,choices=ROLES, default='liv')
+
+    is_active = models.CharField(null=True, blank=True, max_length=15 ,choices=IS_ACTIVE, default='activate')
 
   
 
