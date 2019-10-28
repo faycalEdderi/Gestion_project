@@ -130,11 +130,34 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 LOGOUT_REDIRECT_URL = "connexion"
 
 
-
+# Ci Dessoous parametres permettant la reception de mail via le shell 
+# ecrire la cmd dans un nouveau shell : python -m smtpd -n -c DebuggingServer localhost:1025 
+# si rien ne s'affiche c'est normal il faut d'abord envoyé l'email.
 #EMAIL_HOST = 'localhost'
 #EMAIL_PORT = 1025
 
+#Ces fichier stock dans le dossier "sent_emails" tous les email envoyé a partir de django
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend" # During development only
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend" # During development only
+#EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+# Il faut parametrer une adresse mail professionel avec les parametres suivant pour envoyer un "vrai" mail
+# EMAIL_HOST
+# EMAIL_PORT
+# EMAIL_HOST_USER
+# EMAIL_HOST_PASSWORD
+# EMAIL_USES_TLS
+# EMAIL_USE_SSL
+
+
+
+
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'expleowebsite@gmail.com'
+EMAIL_HOST_PASSWORD = 'Faycal.78'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
