@@ -1,29 +1,10 @@
 $().ready(function() {
 
-$('.check').click(function(){
-
-$('.check').attr('checked', 'checked');
-alert('check');
-
-});
-
-
-if( $('.check').checked ){
-    
-    
-    $(".desactivate").css("color", "red");
-
-}
-
-    
-
-    
-    
-   
-    
-    
-
-
-
+    var app6 = new Vue({
+        el: '#app-6',
+        data: {
+          message: 'Hello Vue !'
+        }
+      })
 
 });

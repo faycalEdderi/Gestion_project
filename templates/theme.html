@@ -40,7 +40,7 @@
     <div class="sidebar " data-background-color="white"  data-image="{% static 'img/expleo.png' %}" id="wrapper"  >
 
       <div class="logo">
-        <a href="https://portal.expleogroup.com/" class="simple-text logo-normal">
+        <a href="{% url 'uo' %}" class="simple-text logo-normal">
          <img class="img-fluid" src="{% static 'img/expleoLogo.png' %}" alt="logo Expleo">
         </a>
       </div>
@@ -125,6 +125,7 @@
 <script src="{% static 'js/core/popper.min.js' %}"></script>
 <script src="{% static 'js/core/bootstrap-material-design.min.js' %}"></script>
 <script src="{% static 'js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+<script src="{% static 'js/vue.js' %}"></script>
 <!-- Librairie JQuery UI-->
 <script src="{% static 'js/plugins/jquery-ui.min.js' %}"></script>
 
@@ -170,9 +171,16 @@
   
 
 <script>
+
   $(document).ready(function() {
 
+    $( "input" ).addClass( "form-control" );
+    
+
     $().ready(function() { 
+
+
+      $('.avancement').val
       
  // DEBUT FONCTION PROGRESSBAR AVANCEMENT     
       let x = 0 ; // initialisation de la valeur a 0
@@ -241,7 +249,7 @@
 
       $full_page = $('.full-page');
 
-      $sidebar_responsive = $('body > .navbar-collapse');
+      $sidebar_responsive = $('body > .navbar-collapse');2
 
       window_width = $(window).width();
 
