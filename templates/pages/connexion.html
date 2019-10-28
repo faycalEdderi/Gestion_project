@@ -35,11 +35,11 @@
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-               <img class="mx-auto d-block" class="img-fluid" src="{% static 'img/expleoLogo.png' %}" alt=""> 
+               <img class="mx-auto d-block w-50" class="img-fluid" src="{% static 'img/expleoLogo.png' %}" alt=""> 
               <div class="col-lg-12 d-flex justify-content-center">
                 <div class="col-lg-6 ">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Bienvenue !</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Gestionnaire d'activité Workpackage</h1>
                   </div>
               
 
@@ -59,20 +59,20 @@
                        <div class="d-flex flex-column align-items-center  ">
                        
                         
-                        <label for="id_username">Nom d'utilisateur&nbsp;:</label>
-                        <input class="w-75 form-control border-top-0 border-right-0 border-left-0 mb-5" type="text" name="username" autofocus="" id="id_username" required="">
+                        <label for="{{ form.username.id_for_label }}">Nom d'utilisateur:</label>
+                        {{form.username}}
                         
                   
                         
-                          <label for="id_password">Mot de passe&nbsp;:</label>
-                          <input class="w-75 form-control border-top-0 border-right-0 border-left-0 mb-5" type="password" name="password" id="id_password" required="">
+                          <label for="{{ form.password.id_for_label }}">Mot de passe:</label>
+                          {{form.password}}
                           
                       
                        
                        
                         </div> 
                         <div class=" text-center"> 
-                          <button class="btn btn-primary " type="submit">Connexion</button>
+                          <button class="btn btn-primary mt-3" type="submit">Connexion</button>
                         </div>
                     </form>
 
@@ -104,6 +104,18 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{% static 'js/core/sb-admin-2.min.js' %}"></script>
+  <script>
+  
+  $(document).ready(function() {
+
+$( "input" ).addClass( "form-control w-50 mb-3 border-top-0 border-right-0 border-left-0" );
+
+  });
+  
+  
+  
+  
+  </script>
 
 
 </body>
