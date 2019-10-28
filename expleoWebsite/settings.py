@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -127,4 +128,13 @@ STATICFILES_DIRS=(
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
 LOGOUT_REDIRECT_URL = "connexion"
+
+
+
+#EMAIL_HOST = 'localhost'
+#EMAIL_PORT = 1025
+
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend" # During development only
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 

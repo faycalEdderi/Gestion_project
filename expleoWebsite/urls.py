@@ -5,7 +5,13 @@ from .import views
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import (
+    LogoutView, 
+    PasswordResetView, 
+    PasswordResetDoneView, 
+    PasswordResetConfirmView,
+    PasswordResetCompleteView
+)
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -23,7 +29,12 @@ urlpatterns = [
     path('uo', views.uo, name="uo"),
     path('historique', views.historique),
     path('connexion', views.connexion, name='connexion'),
+
     path("logout/", LogoutView.as_view(), name="logout"),
+    path("reset_password", PasswordResetView.as_view(), name='reset_password'),
+    path("reset_password/done", PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset_password/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset_password/complete/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
     path('register', profil_views.register, name='register'),
     path('edit_profile', profil_views.edit_profile, name='edit_profile'),
