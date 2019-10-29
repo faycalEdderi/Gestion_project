@@ -22,10 +22,11 @@
                     <form method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
 
-                    <!--<p>
-                        <label for="{{ form.username.id_for_label }}">Nom d'utilisateur:</label>
-                        {{ form.username }}
-                    </p>-->
+                    <p>
+         <!-- on defini quand meme un username egale a l'adresse mail utile uniquement pour l'administrateur
+        Voir la view register dans profil  -->
+                        {{ form.username.as_hidden  }}
+                    </p>
 
                     <p>
                         <label for="{{ form.last_name.id_for_label }}">Nom:</label>

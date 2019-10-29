@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from profil.forms import RegistrationForm, EditProfileForm, EditProfileUserForm
 from .models import UserProfile
@@ -7,6 +6,7 @@ from .forms import UserProfileForm
 from django.contrib.auth.forms import UserCreationForm,  PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, get_user_model
 from django.contrib import messages
+from django import forms
 
 
 
@@ -32,11 +32,20 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST,)
         profile_form = UserProfileForm(request.POST or None, request.FILES or None)
+        
+      
 
         if form.is_valid() and profile_form.is_valid():
+            email = request.POST['email']
+            
+            user = form.save(commit=False)
+            #attribution de l'adresse mail comme username (uniquement utile pour l'admin django)
+            user.username = email 
+            
 
-            user = form.save()
+            user.save()
 
+            user.username = email 
             profile = profile_form.save(commit=False)
             profile.user = user
 

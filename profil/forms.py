@@ -7,15 +7,15 @@ from django.forms import ModelForm
 # FORM DE CREATION DE COMPTE 
 #Uniquement pour RT et +
 class RegistrationForm(UserCreationForm):
-    username = forms.CharField(
-        required=False,
-         
-         
-        )
+   
     
     email = forms.EmailField(
         required=True,
         error_messages={'required': 'Veuillez entrer une Adresse Mail'},
+        ) 
+#username n'est plus requis pour la creation de compte car c'est avec l'adresse mail qu'on se connecte
+    username = forms.CharField(
+        required=False,
         )
     first_name = forms.CharField(
         required=True,
