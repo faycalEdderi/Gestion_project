@@ -7,6 +7,12 @@ from django.forms import ModelForm
 # FORM DE CREATION DE COMPTE 
 #Uniquement pour RT et +
 class RegistrationForm(UserCreationForm):
+    username = forms.CharField(
+        required=False,
+         
+         
+        )
+    
     email = forms.EmailField(
         required=True,
         error_messages={'required': 'Veuillez entrer une Adresse Mail'},
@@ -25,11 +31,13 @@ class RegistrationForm(UserCreationForm):
     password1 = forms.CharField(
         required=True,
         error_messages={'required': 'Les deux mots de passes ne sont pas identiques'}, 
+        widget=forms.PasswordInput, 
       
         )
     password2 = forms.CharField(
         required=True,
-        error_messages={'required': 'Les deux mots de passes ne sont pas identiques'}, 
+        error_messages={'required': 'Les deux mots de passes ne sont pas identiques'},
+        widget=forms.PasswordInput,  
       
         )
     

@@ -55,7 +55,7 @@ def connexion(request):
                 return redirect('uo')
 
         else:
-            messages.error(request,'Nom d\'utilisateur ou mot de passe incorrect') 
+            messages.error(request,'Adresse mail ou mot de passe incorrect') 
             return redirect('connexion')
 
         return render(request,'pages/uo.html')   
