@@ -15,17 +15,17 @@
                 </div>
                     <div class="card card-profile profile_test">
                       <div class="card-avatar">
-                        <a href="#pablo">
+                        <a href="#">
                         {% if user.userprofile.image %}
-                          <img class="img-fluid"  src="{{ user.userprofile.image.url }}" alt="photo de profile" />
+                          <img class="img-fluid"  src="{{ user.userprofile.image.url }}" alt="photo de profile" >
                           {% else %}
-                          <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" alt="photo de profile par défaut" />
+                          <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" alt="photo de profile par défaut">
                         {% endif %}
                         </a>
                       </div>
                       <div class="card-body">
                         <h6 class="card-category text-gray">{{ user.last_name }} {{ user.first_name }}</h6>
-                        <h4 class="card-title">{{ user.userprofile.poste | capfirst  }}</h4>
+                        <h4 class="card-title">{{ user.userprofile.poste | upper  }}</h4>
                         
                       </div>
                     </div>
@@ -59,7 +59,7 @@
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Poste</label>
-                                <input type="text" class="form-control" value="{{ user.userprofile.poste | capfirst  }}" disabled>
+                                <input type="text" class="form-control" value="{{ user.userprofile.poste | upper  }}" disabled>
                               </div>
                             </div>
                             

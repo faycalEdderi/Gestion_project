@@ -19,16 +19,30 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     ROLES = (
-        #AJOUTER Ch valid
+        
         ('rt', 'RT'),
-        ('liv', 'LIV ')
+        ('liv', 'LIV'),
+        ('ch.Valid', 'CH.VALID '),
+        
     ) 
     IS_ACTIVE = (
         ('activate', 'actif'),
-        ('desactivate', 'desactive ')
+        ('desactivate', 'desactive '),
+        
+    )
+    POSTE = (
+        ('blank', ' '),
+        ('ch.MIL', 'CH.MIL'),
+        ('ch.HIL', 'CH.HIL '), 
+        ('ch.IS', 'CH.IS '),
+        ('liv', 'Pilote d\'activité'),
+        ('rt', 'RT '),
+        ('pom', 'PMO'),
+        ('rsop', 'RSOP'),
+        
     ) 
 
-    poste = models.CharField(max_length=150)
+    poste = models.CharField(max_length=150, choices=POSTE, default='blank')
     image = models.ImageField(
             upload_to=upload_location,
             null=True,
@@ -36,7 +50,7 @@ class UserProfile(models.Model):
             
         )
    
-    role = models.CharField( max_length=9 ,choices=ROLES, default='liv')
+    role = models.CharField( max_length=9 ,choices=ROLES, default='ch.Valid')
 
     is_active = models.CharField(null=True, blank=True, max_length=15 ,choices=IS_ACTIVE, default='activate')
 
