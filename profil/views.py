@@ -20,7 +20,7 @@ def user_list(request):
     return render(request, "accounts/users.html", context)
 
 
-      #if request.user.userprofile.role == "rt" and "chf_project":
+      #if request.user.userprofile.role == "rt" or "chf_project":
            # else :
          #   return render(request,'pages/error404.html')
 
@@ -100,6 +100,8 @@ def edit_profile(request):
 
 
         return render(request, 'accounts/edit_profile.html', args)
+
+       
 
 
 #Fonction de update user par RT : 
