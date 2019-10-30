@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import UserProfile
 from django.forms import ModelForm
 
+
+
 # FORM DE CREATION DE COMPTE 
 #Uniquement pour RT et +
 class RegistrationForm(UserCreationForm):
@@ -29,13 +31,13 @@ class RegistrationForm(UserCreationForm):
         )
 
     password1 = forms.CharField(
-        required=True,
+        required=False,
         error_messages={'required': 'Les deux mots de passes ne sont pas identiques'}, 
         widget=forms.PasswordInput, 
       
         )
     password2 = forms.CharField(
-        required=True,
+        required=False,
         error_messages={'required': 'Les deux mots de passes ne sont pas identiques'},
         widget=forms.PasswordInput,  
       
@@ -109,13 +111,25 @@ class EditProfileForm(forms.ModelForm):
 
 
 class EditProfileUserForm(ModelForm):
+    POSTE = (
+        
+        ('ch.MIL', 'CH.MIL'),
+        ('ch.HIL', 'CH.HIL '), 
+        ('ch.IS', 'CH.IS '),
+        ('liv', 'LIV'),
+        ('rt', 'RT '),
+        ('pmo', 'PMO'),
+        ('rsop', 'RSOP'),
+        
+    ) 
 
-    poste = forms.CharField(
-        required=True,
-        error_messages={'required': 'Veuillez selectionner un poste'}, 
+    poste = forms.ChoiceField(choices=POSTE, widget=forms.Select(attrs={'class': 'custom-select mr-sm-2"'}) )
+
+    
+      
+      
          
-        )
-    poste.widget = forms.TextInput(attrs={'class': 'form-control',})
+      
 
     image = forms.ImageField(
         required=False,

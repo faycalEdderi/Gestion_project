@@ -7,6 +7,10 @@ from django.contrib.auth.forms import UserCreationForm,  PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, get_user_model
 from django.contrib import messages
 from django import forms
+import random
+from django.core.mail import send_mail
+
+
 
 
 
@@ -27,21 +31,32 @@ def user_list(request):
   #Fonction de creation de compte UNIQUEMENT POUR RT ET +
   # Ajouter la condition ci dessus pour restreindre accès a RT  
 def register(request):
-   
+
+    
+    
 
     if request.method == 'POST':
-        form = RegistrationForm(request.POST,)
+        form = RegistrationForm(request.POST)
         profile_form = UserProfileForm(request.POST or None, request.FILES or None)
+
         
       
 
         if form.is_valid() and profile_form.is_valid():
             email = request.POST['email']
-            
+
             user = form.save(commit=False)
             #attribution de l'adresse mail comme username (uniquement utile pour l'admin django)
-            user.username = email 
+            user.username = email
+
             
+            password = User.objects.make_random_password(length=9) 
+
+            
+
+            user.set_password(password)
+            
+             
 
             user.save()
 
@@ -50,6 +65,15 @@ def register(request):
             profile.user = user
 
             profile.save()
+
+
+            send_mail(
+                'Votre compte a été créé',
+                'Votre mdp : ' +  password,
+                'Admin@expleogroup.com',
+                [email],
+                fail_silently=False,
+            )
 
             return redirect('connexion')
         else:

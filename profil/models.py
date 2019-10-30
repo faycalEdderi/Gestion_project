@@ -2,6 +2,7 @@ from django import forms
 from django.db import models
 from django.contrib.auth.models import User
 
+
 import random
 
 
@@ -21,8 +22,8 @@ class UserProfile(models.Model):
     ROLES = (
         
         ('rt', 'RT'),
-        ('liv', 'LIV'),
-        ('ch.Valid', 'CH.VALID '),
+        ('pilote_activite', 'PILOTE D\'ACTIVITÉ'),
+        ('charge_execution', 'CH.EXECUTION '),
         
     ) 
     IS_ACTIVE = (
@@ -31,18 +32,21 @@ class UserProfile(models.Model):
         
     )
     POSTE = (
-        ('blank', ' '),
+        
         ('ch.MIL', 'CH.MIL'),
         ('ch.HIL', 'CH.HIL '), 
         ('ch.IS', 'CH.IS '),
-        ('liv', 'Pilote d\'activité'),
+        ('liv', 'LIV'),
         ('rt', 'RT '),
-        ('pom', 'PMO'),
+        ('pmo', 'PMO'),
         ('rsop', 'RSOP'),
         
     ) 
 
-    poste = models.CharField(max_length=150, choices=POSTE, default='blank')
+    poste = models.CharField(max_length=150, choices=POSTE )
+
+    poste.widget = forms.TextInput(attrs={'class': 'form-control',})
+    
     image = models.ImageField(
             upload_to=upload_location,
             null=True,
