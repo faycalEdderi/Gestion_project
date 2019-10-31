@@ -9,12 +9,41 @@ from django.contrib import messages
 from django import forms
 import random
 from django.core.mail import send_mail
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login
 
 
 
+#Affichage des information de l'utilisateur connecté 
 
+#@login_required(login_url="connexion")
+def profil(request):
+    
+    return render(request,'accounts/profil.html')
 
+#Fonction de connection
+def connexion(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
 
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return redirect('uo')
+
+        else:
+            messages.error(request,'Adresse mail ou mot de passe incorrect') 
+            return redirect('connexion')
+
+        return render(request,'pages/uo.html')   
+    else:
+        form = AuthenticationForm()
+    return render(request, 'pages/connexion.html', {'form': form})   
+
+#POUR RT : Affichage d'une liste d'utilisateur 
 def user_list(request):
     userList = User.objects.all()
       
@@ -28,8 +57,8 @@ def user_list(request):
            # else :
          #   return render(request,'pages/error404.html')
 
-  #Fonction de creation de compte UNIQUEMENT POUR RT ET +
-  # Ajouter la condition ci dessus pour restreindre accès a RT  
+#Fonction de creation de compte UNIQUEMENT POUR RT ET +
+# Ajouter la condition ci dessus pour restreindre accès a RT  
 def register(request):
 
     

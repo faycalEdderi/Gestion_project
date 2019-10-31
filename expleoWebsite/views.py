@@ -18,10 +18,6 @@ def theme(request):
 
 
 
-#@login_required(login_url="connexion")
-def profil(request):
-    
-    return render(request,'pages/profil.html')
 
 def diagramme(request):
 
@@ -42,26 +38,7 @@ def historique(request):
     return render(request,'pages/historique.html')
 
 
-def connexion(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        username = request.POST['username']
-        password = request.POST['password']
 
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect('uo')
-
-        else:
-            messages.error(request,'Adresse mail ou mot de passe incorrect') 
-            return redirect('connexion')
-
-        return render(request,'pages/uo.html')   
-    else:
-        form = AuthenticationForm()
-    return render(request, 'pages/connexion.html', {'form': form})   
 
 
                                 
