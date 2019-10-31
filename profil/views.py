@@ -49,7 +49,8 @@ def register(request):
             #attribution de l'adresse mail comme username (uniquement utile pour l'admin django)
             user.username = email
 
-            
+            #Genere un mot de passe automatiquement
+            #Reste a voir s'il faut le parametrer pour plus de difficulter ou pas
             password = User.objects.make_random_password(length=9) 
 
             
@@ -82,7 +83,7 @@ def register(request):
             messages.error(request, form['email'].errors)
             messages.error(request, form['password1'].errors)
             messages.error(request, profile_form['poste'].errors)
-            
+            user
     else:
         form = RegistrationForm()
         profile_form = UserProfileForm()
@@ -159,12 +160,23 @@ def update_user(request, id=None):
 #Fonction de modification de mot de passe a parir du profile User.
 
 def change_pwd(request):
+    
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
         
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
+
+            adresse_mail = request.user.email
+            #envoie email lorsque le mot de passe est modifié
+            send_mail(
+                'Votre mot de passe a étais modifié',
+                'Le changement de mot de passe a étais effectué avec succès',
+                'Admin@expleogroup.com',
+                [adresse_mail],
+                fail_silently=False,
+            )
             return redirect('profil')
         else:
             return redirect('modifMdp')
