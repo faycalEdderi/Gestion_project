@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
+
 import random
 
 
@@ -23,7 +25,7 @@ class UserProfile(models.Model):
         
         ('rt', 'RT'),
         ('pilote_activite', 'PILOTE D\'ACTIVITÉ'),
-        ('charge_execution', 'CH.EXECUTION '),
+        ('charge_execution', 'CH.EXECUTION'),
         
     ) 
     IS_ACTIVE = (
@@ -58,9 +60,37 @@ class UserProfile(models.Model):
 
     is_active = models.CharField(null=True, blank=True, max_length=15 ,choices=IS_ACTIVE, default='activate')
 
+
   
+
+    def __str__(self):
+        return self.user.username
+
+
+
+    
+
+class Liv(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+   
+
+    #equipe = models.ForeignKey("Chvalid", on_delete=models.CASCADE)
+
+    executant = models.ManyToManyField('ChValid')
+    
 
     def __str__(self):
         return self.user.username
     
 
+
+
+class ChValid(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+   
+
+    superieur = models.ManyToManyField(Liv)
+
+    def __str__(self):
+        return self.user.username

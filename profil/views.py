@@ -62,7 +62,6 @@ def user_list(request):
 def register(request):
 
     
-    
 
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -76,7 +75,7 @@ def register(request):
 
             user = form.save(commit=False)
             #attribution de l'adresse mail comme username (uniquement utile pour l'admin django)
-            user.username = email
+            user.username = request.POST['last_name'] + ' ' +  request.POST['first_name']
 
             #Genere un mot de passe automatiquement
             #Reste a voir s'il faut le parametrer pour plus de difficulter ou pas
@@ -90,7 +89,7 @@ def register(request):
 
             user.save()
 
-            user.username = email 
+            user.username = request.POST['last_name'] + request.POST['first_name'] 
             profile = profile_form.save(commit=False)
             profile.user = user
 
@@ -112,7 +111,7 @@ def register(request):
             messages.error(request, form['email'].errors)
             messages.error(request, form['password1'].errors)
             messages.error(request, profile_form['poste'].errors)
-            user
+
     else:
         form = RegistrationForm()
         profile_form = UserProfileForm()
@@ -142,6 +141,7 @@ def edit_profile(request):
         
             messages.error(request, form['first_name'].errors)
             messages.error(request, form['last_name'].errors)
+            messages.error(request, form['image'].errors)
 
             return redirect('edit_profile')
            
@@ -177,7 +177,7 @@ def update_user(request, id=None):
         
         return redirect('user_list')
     else : 
-        messages.error(request, form_profile['poste'].errors)
+        messages.error(request, form_profile['image'].errors)
         
     context ={'form' : form, 'form_profile' : form_profile,}
     return render(request, "accounts/edit_profileRT.html", context)

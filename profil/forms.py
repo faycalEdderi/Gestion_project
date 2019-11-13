@@ -85,7 +85,7 @@ class EditProfileForm(forms.ModelForm):
    
     first_name = forms.CharField(
         required=True,
-        error_messages={'required': 'Veuillez entrer un Nom'}, 
+        error_messages={'required': 'Veuillez entrer un prénom'}, 
          
         )
     #ajout de class bootstrap pour modifier le style de l'input
@@ -93,10 +93,18 @@ class EditProfileForm(forms.ModelForm):
     
     last_name = forms.CharField(
         required=True,
-        error_messages={'required': 'Veuillez entrer un Prénom'},
+        error_messages={'required': 'Veuillez entrer un nom'},
+        
         
         )
     last_name.widget = forms.TextInput(attrs={'class': 'form-control',})
+
+    image = forms.ImageField(
+        required=False,
+        error_messages = {'invalid': "Veuillez selectionner uniquement un fichier de type image" }, 
+        widget=forms.FileInput,  
+         
+        )
 
    
 
@@ -127,10 +135,6 @@ class EditProfileUserForm(ModelForm):
 
     
       
-      
-         
-      
-
     image = forms.ImageField(
         required=False,
         error_messages = {'invalid': "Veuillez selectionner uniquement un fichier de type image" }, 
@@ -138,7 +142,7 @@ class EditProfileUserForm(ModelForm):
          
         )
   
-
+#A UTILISER POUR DESCATIVER UN UTILISATEUR
     class Meta:
         model = UserProfile
         

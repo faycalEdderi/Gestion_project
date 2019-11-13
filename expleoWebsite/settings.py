@@ -136,7 +136,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-# Ci Dessoous parametres permettant la reception de mail via le shell 
+# Ci Dessous parametres permettant la reception de mail via le shell 
 # ecrire la cmd dans un nouveau shell : python -m smtpd -n -c DebuggingServer localhost:1025 
 # si rien ne s'affiche c'est normal il faut d'abord envoyé l'email.
 #EMAIL_HOST = 'localhost'
