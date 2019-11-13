@@ -56,7 +56,7 @@ class UserProfile(models.Model):
             
         )
    
-    role = models.CharField( max_length=9 ,choices=ROLES, default='ch.Valid')
+    role = models.CharField( max_length=20 ,choices=ROLES, default='ch.Valid')
 
     is_active = models.CharField(null=True, blank=True, max_length=15 ,choices=IS_ACTIVE, default='activate')
 
