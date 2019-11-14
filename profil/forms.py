@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import UserProfile
+from .models import UserProfile, Liv
 from django.forms import ModelForm
 
 
@@ -74,6 +74,14 @@ class UserProfileForm(forms.ModelForm):
         fields = (
             'poste',
             'image'
+            
+        )
+class LivForm(forms.ModelForm):
+    class Meta : 
+        model = Liv
+        
+        fields = (
+           'executant', 
             
         )
 #########################FIN DE CREATION DE COMPTE #####################

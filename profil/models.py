@@ -36,10 +36,10 @@ class UserProfile(models.Model):
     POSTE = (
         
         ('ch.MIL', 'CH.MIL'),
-        ('ch.HIL', 'CH.HIL '), 
-        ('ch.IS', 'CH.IS '),
+        ('ch.HIL', 'CH.HIL'), 
+        ('ch.IS', 'CH.IS'),
         ('liv', 'LIV'),
-        ('rt', 'RT '),
+        ('rt', 'RT'),
         ('pmo', 'PMO'),
         ('rsop', 'RSOP'),
         
@@ -56,7 +56,7 @@ class UserProfile(models.Model):
             
         )
    
-    role = models.CharField( max_length=20 ,choices=ROLES, default='ch.Valid')
+    role = models.CharField( max_length=20 ,choices=ROLES, default='charge_execution')
 
     is_active = models.CharField(null=True, blank=True, max_length=15 ,choices=IS_ACTIVE, default='activate')
 

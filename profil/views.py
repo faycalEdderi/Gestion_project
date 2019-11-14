@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from profil.forms import RegistrationForm, EditProfileForm, EditProfileUserForm
+from profil.forms import (
+    RegistrationForm, 
+    EditProfileForm, 
+    EditProfileUserForm, 
+    LivForm )
 from .models import UserProfile
 from django.contrib.auth.models import User
 from .forms import UserProfileForm
@@ -67,22 +71,29 @@ def register(request):
         form = RegistrationForm(request.POST)
         profile_form = UserProfileForm(request.POST or None, request.FILES or None)
 
+        equipe_form = LivForm(request.POST)
+
         
       
 
-        if form.is_valid() and profile_form.is_valid():
-            email = request.POST['email']
+        if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid:
 
-            user = form.save(commit=False)
-            #attribution de l'adresse mail comme username (uniquement utile pour l'admin django)
-            user.username = request.POST['last_name'] + ' ' +  request.POST['first_name']
-
-            #Genere un mot de passe automatiquement
-            #Reste a voir s'il faut le parametrer pour plus de difficulter ou pas
-            password = User.objects.make_random_password(length=9) 
+            role = request.POST['poste']
 
             
 
+            email = request.POST['email']
+
+            user = form.save(commit=False)
+
+         
+
+
+            #attribution de l'adresse mail comme username (uniquement utile pour l'admin django)
+            user.username = request.POST['last_name'] + '_' +  request.POST['first_name']
+
+            #Genere un mot de passe automatiquement
+            password = User.objects.make_random_password(length=9) 
             user.set_password(password)
             
              
@@ -90,8 +101,19 @@ def register(request):
             user.save()
 
             user.username = request.POST['last_name'] + request.POST['first_name'] 
+
             profile = profile_form.save(commit=False)
+
+            if role == 'liv':
+                profile.role = 'pilote_activite'
+            elif role == 'CH.MIL' or role == 'CH.IS' or role == 'CH.HIL'  : 
+                 profile.role = 'charge_execution'
+
+            
+            executant = equipe_form.save(commit=False)
+
             profile.user = user
+            executant.user= user
 
             profile.save()
 
@@ -115,8 +137,13 @@ def register(request):
     else:
         form = RegistrationForm()
         profile_form = UserProfileForm()
+        equipe_form = LivForm()
 
-    context = {'form' : form, 'profile_form' : profile_form}
+    context = {
+        'form' : form, 
+        'profile_form' : profile_form, 
+        'equipe_form' : equipe_form, 
+        }
     return render(request, 'accounts/register.html', context)
 
 
@@ -214,5 +241,55 @@ def change_pwd(request):
         args = {'form' : form}
 
         return render(request, 'accounts/change_password.html', args)
+
+
+
+
+def userRelation(request):
+
+    
+
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)  
+
+        equipe_form = LivForm(request.POST)
+
+        
+      
+
+        if equipe_form.is_valid:
+            
+
+            user = form.save(commit=False)
+ 
+            user.save()
+
+
+            
+            executant = equipe_form.save(commit=False)
+
+           
+            executant.user= user
+
+            executant.save()
+
+
+         
+
+            return redirect('connexion')
+        else:
+          
+            messages.error(request, equipe_form['executant'].errors)
+
+    else:
+        
+        equipe_form = LivForm()
+
+    context = {
+        
+        'equipe_form' : equipe_form, 
+        }
+    return render(request, 'hierarchie/equipe.html', context)
+
 
 
