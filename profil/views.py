@@ -196,11 +196,21 @@ def update_user(request, id=None):
 
     if form.is_valid() and form_profile.is_valid()   :
 
-        
+        adresse_mail = request.POST['email']
         userUpdate = form.save(commit=False)
 
         userUpdate.userprofile.save()
         userUpdate.save()
+        #SI L'UTILLISATEUR NE S'EST JAMAIS CONNECTÉ UN MAIL EST ENVOYÉ
+        #METTRE CETTE CONDITION LORS DE LA MODIFICATION DE MDP PAR SUPERIEUR EN CAS D'ERREUR
+        if userUpdate.last_login is None:
+            send_mail(
+                'Vos informations ont été modifiés',
+                'Certaines de vos informations on été modifié par votre responsable',
+                'Admin@expleogroup.com',
+                [adresse_mail],
+                fail_silently=False,
+            )
         
         return redirect('user_list')
     else : 
@@ -227,7 +237,7 @@ def change_pwd(request):
             adresse_mail = request.user.email
             #envoie email lorsque le mot de passe est modifié
             send_mail(
-                'Votre mot de passe a étais modifié',
+                'Votre mot de passe à été modifié',
                 'Le changement de mot de passe a étais effectué avec succès',
                 'Admin@expleogroup.com',
                 [adresse_mail],

@@ -9,14 +9,18 @@
                <div class="card">
                     {% include 'error_message.html' %}
                 <div class="card-header ">
-                  <h4 class="card-title">Création de compte</h4>
+                  <h4 class="card-title">Modification de compte</h4>
                 
                 
 
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                     
-                        
+                        <p>
+                            <label for="{{ form_profile.email.id_for_label }}">Email:</label>
+                            {{ form.email }}
+
+                        </p>
 
                         <p>
                             <label for="{{ form.last_name.id_for_label }}">Nom:</label>

@@ -113,6 +113,10 @@ class EditProfileForm(forms.ModelForm):
         widget=forms.FileInput,  
          
         )
+    email = forms.EmailField(
+        required=True,
+        error_messages={'required': 'Veuillez entrer une Adresse Mail'},
+        ) 
 
    
 
@@ -122,7 +126,8 @@ class EditProfileForm(forms.ModelForm):
         fields = ( 
             
             'first_name',
-            'last_name', 
+            'last_name',
+            'email', 
         )
 
 
