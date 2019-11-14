@@ -155,7 +155,7 @@ class EditProfileUserForm(ModelForm):
          
         )
   
-#A UTILISER POUR DESCATIVER UN UTILISATEUR
+#A UTILISER POUR DESACTIVER UN UTILISATEUR
     class Meta:
         model = UserProfile
         
@@ -165,6 +165,12 @@ class EditProfileUserForm(ModelForm):
             'poste',
             'is_active',
         )
+
+
+
+    
+      
+
 
 
 

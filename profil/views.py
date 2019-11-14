@@ -65,8 +65,6 @@ def user_list(request):
 # Ajouter la condition ci dessus pour restreindre accès a RT  
 def register(request):
 
-    
-
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         profile_form = UserProfileForm(request.POST or None, request.FILES or None)
@@ -79,15 +77,9 @@ def register(request):
         if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid:
 
             role = request.POST['poste']
-
-            
-
             email = request.POST['email']
 
             user = form.save(commit=False)
-
-         
-
 
             #attribution de l'adresse mail comme username (uniquement utile pour l'admin django)
             user.username = request.POST['last_name'] + '_' +  request.POST['first_name']
@@ -95,8 +87,6 @@ def register(request):
             #Genere un mot de passe automatiquement
             password = User.objects.make_random_password(length=9) 
             user.set_password(password)
-            
-             
 
             user.save()
 
@@ -116,6 +106,7 @@ def register(request):
             executant.user= user
 
             profile.save()
+            executant.save()
 
 
             send_mail(
@@ -255,51 +246,37 @@ def change_pwd(request):
 
 
 
-def userRelation(request):
+#def userRelation(request):
 
     
 
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)  
+    #if request.method == 'POST':
+       # form = LivForm(request.POST, instance=request.user)
+       
 
-        equipe_form = LivForm(request.POST)
-
+       
+       
         
-      
+        #if form.is_valid()  :
 
-        if equipe_form.is_valid:
+        #    form.save()
+            
+       #     return redirect('team')
+      #  else:
+             
+            
+        
             
 
-            user = form.save(commit=False)
- 
-            user.save()
-
-
-            
-            executant = equipe_form.save(commit=False)
-
+     #       return redirect('team')
            
-            executant.user= user
-
-            executant.save()
-
-
-         
-
-            return redirect('connexion')
-        else:
-          
-            messages.error(request, equipe_form['executant'].errors)
-
-    else:
+    #else :
+        form = LivForm(instance=request.user.userprofile)
         
-        equipe_form = LivForm()
 
-    context = {
         
-        'equipe_form' : equipe_form, 
-        }
-    return render(request, 'hierarchie/equipe.html', context)
+   #     context = {'form' : form }
+   # return render(request, 'hierarchie/equipe.html', context)
 
 
 

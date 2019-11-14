@@ -23,10 +23,15 @@
                     {% csrf_token %}
 
                     <p>
-                        <label for="{{  equipe_form.equipe.id_for_label }}">Equipe:</label>
-                        {{ equipe_form.executant }}
+                      <label for="{{  equipe_form.equipe.id_for_label }}">Equipe:</label>
+                      {{ form.executant }}
 
-                    </p>
+                  </p>
+                  <p>
+                    
+                    {{ user.liv.executant }}
+
+                </p>
         
                     
                     <button class="btn btn-primary" type="submit"> Valider </button>

@@ -44,7 +44,7 @@ urlpatterns = [
     path('modifMdp', profil_views.change_pwd, name='modifMdp'),
     path('userList', profil_views.user_list, name='user_list'),
 
-    path('team', profil_views.userRelation, name='team'),
+    #path('team', profil_views.userRelation, name='team'),
     
     path('user/<int:id>/update/', profil_views.update_user, name='update_user'),
   
