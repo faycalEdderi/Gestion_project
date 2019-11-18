@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import UserProfile, Liv, ChValid
+from .models import UserProfile, Liv
 from django.forms import ModelForm
 
 
@@ -81,19 +81,9 @@ class LivForm(forms.ModelForm):
         model = Liv
         
         fields = (
-           'executant',
-           #'equipe', 
+           'executant', 
             
         )
-#class LivForm(forms.ModelForm):
-#    class Meta : 
-#        model = ChValid
-        
-#        fields = (
-#           'superieur',
-           #'equipe', 
-            
- #       )
 #########################FIN DE CREATION DE COMPTE #####################
 
 #FORM MODIFICATION DE PROFIL ACCESSIBLE PAR TOUS USER 
@@ -118,8 +108,7 @@ class EditProfileForm(forms.ModelForm):
     last_name.widget = forms.TextInput(attrs={'class': 'form-control',})
 
     image = forms.ImageField(
-        required=False,
-        error_messages = {'invalid': "Veuillez selectionner uniquement un fichier de type image" }, 
+        required=False, 
         widget=forms.FileInput,  
          
         )
@@ -175,18 +164,3 @@ class EditProfileUserForm(ModelForm):
             'poste',
             'is_active',
         )
-
-
-
-    
-      
-
-
-
-
-
-
-    
-
-
-
