@@ -73,11 +73,14 @@ class UserProfile(models.Model):
 class Liv(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-   
+    
 
     #equipe = models.ForeignKey("Chvalid", on_delete=models.CASCADE)
-
+   
     executant = models.ManyToManyField('ChValid')
+    
+    
+    
     
 
     def __str__(self):
@@ -90,7 +93,9 @@ class ChValid(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
    
 
-    superieur = models.ManyToManyField(Liv)
+   # superieur = models.ManyToManyField(Liv)
+
+   
 
     def __str__(self):
         return self.user.username

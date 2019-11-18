@@ -108,8 +108,7 @@ class EditProfileForm(forms.ModelForm):
     last_name.widget = forms.TextInput(attrs={'class': 'form-control',})
 
     image = forms.ImageField(
-        required=False,
-        error_messages = {'invalid': "Veuillez selectionner uniquement un fichier de type image" }, 
+        required=False, 
         widget=forms.FileInput,  
          
         )
@@ -165,18 +164,3 @@ class EditProfileUserForm(ModelForm):
             'poste',
             'is_active',
         )
-
-
-
-    
-      
-
-
-
-
-
-
-    
-
-
-

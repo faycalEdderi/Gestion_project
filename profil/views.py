@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from profil.forms import (
     RegistrationForm, 
     EditProfileForm, 
-    EditProfileUserForm, 
+    EditProfileUserForm,  
     LivForm )
-from .models import UserProfile
+from .models import UserProfile ,Liv
 from django.contrib.auth.models import User
 from .forms import UserProfileForm
 from django.contrib.auth.forms import UserCreationForm,  PasswordChangeForm
@@ -22,8 +22,16 @@ from django.contrib.auth import authenticate, login
 
 #@login_required(login_url="connexion")
 def profil(request):
+
+    equipe_list = Liv.objects.all()
+
+    context = {
+        "equipe": equipe_list, 
+    }
+
     
-    return render(request,'accounts/profil.html')
+    
+    return render(request,'accounts/profil.html', context)
 
 #Fonction de connection
 def connexion(request):
@@ -71,13 +79,14 @@ def register(request):
 
         equipe_form = LivForm(request.POST)
 
-        
-      
+        #equipe_name= request.POST['executant']
+        #request.POST['equipe'] = equipe_name      
 
         if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid:
 
             role = request.POST['poste']
             email = request.POST['email']
+            
 
             user = form.save(commit=False)
 
@@ -143,13 +152,13 @@ def register(request):
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
-        form_profile = EditProfileUserForm(request.POST, request.FILES  or None, instance=request.user.userprofile)
+        form_profil = EditProfileUserForm(request.POST, request.FILES  or None, instance=request.user.userprofile)
        
         
-        if form.is_valid() and form_profile.is_valid() :
+        if form.is_valid() and form_profil.is_valid() :
 
             user_form = form.save()
-            custom_form = form_profile.save(False)
+            custom_form = form_profil.save(False)
             custom_form.user = user_form
             custom_form.save()
             return redirect('profil')
@@ -159,16 +168,16 @@ def edit_profile(request):
         
             messages.error(request, form['first_name'].errors)
             messages.error(request, form['last_name'].errors)
-            messages.error(request, form['image'].errors)
+            messages.error(request, form_profil['image'].errors)
 
             return redirect('edit_profile')
            
     else :
         form = EditProfileForm(instance=request.user)
-        form_profile = EditProfileUserForm(instance=request.user.userprofile)
+        form_profil = EditProfileUserForm(instance=request.user.userprofile)
 
         
-        args = {'form' : form, 'form_profile' : form_profile, }
+        args = {'form' : form, 'form_profil' : form_profil, }
 
 
         return render(request, 'accounts/edit_profile.html', args)
@@ -183,9 +192,9 @@ def update_user(request, id=None):
     userUpdate =User.objects.get(id= id)
     
     form = EditProfileForm(request.POST or None, instance=userUpdate) 
-    form_profile = EditProfileUserForm(request.POST or None,request.FILES  or None, instance=userUpdate.userprofile)    
+    form_profil = EditProfileUserForm(request.POST or None,request.FILES  or None, instance=userUpdate.userprofile)    
 
-    if form.is_valid() and form_profile.is_valid()   :
+    if form.is_valid() and form_profil.is_valid()   :
 
         adresse_mail = request.POST['email']
         userUpdate = form.save(commit=False)
@@ -205,9 +214,9 @@ def update_user(request, id=None):
         
         return redirect('user_list')
     else : 
-        messages.error(request, form_profile['image'].errors)
+        messages.error(request, form_profil['image'].errors)
         
-    context ={'form' : form, 'form_profile' : form_profile,}
+    context ={'form' : form, 'form_profil' : form_profil,}
     return render(request, "accounts/edit_profileRT.html", context)
 
 
@@ -271,7 +280,7 @@ def change_pwd(request):
      #       return redirect('team')
            
     #else :
-        form = LivForm(instance=request.user.userprofile)
+        #form = LivForm(instance=request.user.userprofile)
         
 
         
