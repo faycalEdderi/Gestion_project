@@ -23,15 +23,15 @@ from django.contrib.auth import authenticate, login
 #@login_required(login_url="connexion")
 def profil(request):
 
-    #equipe_list = Liv.objects.all()
+    equipe_list = Liv.objects.all()
 
-    #context = {
-    #    "equipe_list": equipe_list, 
-    #}
+    context = {
+        "equipe": equipe_list, 
+    }
 
     
     
-    return render(request,'accounts/profil.html')
+    return render(request,'accounts/profil.html', context)
 
 #Fonction de connection
 def connexion(request):
