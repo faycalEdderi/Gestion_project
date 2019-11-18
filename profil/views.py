@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from profil.forms import (
     RegistrationForm, 
     EditProfileForm, 
-    EditProfileUserForm, 
+    EditProfileUserForm,  
     LivForm )
-from .models import UserProfile
+from .models import UserProfile ,Liv
 from django.contrib.auth.models import User
 from .forms import UserProfileForm
 from django.contrib.auth.forms import UserCreationForm,  PasswordChangeForm
@@ -22,6 +22,14 @@ from django.contrib.auth import authenticate, login
 
 #@login_required(login_url="connexion")
 def profil(request):
+
+    #equipe_list = Liv.objects.all()
+
+    #context = {
+    #    "equipe_list": equipe_list, 
+    #}
+
+    
     
     return render(request,'accounts/profil.html')
 
@@ -71,13 +79,14 @@ def register(request):
 
         equipe_form = LivForm(request.POST)
 
-        
-      
+        #equipe_name= request.POST['executant']
+        #request.POST['equipe'] = equipe_name      
 
         if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid:
 
             role = request.POST['poste']
             email = request.POST['email']
+            
 
             user = form.save(commit=False)
 
@@ -271,7 +280,7 @@ def change_pwd(request):
      #       return redirect('team')
            
     #else :
-        form = LivForm(instance=request.user.userprofile)
+        #form = LivForm(instance=request.user.userprofile)
         
 
         

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import UserProfile, Liv
+from .models import UserProfile, Liv, ChValid
 from django.forms import ModelForm
 
 
@@ -81,9 +81,19 @@ class LivForm(forms.ModelForm):
         model = Liv
         
         fields = (
-           'executant', 
+           'executant',
+           #'equipe', 
             
         )
+#class LivForm(forms.ModelForm):
+#    class Meta : 
+#        model = ChValid
+        
+#        fields = (
+#           'superieur',
+           #'equipe', 
+            
+ #       )
 #########################FIN DE CREATION DE COMPTE #####################
 
 #FORM MODIFICATION DE PROFIL ACCESSIBLE PAR TOUS USER 
