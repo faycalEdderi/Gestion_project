@@ -76,7 +76,11 @@
 
                     <p id="equipe_liv" >
                         <label for="{{  equipe_form.equipe.id_for_label }}">Equipe:</label>
-                        {{ equipe_form.executant }}
+                        {% for equipe in equipe.all %}
+                            {% for q in equipe.user %}
+                             {{ q }}
+                            {% endfor %}
+                        {% endfor %}
 
                     </p> 
         
