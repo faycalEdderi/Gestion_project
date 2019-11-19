@@ -77,6 +77,12 @@ class UserProfileForm(forms.ModelForm):
             
         )
 class LivForm(forms.ModelForm):
+    executant = forms.CharField(
+        required=False,
+         
+         
+        )
+
     class Meta : 
         model = Liv
         
@@ -116,6 +122,7 @@ class EditProfileForm(forms.ModelForm):
         required=True,
         error_messages={'required': 'Veuillez entrer une Adresse Mail'},
         ) 
+    email.widget = forms.TextInput(attrs={'readonly': '',})
 
    
 

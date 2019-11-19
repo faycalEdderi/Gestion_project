@@ -62,22 +62,7 @@
                                 <input type="text" class="form-control" value="{{ user.userprofile.poste | upper  }}" disabled>
                               </div>
                             </div>
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label class="bmd-label-floating">Equipe</label>
-                                {% for equipe in equipe.all %}
-                                  {% for q in equipe.executant.all %}
-
-                                <ul>{{ q }}</ul>
-
-                                  {% endfor %}
-
-                                {% endfor %}
-                                
-                               
-                              
-                              </div>
-                            </div>
+                           
                             
                           </div>
                           <div class="row">

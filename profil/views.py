@@ -77,12 +77,12 @@ def register(request):
         form = RegistrationForm(request.POST)
         profile_form = UserProfileForm(request.POST or None, request.FILES or None)
 
-        equipe_form = LivForm(request.POST)
+        #equipe_form = LivForm(request.POST)
 
         #equipe_name= request.POST['executant']
         #request.POST['equipe'] = equipe_name      
 
-        if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid:
+        if form.is_valid() and profile_form.is_valid() : #and equipe_form.is_valid
 
             role = request.POST['poste']
             email = request.POST['email']
@@ -103,19 +103,19 @@ def register(request):
 
             profile = profile_form.save(commit=False)
 
-            if role == 'liv':
-                profile.role = 'pilote_activite'
-            elif role == 'CH.MIL' or role == 'CH.IS' or role == 'CH.HIL'  : 
-                 profile.role = 'charge_execution'
+            #if role == 'liv':
+            #    profile.role = 'pilote_activite'
+            #elif role == 'CH.MIL' or role == 'CH.IS' or role == 'CH.HIL'  : 
+            #     profile.role = 'charge_execution'
 
             
-            executant = equipe_form.save(commit=False)
+            #executant = equipe_form.save(commit=False)
 
             profile.user = user
-            executant.user= user
+            #executant.user= user
 
             profile.save()
-            executant.save()
+           # executant.save()
 
 
             send_mail(
@@ -137,12 +137,12 @@ def register(request):
     else:
         form = RegistrationForm()
         profile_form = UserProfileForm()
-        equipe_form = LivForm()
+        #equipe_form = LivForm()
 
     context = {
         'form' : form, 
         'profile_form' : profile_form, 
-        'equipe_form' : equipe_form, 
+        #'equipe_form' : equipe_form, 
         }
     return render(request, 'accounts/register.html', context)
 
@@ -238,7 +238,7 @@ def change_pwd(request):
             #envoie email lorsque le mot de passe est modifié
             send_mail(
                 'Votre mot de passe à été modifié',
-                'Le changement de mot de passe a étais effectué avec succès',
+                'Le changement de mot de passe a été effectué avec succès',
                 'Admin@expleogroup.com',
                 [adresse_mail],
                 fail_silently=False,
