@@ -77,7 +77,7 @@ class Liv(models.Model):
 
     #equipe = models.ForeignKey("Chvalid", on_delete=models.CASCADE)
    
-    executant = models.ManyToManyField('ChValid')
+    executant = models.ManyToManyField('ChValid', blank=True)
     
     
     

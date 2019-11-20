@@ -77,15 +77,16 @@ def register(request):
         form = RegistrationForm(request.POST)
         profile_form = UserProfileForm(request.POST or None, request.FILES or None)
 
-        #equipe_form = LivForm(request.POST)
+        equipe_form = LivForm(request.POST)
 
         #equipe_name= request.POST['executant']
         #request.POST['equipe'] = equipe_name      
 
-        if form.is_valid() and profile_form.is_valid() : #and equipe_form.is_valid
+        if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid : 
 
             role = request.POST['poste']
             email = request.POST['email']
+            executant =  request.POST['executant']
             
 
             user = form.save(commit=False)
@@ -103,19 +104,24 @@ def register(request):
 
             profile = profile_form.save(commit=False)
 
-            #if role == 'liv':
-            #    profile.role = 'pilote_activite'
-            #elif role == 'CH.MIL' or role == 'CH.IS' or role == 'CH.HIL'  : 
-            #     profile.role = 'charge_execution'
+            if role == 'liv':
+                profile.role = 'pilote_activite'
+            elif role == 'CH.MIL' or role == 'CH.IS' or role == 'CH.HIL'  : 
+                 profile.role = 'charge_execution'
 
             
-            #executant = equipe_form.save(commit=False)
+            responsable = equipe_form.save(commit=False)
 
             profile.user = user
-            #executant.user= user
+            responsable.user= user
 
             profile.save()
-           # executant.save()
+            responsable.save()
+
+            
+            responsable.executant.add(executant)
+            
+
 
 
             send_mail(
@@ -137,12 +143,12 @@ def register(request):
     else:
         form = RegistrationForm()
         profile_form = UserProfileForm()
-        #equipe_form = LivForm()
+        equipe_form = LivForm()
 
     context = {
         'form' : form, 
         'profile_form' : profile_form, 
-        #'equipe_form' : equipe_form, 
+        'equipe_form' : equipe_form, 
         }
     return render(request, 'accounts/register.html', context)
 
@@ -156,6 +162,10 @@ def edit_profile(request):
        
         
         if form.is_valid() and form_profil.is_valid() :
+
+            ## ATTRIBUTION DU USERNAME SI MODIFICATION
+            user = form.save(commit=False)
+            user.username = request.POST['last_name'] + '_' +  request.POST['first_name']
 
             user_form = form.save()
             custom_form = form_profil.save(False)
@@ -194,7 +204,11 @@ def update_user(request, id=None):
     form = EditProfileForm(request.POST or None, instance=userUpdate) 
     form_profil = EditProfileUserForm(request.POST or None,request.FILES  or None, instance=userUpdate.userprofile)    
 
-    if form.is_valid() and form_profil.is_valid()   :
+    if form.is_valid() and form_profil.is_valid():
+
+        ## ATTRIBUTION DU USERNAME SI MODIFICATION
+        user = form.save(commit=False)
+        user.username = request.POST['last_name'] + '_' +  request.POST['first_name']
 
         adresse_mail = request.POST['email']
         userUpdate = form.save(commit=False)
