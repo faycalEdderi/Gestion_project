@@ -1,0 +1,52 @@
+.expleoColorB {
+    background-color: #6846c6
+}  
+.expleoColorT {
+    color: #6846c6
+} 
+
+
+.profile_test{
+
+box-shadow: none;
+}
+
+
+
+
+/*STYLE PROGRESSE BAR AVANCEMENT LIV*/
+
+.ui-progressbar {
+    position: relative;
+    color:#362878;
+    width:650px;
+
+}
+  .progress-label {
+    position: absolute;
+    text-align: center;
+    width : 100%;
+    
+    top: 4px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+    margin : 0 auto;
+  }
+
+.ui-widget-header {
+  border: 1px solid #E8D1CF;
+
+  font-weight: bold;
+  margin-left:-40px;
+  
+  
+}
+
+
+/**************************************************/
+
+
+/* Page création de compte */
+
+
+
