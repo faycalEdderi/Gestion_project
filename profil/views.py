@@ -4,7 +4,7 @@ from profil.forms import (
     EditProfileForm, 
     EditProfileUserForm,  
     LivForm )
-from .models import UserProfile ,Liv
+from .models import UserProfile, Liv, ChValid
 from django.contrib.auth.models import User
 from .forms import UserProfileForm
 from django.contrib.auth.forms import UserCreationForm,  PasswordChangeForm
@@ -17,13 +17,24 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 
 
+"""
+Multi-ligne commentaire
 
+"""
 #Affichage des information de l'utilisateur connecté 
 
 #@login_required(login_url="connexion")
 def profil(request):
 
-    equipe_list = Liv.objects.all()
+    equipe_list =  Liv.objects.all().prefetch_related('executant')
+
+
+
+    #equipe_list = Liv.objects.filter(user_id=user_id).order_by('id')
+
+
+    #liv = Liv.objects.all
+    #equipe_list = ChValid.objects.filter(liv__in=[liv])
 
     context = {
         "equipe": equipe_list, 
@@ -95,7 +106,11 @@ def register(request):
             user.username = request.POST['last_name'] + '_' +  request.POST['first_name']
 
             #Genere un mot de passe automatiquement
-            password = User.objects.make_random_password(length=9) 
+#############RETIRER LE COMMENTAIRE SI DESSOUS######################################################
+            #password = User.objects.make_random_password(length=9) 
+#############LE MEME MDP POUR TOUS LES COMPTE POUR FACILITER LE DEVELOPPEMENT######################
+            password = 'motdepass78'
+## !!!! SUPPRIMER LE MOT DE PASSE SI DESSUS !!!!! #######
             user.set_password(password)
 
             user.save()
@@ -118,7 +133,8 @@ def register(request):
             profile.save()
             responsable.save()
 
-            
+            #Ajoute un executant a un responsable 
+            #permet de lier duex profil dès la création d'un nouveau profil
             responsable.executant.add(executant)
             
 

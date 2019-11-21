@@ -14,3 +14,16 @@
     
     </div>
   </div>
+
+
+
+{% for equipe in equipe.all %}
+                                
+{{ equipe.user }}
+  {% for q in equipe.executant.all %}
+
+<ul>{{ q }}</ul>
+
+  {% endfor %}
+
+{% endfor %}
