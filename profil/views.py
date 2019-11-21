@@ -29,13 +29,6 @@ def profil(request):
     equipe_list =  Liv.objects.all().prefetch_related('executant')
 
 
-
-    #equipe_list = Liv.objects.filter(user_id=user_id).order_by('id')
-
-
-    #liv = Liv.objects.all
-    #equipe_list = ChValid.objects.filter(liv__in=[liv])
-
     context = {
         "equipe": equipe_list, 
     }
@@ -97,7 +90,12 @@ def register(request):
 
             role = request.POST['poste']
             email = request.POST['email']
-            executant =  request.POST['executant']
+
+            if 'executant' in request.POST:
+            #cette condition verifie qu'un champ executant est saisi lors de l'inscription
+            
+                executant =  request.POST['executant']
+                
             
 
             user = form.save(commit=False)
@@ -133,9 +131,12 @@ def register(request):
             profile.save()
             responsable.save()
 
+            if 'executant' in request.POST:
             #Ajoute un executant a un responsable 
             #permet de lier duex profil dès la création d'un nouveau profil
-            responsable.executant.add(executant)
+                responsable.executant.add(executant)
+
+            
             
 
 

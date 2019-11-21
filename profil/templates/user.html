@@ -80,12 +80,13 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               <label class="bmd-label-floating">Equipe</label>
-
+                              <ul>
                               {% for executant in  user.liv.executant.all  %}
 
-                              {{executant}}
+                                <li>{{executant}}</li>
 
                               {% endfor %}
+                              </ul>
 
                               
 
