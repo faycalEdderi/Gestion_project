@@ -95,7 +95,7 @@ class ChValidForm(forms.ModelForm):
         model = ChValid
         fields =(
             
-            'user', 
+            'responsable', 
         )
             
 #########################FIN DE CREATION DE COMPTE #####################

@@ -75,9 +75,9 @@ class Liv(models.Model):
 
     
 
-    #equipe = models.ForeignKey("Chvalid", on_delete=models.CASCADE)
+    #equipe = models.ForeignKey("Chvalid", on_delete=models.SET_NULL)
    
-    executant = models.ManyToManyField('ChValid', blank=True)
+    executant = models.ManyToManyField('ChValid', blank=True,)
     
     
     
@@ -94,6 +94,10 @@ class ChValid(models.Model):
    
 
    # superieur = models.ManyToManyField(Liv)
+
+    responsable = models.ForeignKey(Liv, null=True, blank=True,  on_delete=models.CASCADE)
+
+    
 
    
 

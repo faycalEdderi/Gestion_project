@@ -3,7 +3,8 @@ from profil.forms import (
     RegistrationForm, 
     EditProfileForm, 
     EditProfileUserForm,  
-    LivForm )
+    LivForm, 
+    ChValidForm )
 from .models import UserProfile, Liv, ChValid
 from django.contrib.auth.models import User
 from .forms import UserProfileForm
@@ -83,10 +84,12 @@ def register(request):
 
         equipe_form = LivForm(request.POST)
 
-        #equipe_name= request.POST['executant']
-        #request.POST['equipe'] = equipe_name      
+        ajout_responsable_form = ChValidForm(request.POST)
+        
 
-        if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid : 
+            
+
+        if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid and ajout_responsable_form.is_valid: 
 
             role = request.POST['poste']
             email = request.POST['email']
@@ -95,6 +98,11 @@ def register(request):
             #cette condition verifie qu'un champ executant est saisi lors de l'inscription
             
                 executant =  request.POST['executant']
+            
+            if 'responsable' in request.POST:
+                responsable = request.POST['responsable']
+            
+            
                 
             
 
@@ -104,11 +112,11 @@ def register(request):
             user.username = request.POST['last_name'] + '_' +  request.POST['first_name']
 
             #Genere un mot de passe automatiquement
-#############RETIRER LE COMMENTAIRE SI DESSOUS######################################################
+#############RETIRER LE COMMENTAIRE CI DESSOUS######################################################
             #password = User.objects.make_random_password(length=9) 
 #############LE MEME MDP POUR TOUS LES COMPTE POUR FACILITER LE DEVELOPPEMENT######################
             password = 'motdepass78'
-## !!!! SUPPRIMER LE MOT DE PASSE SI DESSUS !!!!! #######
+## !!!! SUPPRIMER LE MOT DE PASSE CI DESSUS !!!!! #######
             user.set_password(password)
 
             user.save()
@@ -119,22 +127,35 @@ def register(request):
 
             if role == 'liv':
                 profile.role = 'pilote_activite'
+            
+            
             elif role == 'CH.MIL' or role == 'CH.IS' or role == 'CH.HIL'  : 
                  profile.role = 'charge_execution'
 
-            
-            responsable = equipe_form.save(commit=False)
-
             profile.user = user
-            responsable.user= user
-
+ 
             profile.save()
-            responsable.save()
+            
+            
 
             if 'executant' in request.POST:
+                add_executant = equipe_form.save(commit=False)
+                add_executant.user= user
+
+                add_executant.save()
             #Ajoute un executant a un responsable 
             #permet de lier duex profil dès la création d'un nouveau profil
-                responsable.executant.add(executant)
+                add_executant.executant.add(executant)
+            
+            if 'responsable' in request.POST:
+                add_responsable = ajout_responsable_form.save(commit=False)
+                add_responsable.user= user
+
+                add_responsable.save()
+            #Ajoute un executant a un responsable 
+            #permet de lier duex profil dès la création d'un nouveau profil
+                #add_responsable.responsable.add(responsable)
+            
 
             
             
@@ -161,11 +182,15 @@ def register(request):
         form = RegistrationForm()
         profile_form = UserProfileForm()
         equipe_form = LivForm()
+        ajout_responsable_form = ChValidForm()
+        
 
     context = {
         'form' : form, 
         'profile_form' : profile_form, 
-        'equipe_form' : equipe_form, 
+        'equipe_form' : equipe_form,
+        'responsable_form': ajout_responsable_form,
+        
         }
     return render(request, 'accounts/register.html', context)
 
