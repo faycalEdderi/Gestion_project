@@ -106,14 +106,12 @@ def register(request):
                 
 
 
-            """
-                if 'executant' not in request.POST:
-                    executant = 
+            
             
             if 'responsable' in request.POST:
                 responsable = request.POST['responsable']
             #return HttpResponse(str(responsable))
-            """
+            
             
         
             
@@ -153,22 +151,24 @@ def register(request):
             
             
 
-            #if poste == 'liv':
-            add_executant = equipe_form.save(commit=False)
-            add_executant.user= user
+            if poste == 'liv':
+                add_executant = equipe_form.save(commit=False)
+                add_executant.user= user
 
-            add_executant.save()
+                add_executant.save()
         #Ajoute un executant a un responsable 
         #permet de lier deux profil dès la création d'un nouveau profil
             if 'executant' in request.POST:
                 add_executant.executant.add(executant)
-                
-            """ 
-           if responsable is not None:
+
+            if poste == 'ch.MIL':
+            #Verifie si l'utilisateur ajouté est un chargé executant
+            #Puis ajoute l'utilisateur 
                 add_responsable = ajout_responsable_form.save(commit=False)
                 add_responsable.user= user
 
-                add_responsable.save() """
+                add_responsable.save() 
+            
                    
 
             send_mail(
