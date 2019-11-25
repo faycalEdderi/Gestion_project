@@ -16,6 +16,7 @@ import random
 from django.core.mail import send_mail
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
 
 
 """
@@ -93,14 +94,28 @@ def register(request):
 
             role = request.POST['poste']
             email = request.POST['email']
+            poste = request.POST['poste']
+            
 
+            
             if 'executant' in request.POST:
             #cette condition verifie qu'un champ executant est saisi lors de l'inscription
-            
                 executant =  request.POST['executant']
+
+            
+                
+
+
+            """
+                if 'executant' not in request.POST:
+                    executant = 
             
             if 'responsable' in request.POST:
                 responsable = request.POST['responsable']
+            #return HttpResponse(str(responsable))
+            """
+            
+        
             
             
                 
@@ -138,29 +153,23 @@ def register(request):
             
             
 
-            if 'executant' in request.POST:
-                add_executant = equipe_form.save(commit=False)
-                add_executant.user= user
+            #if poste == 'liv':
+            add_executant = equipe_form.save(commit=False)
+            add_executant.user= user
 
-                add_executant.save()
-            #Ajoute un executant a un responsable 
-            #permet de lier duex profil dès la création d'un nouveau profil
+            add_executant.save()
+        #Ajoute un executant a un responsable 
+        #permet de lier deux profil dès la création d'un nouveau profil
+            if 'executant' in request.POST:
                 add_executant.executant.add(executant)
-            
-            if 'responsable' in request.POST:
+                
+            """ 
+           if responsable is not None:
                 add_responsable = ajout_responsable_form.save(commit=False)
                 add_responsable.user= user
 
-                add_responsable.save()
-            #Ajoute un executant a un responsable 
-            #permet de lier duex profil dès la création d'un nouveau profil
-                #add_responsable.responsable.add(responsable)
-            
-
-            
-            
-
-
+                add_responsable.save() """
+                   
 
             send_mail(
                 'Votre compte a été créé',
@@ -193,6 +202,7 @@ def register(request):
         
         }
     return render(request, 'accounts/register.html', context)
+    
 
 
     
