@@ -109,7 +109,17 @@ def register(request):
             
             
             if 'responsable' in request.POST:
-                responsable = request.POST['responsable']
+                recup_respo = request.POST.get('responsable')
+
+                
+                
+
+                if recup_respo != '':
+                    responsable = User.objects.get(liv = recup_respo)
+
+                
+
+
             #return HttpResponse(str(responsable))
             
             
@@ -161,13 +171,24 @@ def register(request):
             if 'executant' in request.POST:
                 add_executant.executant.add(executant)
 
-            if poste == 'ch.MIL':
+            if poste == 'ch.MIL' or poste == 'ch.HIL' or poste == 'ch.IS' :
             #Verifie si l'utilisateur ajouté est un chargé executant
-            #Puis ajoute l'utilisateur 
+            #Puis ajoute l'utilisateur en tant que chargé executant
+            #si il a un responsable dès la création de son compte il est lié a ce responsable
                 add_responsable = ajout_responsable_form.save(commit=False)
                 add_responsable.user= user
 
                 add_responsable.save() 
+
+                if recup_respo != '':
+                #SI on choisit un responsable lors de la création du profil du ch d'execution
+                #Permet de lier responsable et chargé executant ensemble 
+                
+                    responsable.liv.executant.add(add_responsable)
+
+                
+                
+
             
                    
 
@@ -321,37 +342,27 @@ def change_pwd(request):
 
 
 
-#def userRelation(request):
+
+def debug(request):
+
+    respObj = ChValid.objects.first()
+   # responsable = respObj.liv.get(id=19)
+
+    
+    #responsable = respObj.liv.all()
+
+    responsable = User.objects.get(liv = 19)
 
     
 
-    #if request.method == 'POST':
-       # form = LivForm(request.POST, instance=request.user)
-       
 
-       
-       
-        
-        #if form.is_valid()  :
 
-        #    form.save()
-            
-       #     return redirect('team')
-      #  else:
-             
-            
-        
-            
+    context = {
+        "affiche": responsable, 
+    }
 
-     #       return redirect('team')
-           
-    #else :
-        #form = LivForm(instance=request.user.userprofile)
-        
-
-        
-   #     context = {'form' : form }
-   # return render(request, 'hierarchie/equipe.html', context)
-
+    
+    
+    return render(request,'accounts/debug.html', context)
 
 
