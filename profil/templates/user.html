@@ -14,10 +14,10 @@
                   
                 </div>
                     <div class="card card-profile profile_test">
-                      <div class="card-avatar">
+                      <div class="card-avatar rounded-circle">
                         <a href="#">
                         {% if user.userprofile.image %}
-                          <img class="img-fluid"  src="{{ user.userprofile.image.url }}" alt="photo de profile" >
+                          <img class="img-fluid rounded-circle"  src="{{ user.userprofile.image.url }}" alt="photo de profile" >
                           {% else %}
                           <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" alt="photo de profile par défaut">
                         {% endif %}
