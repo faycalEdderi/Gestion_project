@@ -19,11 +19,12 @@ from django.conf.urls.static import static
 
 
 from profil import views as profil_views
+from uos import views as uos_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.uo),
-    
+    path('uoslist', uos_views.uo_list, name='uoslist'),
     path('diagramme', views.diagramme),
     path('pointages', views.pointages, name='pointages'),
     path('uo', views.uo, name="uo"),
