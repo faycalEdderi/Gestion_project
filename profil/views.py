@@ -19,6 +19,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 
 
+
 """
 Multi-ligne commentaire
 
@@ -102,12 +103,7 @@ def register(request):
             #cette condition verifie qu'un champ executant est saisi lors de l'inscription
                 executant =  request.POST['executant']
 
-            
-                
-
-
-            
-            
+            #cette condition verifie qu'un champ responsable est saisi lors de l'inscription
             if 'responsable' in request.POST:
                 recup_respo = request.POST.get('responsable')
 
@@ -122,12 +118,7 @@ def register(request):
 
             #return HttpResponse(str(responsable))
             
-            
-        
-            
-            
-                
-            
+  
 
             user = form.save(commit=False)
 
@@ -186,12 +177,7 @@ def register(request):
                 
                     responsable.liv.executant.add(add_responsable)
 
-                
-                
-
-            
-                   
-
+     
             send_mail(
                 'Votre compte a été créé',
                 'Votre mdp : ' +  password,
@@ -199,8 +185,10 @@ def register(request):
                 [email],
                 fail_silently=False,
             )
-
-            return redirect('connexion')
+            
+            messages.add_message(request, messages.INFO, 'Le compte a été créer avec succès, un mail avec les informations de connexion à été envoyé a l\'adresse indiqué')
+           
+            return redirect('register')
         else:
             messages.error(request, form['first_name'].errors)
             messages.error(request, form['last_name'].errors)
@@ -298,6 +286,7 @@ def update_user(request, id=None):
                 [adresse_mail],
                 fail_silently=False,
             )
+        
         
         return redirect('user_list')
     else : 

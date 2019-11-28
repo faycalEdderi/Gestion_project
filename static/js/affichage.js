@@ -58,6 +58,14 @@ $().ready(function() {
     });
 
 
+// suppression de l'alerte après 3 secondes
+// durée en millisecondes
+window.setTimeout( () => $('.alert').fadeOut('slow'), 3000 );
+
+
+alert('toast');
+
+
 
     
     

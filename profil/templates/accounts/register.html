@@ -16,8 +16,17 @@
               
 
                 <div class="card-body">
-                    <!--Inclus les messages d'erreurs-->
-                    {% include 'error_message.html' %}
+                    <!--Afficher les messages d'erreurs-->
+    
+                    {% for message in messages %}
+                    <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+
+                        <p class="text-center" >{{ message }}</p> 
+                        
+
+                    </div>
+                    {% endfor %}
 
                     <form method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
@@ -114,19 +123,3 @@
 
 
 
-
-<!-- 
-
-<p>Registration form</p>
-
-{% block body %}
-<div class="container">
-    <h1>Register</h1>
-    <form method="post" enctype='multipart/form-data'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        {{ profile_form.as_p }}
-        <button type="submit"> Submit </button>
-    </form>
-</div>
-{% endblock %}-->

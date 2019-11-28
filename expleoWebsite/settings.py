@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'django_cleanup.apps.CleanupConfig',
+    'django_cleanup.apps.CleanupConfig', #Les anciennes images sont supprimés automatiquement 
 ]
 
 MIDDLEWARE = [
