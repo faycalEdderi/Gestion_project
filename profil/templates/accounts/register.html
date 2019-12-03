@@ -84,15 +84,26 @@
                     </p>
 
                     <p id="equipe_liv" >
+                        <label for="{{ equipe_form.rt_liv.id_for_label }}">Lier ce compte a un RT :</label>
+                    
+                        {{equipe_form.rt_liv}}
+
+                        <br/>
+                        
                         <label for="{{  equipe_form.equipe.id_for_label }}">Equipe:</label>
                         
                         {{equipe_form.executant}}
+
+                        
+
+                        
                         
                         
                     </p> 
+                  
 
-                    <p id="equipe_responsable" >
-                        <label for="{{  equipe_form.equipe.id_for_label }}">Ajouter un responsable:</label>
+                    <p id="equipe_responsable"  >
+                        <label for="{{  responsable_form.responsable.id_for_label }}">Ajouter un responsable:</label>
                         
                         {{responsable_form.responsable}}
                         

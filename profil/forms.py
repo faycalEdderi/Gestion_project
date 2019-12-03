@@ -1,7 +1,12 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import UserProfile, Liv, ChValid
+from .models import (
+    UserProfile,
+    Liv,
+    ChValid, 
+    Rt,
+ ) 
 from django.forms import ModelForm
 
 
@@ -76,6 +81,8 @@ class UserProfileForm(forms.ModelForm):
             'image'
             
         )
+
+       
 class LivForm(forms.ModelForm):
    
 
@@ -84,6 +91,7 @@ class LivForm(forms.ModelForm):
         
         fields = (
            'executant', 
+           'rt_liv', 
             
         )
 
@@ -95,7 +103,8 @@ class ChValidForm(forms.ModelForm):
         model = ChValid
         fields =(
             
-            'responsable', 
+            'responsable',
+             
         )
             
 #########################FIN DE CREATION DE COMPTE #####################

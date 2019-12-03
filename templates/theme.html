@@ -151,6 +151,8 @@
 <!-- Librairie JQuery UI-->
 <script src="{% static 'js/plugins/jquery-ui.min.js' %}"></script>
 
+<script src="{% static 'js/affichage.js' %}" type="text/javascript"></script>
+
 <!-- Plugin for the momentJs  -->
 <script src="{% static 'js/plugins/moment.min.js' %}"></script>
 <!--  Plugin for Sweet Alert -->
@@ -187,7 +189,7 @@
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="{% static 'js/material-dashboard.js' %}" type="text/javascript"></script>
 
-<script src="{% static 'js/affichage.js' %}" type="text/javascript"></script>
+
 
 
   
@@ -199,6 +201,8 @@
     $( "input" ).addClass( "form-control" );
     $('th').addClass("text-center");
     $('td').addClass("text-center");
+
+    
     
 //Dispartion des messages au bout de 5 seconde :
     window.setTimeout( () => $('.alert').fadeOut('slow'), 5000 );
@@ -444,6 +448,8 @@
     
   });
 </script>
+
+
 
    
   

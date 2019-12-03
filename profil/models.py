@@ -67,7 +67,15 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+class Rt(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+   
+    
+    
+    
 
+    def __str__(self):
+        return self.user.username
     
 
 class Liv(models.Model):
@@ -78,6 +86,8 @@ class Liv(models.Model):
     #equipe = models.ForeignKey("Chvalid", on_delete=models.SET_NULL)
    
     executant = models.ManyToManyField('ChValid', blank=True, related_name='liv')
+
+    rt_liv = models.ForeignKey(Rt, null=True, blank=True,  on_delete=models.CASCADE)
     
     
     
@@ -96,6 +106,8 @@ class ChValid(models.Model):
    # superieur = models.ManyToManyField(Liv)
 
     responsable = models.ForeignKey(Liv, null=True, blank=True,  on_delete=models.CASCADE)
+
+    
 
     
 

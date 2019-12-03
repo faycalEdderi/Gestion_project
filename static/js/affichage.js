@@ -5,7 +5,8 @@ $().ready(function() {
     $("#equipe_liv").hide();
     $("#equipe_responsable").hide();
     
-/* Lorque le champs select du poste est modifié une liste de poste s'affiche
+/* Page de création de compte : 
+ * Lorque le champs select du poste est modifié une liste de poste s'affiche
  * en fonction de la valeur
  */
     $("#id_poste").change(function(){
@@ -63,7 +64,6 @@ $().ready(function() {
 window.setTimeout( () => $('.alert').fadeOut('slow'), 3000 );
 
 
-alert('toast');
 
 
 

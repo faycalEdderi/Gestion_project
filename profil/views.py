@@ -30,10 +30,12 @@ Multi-ligne commentaire
 def profil(request):
 
     equipe_list =  Liv.objects.all().prefetch_related('executant')
+    
 
 
     context = {
         "equipe": equipe_list, 
+        
     }
 
     
@@ -102,13 +104,18 @@ def register(request):
             if 'executant' in request.POST:
             #cette condition verifie qu'un champ executant est saisi lors de l'inscription
                 executant =  request.POST['executant']
+               
+                recup_exec = request.POST.get('executant')
+                
+           # return HttpResponse(str(executant))
+                if recup_exec != '':
+                    recup_user_exec = ChValid.objects.get( id = recup_exec)
+                #return HttpResponse(str(recup_user_exec))
+                
 
             #cette condition verifie qu'un champ responsable est saisi lors de l'inscription
             if 'responsable' in request.POST:
                 recup_respo = request.POST.get('responsable')
-
-                
-                
 
                 if recup_respo != '':
                     responsable = User.objects.get(liv = recup_respo)
@@ -162,10 +169,20 @@ def register(request):
             if 'executant' in request.POST:
                 add_executant.executant.add(executant)
 
+                if recup_exec != '':
+                   
+
+                    recup_user_exec.responsable = add_executant
+                    recup_user_exec.save()
+                    
+                    #return HttpResponse(str( recup_user_exec.responsable))
+                
+                
+
             if poste == 'ch.MIL' or poste == 'ch.HIL' or poste == 'ch.IS' :
             #Verifie si l'utilisateur ajouté est un chargé executant
             #Puis ajoute l'utilisateur en tant que chargé executant
-            #si il a un responsable dès la création de son compte il est lié a ce responsable
+            #s'il a un responsable dès la création de son compte il est lié a ce responsable
                 add_responsable = ajout_responsable_form.save(commit=False)
                 add_responsable.user= user
 

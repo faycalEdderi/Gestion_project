@@ -96,6 +96,50 @@
                             
                             </div>
                           </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Responsable : </label>
+                              <ul>
+                              
+
+                                <li>{{user.chvalid.responsable}}</li>
+
+                              
+                              </ul>
+
+                              
+
+                              
+                              
+                             
+                            
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="bmd-label-floating">Responsable : </label>
+                                <ul>
+                                
+  
+                                    {% for liv in  user.rt_liv.all  %}
+
+                                    <li>{{liv}}</li>
+    
+                                  {% endfor %}
+
+                                  
+  
+                                
+                                </ul>
+  
+                                
+  
+                                
+                                
+                               
+                              
+                              </div>
+                            </div>
                               
                           
                     
