@@ -279,19 +279,57 @@ def update_user(request, id=None):
     
     userUpdate =User.objects.get(id= id)
     
+    livUserUpdate = Liv.objects.get(user_id=id)
+    
     form = EditProfileForm(request.POST or None, instance=userUpdate) 
-    form_profil = EditProfileUserForm(request.POST or None,request.FILES  or None, instance=userUpdate.userprofile)    
+    form_profil = EditProfileUserForm(request.POST or None,request.FILES  or None, instance=userUpdate.userprofile) 
 
-    if form.is_valid() and form_profil.is_valid():
+    equipe_form = LivForm(request.POST or None, instance = userUpdate.liv)
+
+    #ajout_responsable_form = ChValidForm(request.POST)   
+
+    if form.is_valid() and form_profil.is_valid() and equipe_form.is_valid :
 
         ## ATTRIBUTION DU USERNAME SI MODIFICATION
         user = form.save(commit=False)
         user.username = request.POST['last_name'] + '_' +  request.POST['first_name']
+        
+        
+       
 
+        
+        
+
+        
+        
+        
+        execut = livUserUpdate.executant.all()
+        print("relation supprimé avec : ")
+        print(execut)
+        for executant in execut : 
+            livUserUpdate.executant.remove(executant)
+
+        #livUserUpdate.executant.remove(execut)
+        #Suppression des liens entre ch execution et pilote
         adresse_mail = request.POST['email']
         userUpdate = form.save(commit=False)
 
         userUpdate.userprofile.save()
+        
+        
+        list_add_executant = request.POST.getlist('executant')
+        
+        for add_execut in list_add_executant:
+            print("ajout de reltion avec : ")
+            print(add_execut)
+            
+            
+            livUserUpdate.executant.add(add_execut)
+
+        
+        
+        
+        
         userUpdate.save()
         #SI L'UTILLISATEUR NE S'EST JAMAIS CONNECTÉ UN MAIL EST ENVOYÉ
         #METTRE CETTE CONDITION LORS DE LA MODIFICATION DE MDP PAR SUPERIEUR EN CAS D'ERREUR
@@ -304,12 +342,16 @@ def update_user(request, id=None):
                 fail_silently=False,
             )
         
-        
+        #return HttpResponse(str( recup_user_exec ))
         return redirect('user_list')
     else : 
         messages.error(request, form_profil['image'].errors)
         
-    context ={'form' : form, 'form_profil' : form_profil,}
+    context ={
+        'form' : form,
+        'form_profil' : form_profil,
+        'equipe_form_liv' : equipe_form,
+        }
     return render(request, "accounts/edit_profileRT.html", context)
 
 
@@ -356,6 +398,7 @@ def debug(request):
 
     
     #responsable = respObj.liv.all()
+    
 
     responsable = User.objects.get(liv = 19)
 
