@@ -21,7 +21,9 @@ from django.http import HttpResponse
 
 
 """
-Multi-ligne commentaire
+Multi-ligne commentaire avec 3 guillemets
+
+Les prints renvoient des informations dans l'invit de commande du serveur
 
 """
 #Affichage des information de l'utilisateur connecté 
@@ -108,8 +110,8 @@ def register(request):
                 recup_exec = request.POST.get('executant')
                 
            # return HttpResponse(str(executant))
-                if recup_exec != '':
-                    recup_user_exec = ChValid.objects.get( id = recup_exec)
+               # if recup_exec != '':
+                #    recup_user_exec = ChValid.objects.get( id = recup_exec)
                 #return HttpResponse(str(recup_user_exec))
                 
 
@@ -167,15 +169,26 @@ def register(request):
         #Ajoute un executant a un responsable 
         #permet de lier deux profil dès la création d'un nouveau profil
             if 'executant' in request.POST:
-                add_executant.executant.add(executant)
+
+                list_add_executant = request.POST.getlist('executant')
+                #Ajout des nouveaux liens entre ch execuction et pilote
+                for add_execut in list_add_executant:
+                    print("ajout de relation avec : ")
+                    print(add_execut)
+            
+            
+                    add_executant.executant.add(add_execut)
 
                 if recup_exec != '':
-                   
-
-                    recup_user_exec.responsable = add_executant
-                    recup_user_exec.save()
+                    list_add_executant = request.POST.getlist('executant')
+                    for add_execut in list_add_executant:
+                        recup_user_exec = ChValid.objects.get( id = add_execut)
+                        print("Ajout du liv a : ")
+                        print(recup_user_exec)
+                        recup_user_exec.responsable = add_executant
+                        recup_user_exec.save()
                     
-                    #return HttpResponse(str( recup_user_exec.responsable))
+                    #return HttpResponse(str( "hello world"))
                 
                 
 
@@ -279,38 +292,35 @@ def update_user(request, id=None):
     
     userUpdate =User.objects.get(id= id)
     
-    livUserUpdate = Liv.objects.get(user_id=id)
+    poste = userUpdate.userprofile.poste
+
+    if poste == 'liv':
+        livUserUpdate = Liv.objects.get(user_id=id)
+        #METTRE UNE CONDITION ICI EN FONCTION DU POSTE LIV CH ETC et CHANGER DE FORM
+        equipe_form = LivForm(request.POST or None, instance = userUpdate.liv)
     
     form = EditProfileForm(request.POST or None, instance=userUpdate) 
     form_profil = EditProfileUserForm(request.POST or None,request.FILES  or None, instance=userUpdate.userprofile) 
 
-    equipe_form = LivForm(request.POST or None, instance = userUpdate.liv)
+    
 
     #ajout_responsable_form = ChValidForm(request.POST)   
 
-    if form.is_valid() and form_profil.is_valid() and equipe_form.is_valid :
+    if form.is_valid() and form_profil.is_valid() :
 
         ## ATTRIBUTION DU USERNAME SI MODIFICATION
         user = form.save(commit=False)
         user.username = request.POST['last_name'] + '_' +  request.POST['first_name']
         
-        
-       
-
-        
-        
-
-        
-        
-        
+        #Suppression des liens entre ch execution et pilote
         execut = livUserUpdate.executant.all()
         print("relation supprimé avec : ")
         print(execut)
         for executant in execut : 
             livUserUpdate.executant.remove(executant)
 
-        #livUserUpdate.executant.remove(execut)
-        #Suppression des liens entre ch execution et pilote
+        
+        
         adresse_mail = request.POST['email']
         userUpdate = form.save(commit=False)
 
@@ -318,9 +328,9 @@ def update_user(request, id=None):
         
         
         list_add_executant = request.POST.getlist('executant')
-        
+        #Ajout des nouveaux liens entre ch execuction et pilote
         for add_execut in list_add_executant:
-            print("ajout de reltion avec : ")
+            print("ajout de relation avec : ")
             print(add_execut)
             
             
@@ -346,12 +356,19 @@ def update_user(request, id=None):
         return redirect('user_list')
     else : 
         messages.error(request, form_profil['image'].errors)
-        
-    context ={
-        'form' : form,
-        'form_profil' : form_profil,
-        'equipe_form_liv' : equipe_form,
-        }
+    if poste == 'liv':   #ECHANGER CETTE CONDITION CONTRE UNE VARIABLE POUR equipe_form
+        context ={
+            'form' : form,
+            'form_profil' : form_profil,
+            'equipe_form_liv' : equipe_form,
+            }
+    else: 
+        context ={
+            'form' : form,
+            'form_profil' : form_profil,
+            
+            }
+
     return render(request, "accounts/edit_profileRT.html", context)
 
 
