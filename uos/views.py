@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db import models
-from uos.models import  uo
+from uos.models import  Uo
 
 
 def choix(objectmodel):
@@ -9,8 +9,10 @@ def choix(objectmodel):
     
 # Create your views here.
 def uo_list(request):
-    uoListe= uo.objects.all()
+    uoListe= Uo.objects.all()
     context = {
-        "uo": uoListe,
+        "Uo": uoListe,
     }
     return render(request, "TableUos.html", context)
+
+

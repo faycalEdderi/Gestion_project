@@ -1,13 +1,17 @@
 from django.contrib import admin
-from .models import uo , typeuo , niveauuo ,etatuo,fonction, projet, statutuo,UET , plateforme
+from .models import Uo, Typeuo , Niveauuo ,Etatuo,Fonction, Projet, Statutuo,Uet , Plateforme ,WorkPackage,Perimetre,CatalogueUo , Pointage 
 
 # Register your models here.
-admin.site.register(uo)
-admin.site.register(typeuo)
-admin.site.register(niveauuo)
-admin.site.register(etatuo)
-admin.site.register(fonction)
-admin.site.register(plateforme)
-admin.site.register(projet)
-admin.site.register(statutuo)
-admin.site.register(UET)
+admin.site.register(Uo)
+admin.site.register(Typeuo)
+admin.site.register(Niveauuo)
+admin.site.register(Etatuo)
+admin.site.register(Fonction)
+admin.site.register(Plateforme)
+admin.site.register(Projet)
+admin.site.register(Statutuo)
+admin.site.register(Uet)
+admin.site.register(CatalogueUo)
+admin.site.register(Perimetre)
+admin.site.register(Pointage)
+admin.site.register(WorkPackage)
