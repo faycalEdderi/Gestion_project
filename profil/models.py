@@ -22,6 +22,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     ROLES = (
+        ('pmo', 'PMO'),
+        ('rsop', 'RSOP'),
         
         ('rt', 'RT'),
         ('pilote_activite', 'PILOTE D\'ACTIVITÉ'),
@@ -33,19 +35,9 @@ class UserProfile(models.Model):
         ('desactivate', 'desactive '),
         
     )
-    POSTE = (
-        
-        ('ch.MIL', 'CH.MIL'),
-        ('ch.HIL', 'CH.HIL'), 
-        ('ch.IS', 'CH.IS'),
-        ('liv', 'LIV'),
-        ('rt', 'RT'),
-        ('pmo', 'PMO'),
-        ('rsop', 'RSOP'),
-        
-    ) 
+ 
 
-    poste = models.CharField(max_length=150, choices=POSTE )
+    poste = models.CharField(max_length=150)
 
     poste.widget = forms.TextInput(attrs={'class': 'form-control',})
     

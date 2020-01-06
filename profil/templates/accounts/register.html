@@ -82,6 +82,11 @@
                         {{ profile_form.poste }}
 
                     </p>
+                    <p>
+                        <label for="{{  profile_form.role.id_for_label }}">Role:</label>
+                        {{ profile_form.role }}
+
+                    </p>
 
                     <p id="equipe_liv" >
                         <label for="{{ equipe_form.rt_liv.id_for_label }}">Lier ce compte a un RT :</label>
@@ -90,9 +95,11 @@
 
                         <br/>
                         
-                        <label for="{{  equipe_form.equipe.id_for_label }}">Equipe:</label>
+                        <label  for="{{  equipe_form.equipe.id_for_label }}">Equipe:</label>
                         
                         {{equipe_form.executant}}
+
+                        
 
                         
 
@@ -100,6 +107,8 @@
                         
                         
                     </p> 
+
+                 
                   
 
                     <p id="equipe_responsable"  >

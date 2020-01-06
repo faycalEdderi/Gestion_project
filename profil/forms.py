@@ -78,7 +78,8 @@ class UserProfileForm(forms.ModelForm):
         
         fields = (
             'poste',
-            'image'
+            'image', 
+            'role'
             
         )
 

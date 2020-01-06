@@ -77,16 +77,7 @@
                                 </div>
                             </div>
                           </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="bmd-label-floating">Equipe</label>
-                              <ul>
-                              {% for executant in  user.liv.executant.all  %}
-
-                                <li>{{executant}}</li>
-
-                              {% endfor %}
-                              </ul>
+                         
 
                               
 
@@ -96,6 +87,7 @@
                             
                             </div>
                           </div>
+                          {% if user.userprofile.poste == 'ch.MIL' or user.userprofile.poste == 'ch.HIL' or user.userprofile.poste == 'ch.IS'  %}
                           <div class="col-md-6">
                             <div class="form-group">
                               <label class="bmd-label-floating">Responsable : </label>
@@ -106,8 +98,8 @@
 
                               
                               </ul>
+                          {% endif %}
 
-                              
 
                               
                               
@@ -115,6 +107,8 @@
                             
                             </div>
                           </div>
+
+                          {% if user.userprofile.poste == 'liv' %}
                           <div class="col-md-6">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Responsable : </label>
@@ -128,19 +122,25 @@
                                   {% endfor %}
 
                                   
-  
+                          
                                 
                                 </ul>
-  
-                                
-  
-                                
-                                
-                               
                               
-                              </div>
+
+                              
                             </div>
-                              
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Equipe</label>
+                              <ul>
+                              {% for executant in  user.liv.executant.all  %}
+
+                                <li>{{executant}}</li>
+
+                              {% endfor %}
+                              </ul>
+                        {% endif %}
                           
                     
                     

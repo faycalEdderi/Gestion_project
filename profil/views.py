@@ -97,9 +97,11 @@ def register(request):
 
         if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid and ajout_responsable_form.is_valid: 
 
-            role = request.POST['poste']
+            role = request.POST['role']
             email = request.POST['email']
             poste = request.POST['poste']
+            print('LE ROLE EST : ')
+            print(role)
             
 
             
@@ -161,7 +163,7 @@ def register(request):
             
             
 
-            if poste == 'liv':
+            if role == 'pilote_activite':
                 add_executant = equipe_form.save(commit=False)
                 add_executant.user= user
 
@@ -176,7 +178,8 @@ def register(request):
                     print("ajout de relation avec : ")
                     print(add_execut)
             
-            
+            #add_executant = LIV
+            # "add_execut" c'est ajouté un chargé de valid dans le champs executant du liv qui est "add_executant" 
                     add_executant.executant.add(add_execut)
 
                 if recup_exec != '':
@@ -192,7 +195,7 @@ def register(request):
                 
                 
 
-            if poste == 'ch.MIL' or poste == 'ch.HIL' or poste == 'ch.IS' :
+            if role == 'charge_execution' :
             #Verifie si l'utilisateur ajouté est un chargé executant
             #Puis ajoute l'utilisateur en tant que chargé executant
             #s'il a un responsable dès la création de son compte il est lié a ce responsable
@@ -336,10 +339,6 @@ def update_user(request, id=None):
             
             livUserUpdate.executant.add(add_execut)
 
-        
-        
-        
-        
         userUpdate.save()
         #SI L'UTILLISATEUR NE S'EST JAMAIS CONNECTÉ UN MAIL EST ENVOYÉ
         #METTRE CETTE CONDITION LORS DE LA MODIFICATION DE MDP PAR SUPERIEUR EN CAS D'ERREUR
@@ -375,7 +374,7 @@ def update_user(request, id=None):
     
 
 
-#Fonction de modification de mot de passe a parir du profile User.
+#Fonction de modification de mot de passe a partir du profile User.
 
 def change_pwd(request):
     
