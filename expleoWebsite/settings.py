@@ -30,6 +30,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #django auto-complete
+    'dal',
+    'dal_select2',
+##################################
+
     'profil.apps.ProfilConfig',
     'django.contrib.admin',
     'django.contrib.auth',

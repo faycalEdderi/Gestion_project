@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 
 
 
+
 from profil import views as profil_views
 
 urlpatterns = [
@@ -44,6 +45,15 @@ urlpatterns = [
     path('modifMdp', profil_views.change_pwd, name='modifMdp'),
     path('userList', profil_views.user_list, name='user_list'),
     path('debug', profil_views.debug, name='debug'),
+
+
+
+    
+
+    
+
+
+    
 
     #path('team', profil_views.userRelation, name='team'),
     

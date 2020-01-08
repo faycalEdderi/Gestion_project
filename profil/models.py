@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 
 
+
+
 import random
 
 
@@ -16,7 +18,13 @@ def upload_location(instance, filename):
     filebase= ''.join((random.choice(chars)) for x in range(20))
     
     return "%s/%s.%s" %(instance.id, filebase, extension)
+    
+class NomDePoste(models.Model):
+    
+    nom_de_poste = models.CharField(max_length=150,  null=True, blank=True,)
 
+    def __str__(self):
+        return self.nom_de_poste
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -36,10 +44,10 @@ class UserProfile(models.Model):
         
     )
  
+    poste = models.ForeignKey(NomDePoste,  null=True, blank=True, on_delete=models.PROTECT)
+    #poste = models.CharField(max_length=150)
 
-    poste = models.CharField(max_length=150)
-
-    poste.widget = forms.TextInput(attrs={'class': 'form-control',})
+    #poste.widget = forms.TextInput(attrs={'class': 'form-control',})
     
     image = models.ImageField(
             upload_to=upload_location,
@@ -73,6 +81,7 @@ class Rt(models.Model):
 class Liv(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+
     
 
     #equipe = models.ForeignKey("Chvalid", on_delete=models.SET_NULL)
@@ -99,11 +108,13 @@ class ChValid(models.Model):
 
     responsable = models.ForeignKey(Liv, null=True, blank=True,  on_delete=models.CASCADE)
 
-    
-
-    
-
-   
 
     def __str__(self):
         return self.user.username
+
+
+
+
+
+
+

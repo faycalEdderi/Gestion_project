@@ -1,3 +1,4 @@
+
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -6,8 +7,17 @@ from .models import (
     Liv,
     ChValid, 
     Rt,
+    NomDePoste,
  ) 
 from django.forms import ModelForm
+
+
+
+
+
+
+
+
 
 
 
@@ -107,6 +117,16 @@ class ChValidForm(forms.ModelForm):
             'responsable',
              
         )
+
+class AjoutPosteForm(forms.ModelForm):
+    
+    class Meta:
+        model = NomDePoste
+        fields =(
+            
+            'nom_de_poste',
+             
+        )
             
 #########################FIN DE CREATION DE COMPTE #####################
 
@@ -179,7 +199,6 @@ class EditProfileUserForm(ModelForm):
          
         )
   
-#A UTILISER POUR DESACTIVER UN UTILISATEUR
     class Meta:
         model = UserProfile
         

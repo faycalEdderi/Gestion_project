@@ -4,7 +4,8 @@ from profil.forms import (
     EditProfileForm, 
     EditProfileUserForm,  
     LivForm, 
-    ChValidForm )
+    ChValidForm, 
+    AjoutPosteForm )
 from .models import UserProfile, Liv, ChValid
 from django.contrib.auth.models import User
 from .forms import UserProfileForm
@@ -17,6 +18,13 @@ from django.core.mail import send_mail
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
+
+
+
+
+
+
+
 
 
 
@@ -81,25 +89,37 @@ def user_list(request):
          #   return render(request,'pages/error404.html')
 
 #Fonction de creation de compte UNIQUEMENT POUR RT ET +
-# Ajouter la condition ci dessus pour restreindre accès a RT  
+# Ajouter la condition ci dessus pour restreindre accès a RT 
+# 
+
+
 def register(request):
+    form = RegistrationForm(request.POST)
+    profile_form = UserProfileForm(request.POST or None, request.FILES or None)
+    
+    equipe_form = LivForm(request.POST)
+
+    ajout_responsable_form = ChValidForm(request.POST)
+    addPoste_form = AjoutPosteForm(request.POST)
 
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        profile_form = UserProfileForm(request.POST or None, request.FILES or None)
+        
 
-        equipe_form = LivForm(request.POST)
-
-        ajout_responsable_form = ChValidForm(request.POST)
+        
         
 
             
 
-        if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid and ajout_responsable_form.is_valid: 
+        if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid and ajout_responsable_form.is_valid and addPoste_form.is_valid : 
+
+            ajout_poste = addPoste_form.save(commit=False)
+            
+
+            ajout_poste.save()
 
             role = request.POST['role']
             email = request.POST['email']
-            poste = request.POST['poste']
+            
             print('LE ROLE EST : ')
             print(role)
             
@@ -107,14 +127,11 @@ def register(request):
             
             if 'executant' in request.POST:
             #cette condition verifie qu'un champ executant est saisi lors de l'inscription
-                executant =  request.POST['executant']
+              
                
                 recup_exec = request.POST.get('executant')
                 
-           # return HttpResponse(str(executant))
-               # if recup_exec != '':
-                #    recup_user_exec = ChValid.objects.get( id = recup_exec)
-                #return HttpResponse(str(recup_user_exec))
+           
                 
 
             #cette condition verifie qu'un champ responsable est saisi lors de l'inscription
@@ -125,9 +142,6 @@ def register(request):
                     responsable = User.objects.get(liv = recup_respo)
 
                 
-
-
-            #return HttpResponse(str(responsable))
             
   
 
@@ -148,7 +162,11 @@ def register(request):
 
             user.username = request.POST['last_name'] + request.POST['first_name'] 
 
+
+            
+
             profile = profile_form.save(commit=False)
+
 
             if role == 'liv':
                 profile.role = 'pilote_activite'
@@ -160,6 +178,8 @@ def register(request):
             profile.user = user
  
             profile.save()
+
+            
             
             
 
@@ -210,6 +230,8 @@ def register(request):
                 
                     responsable.liv.executant.add(add_responsable)
 
+           
+            
      
             send_mail(
                 'Votre compte a été créé',
@@ -241,6 +263,8 @@ def register(request):
         'profile_form' : profile_form, 
         'equipe_form' : equipe_form,
         'responsable_form': ajout_responsable_form,
+        'add_poste_form' : addPoste_form, 
+        
         
         }
     return render(request, 'accounts/register.html', context)

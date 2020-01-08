@@ -55,25 +55,7 @@
                         {{ form.email }}
 
                     </p>
-                    <!-- <p>
-                        <label for="{{ form.first_name.id_for_label }}">Mot de passe:</label>
-                        {{ form.password1 }}
-
-                    </p>
-                    <ul>
-                        <li>Votre mot de passe ne doit pas etre semblable à vos autres informations personnelles.</li><li>Votre mot de passe doit contenir au minimum 8 caractères.</li>
-                        <li>Votre mot de passe ne peut pas être un mot de passe couramment utilisé.</li>
-                        <li>Votre mot de passe ne peut pas être entièrement numérique.</li>
-                    </ul>
-
-
-                    <p>
-                        <label for="{{ form.first_name.id_for_label }}">Confirmer le mot de passe:</label>
-                        {{ form.password2 }}
-
-                        <span class="helptext">Saisissez le même mot de passe que précédemment, pour vérification.</span></p>
-
-                    </p>-->
+                 
                     
                    
                     
@@ -82,6 +64,13 @@
                         {{ profile_form.poste }}
 
                     </p>
+                    <p >
+                        <label for="{{  ajout_poste_form.nom_de_poste.id_for_label }}">Ajouter un poste :</label>
+                        
+                        {{add_poste_form.nom_de_poste}}
+                        
+                        
+                    </p>  
                     <p>
                         <label for="{{  profile_form.role.id_for_label }}">Role:</label>
                         {{ profile_form.role }}
@@ -98,14 +87,7 @@
                         <label  for="{{  equipe_form.equipe.id_for_label }}">Equipe:</label>
                         
                         {{equipe_form.executant}}
-
-                        
-
-                        
-
-                        
-                        
-                        
+ 
                     </p> 
 
                  
@@ -117,7 +99,8 @@
                         {{responsable_form.responsable}}
                         
                         
-                    </p> 
+                    </p>
+                   
         
                     
                     <button class="btn btn-primary" type="submit"> Valider </button>
