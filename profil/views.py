@@ -85,6 +85,8 @@ def register(request):
     ajout_responsable_form = ChValidForm(request.POST)
     addPoste_form = AjoutPosteForm(request.POST)
 
+    print("request : ", request.POST)
+
     if request.method == 'POST':
  
 
@@ -107,7 +109,7 @@ def register(request):
 
             user = form.save(commit=False)
 
-            #attribution de l'adresse mail couserprofil_idmme username (uniquement utile pour l'admin django)
+            #attribution de l'adresse mail comme username (uniquement utile pour l'admin django)
             user.username = request.POST['last_name'] + '_' +  request.POST['first_name']
 
             #Genere un mot de passe automatiquement
@@ -117,19 +119,14 @@ def register(request):
             password = 'motdepass78'
 ## !!!! SUPPRIMER LE MOT DE PASSE CI DESSUS !!!!! #######
             user.set_password(password)
-
             user.save()
-            user.username = request.POST['last_name'] + request.POST['first_name'] 
-                        
 
             profile = profile_form.save(commit=False)
-
             profile.user = user
             poste = NomDePoste.objects.create(nom_de_poste=request.POST["nom_de_poste"])
             profile.poste = poste
          
             profile.save()
-
 
             if role == 'charge_execution' :
             #Verifie si l'utilisateur ajouté est un chargé executant
@@ -138,15 +135,13 @@ def register(request):
                 add_responsable = ajout_responsable_form.save(commit=False)
                 add_responsable.user= user
 
-                add_responsable.save() 
+                add_responsable.save()
 
                 if recup_respo != '':
                 #SI on choisit un responsable lors de la création du profil du ch d'execution
                 #Permet de lier responsable et chargé executant ensemble 
                 
                     responsable.liv.executant.add(add_responsable)
-
-
             if role == 'pilote_activite':
                 add_executant = equipe_form.save(commit=False)
                 add_executant.user= user
@@ -174,8 +169,6 @@ def register(request):
                         print(recup_user_exec)
                         recup_user_exec.responsable = add_executant
                         recup_user_exec.save()
-                    
-                
 
             send_mail(
                 'Votre compte a été créé',
@@ -200,7 +193,6 @@ def register(request):
         profile_form = UserProfileForm()
         equipe_form = LivForm()
         ajout_responsable_form = ChValidForm()
-        
 
     context = {
         'form' : form, 
@@ -208,21 +200,15 @@ def register(request):
         'equipe_form' : equipe_form,
         'responsable_form': ajout_responsable_form,
         'add_poste_form' : addPoste_form, 
-        
-        
         }
     return render(request, 'accounts/register.html', context)
-    
 
-
-    
 #Fonction modification de profile par USER sur son profile personnel
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
         form_profil = EditProfileUserForm(request.POST, request.FILES  or None, instance=request.user.userprofile)
        
-        
         if form.is_valid() and form_profil.is_valid() :
 
             ## ATTRIBUTION DU USERNAME SI MODIFICATION
@@ -236,8 +222,6 @@ def edit_profile(request):
             return redirect('profil')
         else:
              
-            
-        
             messages.error(request, form['first_name'].errors)
             messages.error(request, form['last_name'].errors)
             messages.error(request, form_profil['image'].errors)
@@ -253,9 +237,6 @@ def edit_profile(request):
 
 
         return render(request, 'accounts/edit_profile.html', args)
-
-       
-
 
 #Fonction de update user par RT : 
 # !!!!!Reste a definir un accès restreint uniquement pour RT ET + !!!!!
@@ -273,8 +254,6 @@ def update_user(request, id=None):
     form = EditProfileForm(request.POST or None, instance=userUpdate) 
     form_profil = EditProfileUserForm(request.POST or None,request.FILES  or None, instance=userUpdate.userprofile) 
 
-    
-
     #ajout_responsable_form = ChValidForm(request.POST)   
 
     if form.is_valid() and form_profil.is_valid() :
@@ -290,13 +269,10 @@ def update_user(request, id=None):
         for executant in execut : 
             livUserUpdate.executant.remove(executant)
 
-        
-        
         adresse_mail = request.POST['email']
         userUpdate = form.save(commit=False)
 
         userUpdate.userprofile.save()
-        
         
         list_add_executant = request.POST.getlist('executant')
         #Ajout des nouveaux liens entre ch execuction et pilote
@@ -338,10 +314,6 @@ def update_user(request, id=None):
 
     return render(request, "accounts/edit_profileRT.html", context)
 
-
-    
-
-
 #Fonction de modification de mot de passe a partir du profile User.
 
 def change_pwd(request):
@@ -371,31 +343,17 @@ def change_pwd(request):
 
         return render(request, 'accounts/change_password.html', args)
 
-
-
-
-
 def debug(request):
 
     respObj = ChValid.objects.first()
    # responsable = respObj.liv.get(id=19)
-
-    
     #responsable = respObj.liv.all()
-    
-
     responsable = User.objects.get(liv = 19)
-
-    
-
-
 
     context = {
         "affiche": responsable, 
     }
 
-    
-    
     return render(request,'accounts/debug.html', context)
 
 
