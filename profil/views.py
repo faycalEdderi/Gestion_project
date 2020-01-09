@@ -1,12 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from profil.forms import (
-    RegistrationForm, 
-    EditProfileForm, 
-    EditProfileUserForm,  
-    LivForm, 
-    ChValidForm, 
-    AjoutPosteForm )
-from .models import UserProfile, Liv, ChValid
+from profil.forms import *
+from .models import *
 from django.contrib.auth.models import User
 from .forms import UserProfileForm
 from django.contrib.auth.forms import UserCreationForm,  PasswordChangeForm
@@ -18,14 +12,6 @@ from django.core.mail import send_mail
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
-
-
-
-
-
-
-
-
 
 
 """
@@ -40,16 +26,12 @@ Les prints renvoient des informations dans l'invit de commande du serveur
 def profil(request):
 
     equipe_list =  Liv.objects.all().prefetch_related('executant')
-    
-
 
     context = {
         "equipe": equipe_list, 
         
     }
 
-    
-    
     return render(request,'accounts/profil.html', context)
 
 #Fonction de connection
@@ -94,6 +76,7 @@ def user_list(request):
 
 
 def register(request):
+
     form = RegistrationForm(request.POST)
     profile_form = UserProfileForm(request.POST or None, request.FILES or None)
     
@@ -103,37 +86,18 @@ def register(request):
     addPoste_form = AjoutPosteForm(request.POST)
 
     if request.method == 'POST':
-        
-
-        
-        
-
-            
+ 
 
         if form.is_valid() and profile_form.is_valid() and equipe_form.is_valid and ajout_responsable_form.is_valid and addPoste_form.is_valid : 
 
-            ajout_poste = addPoste_form.save(commit=False)
-            
-
-            ajout_poste.save()
-
             role = request.POST['role']
             email = request.POST['email']
-            
-            print('LE ROLE EST : ')
-            print(role)
-            
 
-            
             if 'executant' in request.POST:
             #cette condition verifie qu'un champ executant est saisi lors de l'inscription
               
-               
                 recup_exec = request.POST.get('executant')
-                
-           
-                
-
+ 
             #cette condition verifie qu'un champ responsable est saisi lors de l'inscription
             if 'responsable' in request.POST:
                 recup_respo = request.POST.get('responsable')
@@ -141,13 +105,9 @@ def register(request):
                 if recup_respo != '':
                     responsable = User.objects.get(liv = recup_respo)
 
-                
-            
-  
-
             user = form.save(commit=False)
 
-            #attribution de l'adresse mail comme username (uniquement utile pour l'admin django)
+            #attribution de l'adresse mail couserprofil_idmme username (uniquement utile pour l'admin django)
             user.username = request.POST['last_name'] + '_' +  request.POST['first_name']
 
             #Genere un mot de passe automatiquement
@@ -159,29 +119,33 @@ def register(request):
             user.set_password(password)
 
             user.save()
-
             user.username = request.POST['last_name'] + request.POST['first_name'] 
-
-
-            
+                        
 
             profile = profile_form.save(commit=False)
 
-
-            if role == 'liv':
-                profile.role = 'pilote_activite'
-            
-            
-            elif role == 'CH.MIL' or role == 'CH.IS' or role == 'CH.HIL'  : 
-                 profile.role = 'charge_execution'
-
             profile.user = user
- 
+            poste = NomDePoste.objects.create(nom_de_poste=request.POST["nom_de_poste"])
+            profile.poste = poste
+         
             profile.save()
 
-            
-            
-            
+
+            if role == 'charge_execution' :
+            #Verifie si l'utilisateur ajouté est un chargé executant
+            #Puis ajoute l'utilisateur en tant que chargé executant
+            #s'il a un responsable dès la création de son compte il est lié a ce responsable
+                add_responsable = ajout_responsable_form.save(commit=False)
+                add_responsable.user= user
+
+                add_responsable.save() 
+
+                if recup_respo != '':
+                #SI on choisit un responsable lors de la création du profil du ch d'execution
+                #Permet de lier responsable et chargé executant ensemble 
+                
+                    responsable.liv.executant.add(add_responsable)
+
 
             if role == 'pilote_activite':
                 add_executant = equipe_form.save(commit=False)
@@ -211,28 +175,8 @@ def register(request):
                         recup_user_exec.responsable = add_executant
                         recup_user_exec.save()
                     
-                    #return HttpResponse(str( "hello world"))
-                
                 
 
-            if role == 'charge_execution' :
-            #Verifie si l'utilisateur ajouté est un chargé executant
-            #Puis ajoute l'utilisateur en tant que chargé executant
-            #s'il a un responsable dès la création de son compte il est lié a ce responsable
-                add_responsable = ajout_responsable_form.save(commit=False)
-                add_responsable.user= user
-
-                add_responsable.save() 
-
-                if recup_respo != '':
-                #SI on choisit un responsable lors de la création du profil du ch d'execution
-                #Permet de lier responsable et chargé executant ensemble 
-                
-                    responsable.liv.executant.add(add_responsable)
-
-           
-            
-     
             send_mail(
                 'Votre compte a été créé',
                 'Votre mdp : ' +  password,
