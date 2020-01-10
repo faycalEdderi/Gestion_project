@@ -1,0 +1,32 @@
+class NomDePoste(models.Model):
+    
+    nom_de_poste = models.CharField(
+        max_length=150, 
+        null=True, 
+        blank=True, 
+        unique=True, 
+        error_messages={'unique':"Existe deja"})
+
+    def __str__(self):
+        return self.nom_de_poste
+
+
+
+
+
+
+        ForeignKey(NomDePoste,  null=True, blank=True, on_delete=models.PROTECT)
+
+
+
+class NewPostName(models.Model):
+    
+    post_name = models.CharField(
+        max_length=150, 
+        null=True, 
+        blank=True, 
+        unique=True, 
+        error_messages={'unique':"Existe deja"})
+
+    def __str__(self):
+        return self.post_name

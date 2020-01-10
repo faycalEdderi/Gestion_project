@@ -2,30 +2,12 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import (
-    UserProfile,
-    Liv,
-    ChValid, 
-    Rt,
-    NomDePoste,
- ) 
+from .models import * 
 from django.forms import ModelForm
-
-
-
-
-
-
-
-
-
-
 
 # FORM DE CREATION DE COMPTE 
 #Uniquement pour RT et +
 class RegistrationForm(UserCreationForm):
-   
-    
     email = forms.EmailField(
         required=True,
         error_messages={'required': 'Veuillez entrer une Adresse Mail'},
@@ -44,7 +26,6 @@ class RegistrationForm(UserCreationForm):
         error_messages={'required': 'Veuillez entrer un Prénom'},
         
         )
-
     password1 = forms.CharField(
         required=False,
         error_messages={'required': 'Les deux mots de passes ne sont pas identiques'}, 
@@ -55,10 +36,9 @@ class RegistrationForm(UserCreationForm):
         required=False,
         error_messages={'required': 'Les deux mots de passes ne sont pas identiques'},
         widget=forms.PasswordInput,  
-      
         )
     
-    
+     
     class Meta:
         model = User
         fields = (
@@ -67,16 +47,13 @@ class RegistrationForm(UserCreationForm):
             'last_name', 
             'email',
             'password1',
-            'password2', 
-                   
+            'password2',          
         )
-
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.email = self.cleaned_data['email']
-        
 
         if commit:
             user.save()
@@ -84,26 +61,20 @@ class RegistrationForm(UserCreationForm):
 
 class UserProfileForm(forms.ModelForm):
     class Meta : 
-        model = UserProfile
-        
+        model = UserProfile 
         fields = (
             'poste',
             'image', 
-            'role'
-            
+            'role'    
         )
 
        
-class LivForm(forms.ModelForm):
-   
-
+class LivForm(forms.ModelForm):   
     class Meta : 
         model = Liv
-        
         fields = (
            'executant', 
-           'rt_liv', 
-            
+           'rt_liv',            
         )
 
 class ChValidForm(forms.ModelForm):
@@ -113,20 +84,19 @@ class ChValidForm(forms.ModelForm):
     class Meta:
         model = ChValid
         fields =(
-            
-            'responsable',
-             
+            'responsable',    
         )
 
 class AjoutPosteForm(forms.ModelForm):
-    
     class Meta:
-        model = NomDePoste
+        model = NewPostName
         fields =(
-            
-            'nom_de_poste',
-             
+            'post_name',
         )
+
+        
+       
+         
             
 #########################FIN DE CREATION DE COMPTE #####################
 
@@ -134,7 +104,6 @@ class AjoutPosteForm(forms.ModelForm):
 
 
 class EditProfileForm(forms.ModelForm):
-   
     first_name = forms.CharField(
         required=True,
         error_messages={'required': 'Veuillez entrer un prénom'}, 
@@ -146,8 +115,6 @@ class EditProfileForm(forms.ModelForm):
     last_name = forms.CharField(
         required=True,
         error_messages={'required': 'Veuillez entrer un nom'},
-        
-        
         )
     last_name.widget = forms.TextInput(attrs={'class': 'form-control',})
 
@@ -162,13 +129,10 @@ class EditProfileForm(forms.ModelForm):
         ) 
     email.widget = forms.TextInput(attrs={'readonly': '',})
 
-   
-
     class Meta:
         model = User
         
-        fields = ( 
-            
+        fields = (     
             'first_name',
             'last_name',
             'email', 
@@ -177,7 +141,6 @@ class EditProfileForm(forms.ModelForm):
 
 class EditProfileUserForm(ModelForm):
     POSTE = (
-        
         ('ch.MIL', 'CH.MIL'),
         ('ch.HIL', 'CH.HIL '), 
         ('ch.IS', 'CH.IS '),
@@ -190,20 +153,15 @@ class EditProfileUserForm(ModelForm):
 
     poste = forms.ChoiceField(choices=POSTE, widget=forms.Select(attrs={'class': 'custom-select mr-sm-2"'}) )
 
-    
-      
     image = forms.ImageField(
         required=False,
-        error_messages = {'invalid': "Veuillez selectionner uniquement un fichier de type image" }, 
+        error_messages = {'invalid': "Veuillez selectionner uniquement un fichier de type image" },
         widget=forms.FileInput,  
-         
         )
   
     class Meta:
         model = UserProfile
-        
         fields = ( 
-            
             'image', 
             'poste',
             'is_active',

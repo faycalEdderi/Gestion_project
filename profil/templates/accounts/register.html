@@ -24,6 +24,7 @@
 
                         <p class="text-center" >{{ message }}</p> 
                         
+                        
 
                     </div>
                     {% endfor %}
@@ -61,13 +62,13 @@
                     
                     <p>
                         <label for="{{  profile_form.poste.id_for_label }}">Poste:</label>
-                        
+                        {{ profile_form.poste }}
 
                     </p>
                     <p >
                         <label for="{{  ajout_poste_form.nom_de_poste.id_for_label }}">Ajouter un poste :</label>
                         
-                        {{add_poste_form.nom_de_poste}}
+                        {{add_poste_form.post_name}}
                         
                         
                     </p>  
