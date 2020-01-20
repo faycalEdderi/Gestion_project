@@ -94,7 +94,7 @@ def register(request):
 
             role = request.POST['role']
             email = request.POST['email']
-           
+            new_poste = request.POST["post_name"] 
 
             if 'executant' in request.POST:
             #cette condition verifie qu'un champ executant est saisi lors de l'inscription
@@ -124,12 +124,17 @@ def register(request):
 
             profile = profile_form.save(commit=False)
             profile.user = user
-            poste = NewPostName.objects.create(post_name=request.POST["post_name"])
-            profile.poste = poste
-            profile.save()
-
-           
             
+            if new_poste != "" : 
+                check_poste = NewPostName(post_name=request.POST["post_name"])
+                check_poste, poste = NewPostName.objects.get_or_create(post_name=request.POST["post_name"])
+                
+                if poste :
+                    profile.poste = poste
+                else:
+                    profile.poste = check_poste
+
+            profile.save()
 
             if role == 'charge_execution' :
             #Verifie si l'utilisateur ajouté est un chargé executant
@@ -190,7 +195,7 @@ def register(request):
             messages.error(request, form['email'].errors)
             messages.error(request, form['password1'].errors)
             messages.error(request, profile_form['poste'].errors)
-            messages.error(request, "Error")
+            messages.error(request, addPoste_form['post_name'].errors)
             
 
     else:

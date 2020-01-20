@@ -88,16 +88,24 @@ class ChValidForm(forms.ModelForm):
         )
 
 class AjoutPosteForm(forms.ModelForm):
+    post_name = forms.CharField(required=False)
+    
     class Meta:
         model = NewPostName
         fields =(
             'post_name',
         )
 
+        error_messages = {
+            'post_name': {
+                'unique': 'Ce poste existe déja !'
+            },
+        }
+        
+        
         
        
-         
-            
+          
 #########################FIN DE CREATION DE COMPTE #####################
 
 #FORM MODIFICATION DE PROFIL ACCESSIBLE PAR TOUS USER 

@@ -15,10 +15,12 @@ class NewPostName(models.Model):
     
     post_name = models.CharField(
         max_length=150, 
-        null=True, 
-        blank=True, 
+        
+         
         unique=True, 
-        error_messages={'unique':"Existe deja"})
+        error_messages={'unique':"Ce poste existe déja !"},
+        )
+        
 
     def __str__(self):
         return self.post_name
@@ -41,7 +43,12 @@ class UserProfile(models.Model):
         
     )
  
-    poste = models.ForeignKey(NewPostName,  null=True, blank=True, on_delete=models.PROTECT)
+    poste = models.ForeignKey(
+        NewPostName,  
+        null=True, 
+        blank=True, 
+        on_delete=models.PROTECT, 
+        )
 
     image = models.ImageField(
             upload_to=upload_location,
