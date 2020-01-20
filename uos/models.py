@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 #fonction qui prends tout les objets d'une classe et les renvoi dans une liste 
@@ -47,7 +48,7 @@ class Perimetre(models.Model):
         return self.nom 
 
       
-#création de work package et pour chaque wp plusieur périmetre 
+#création de work package et pour chaque wp plusieurs périmetres 
 class WorkPackage(models.Model):
     nom=models.CharField(max_length=20)
     perimetretravail=models.ForeignKey(Perimetre, 
@@ -103,6 +104,12 @@ class Uet(models.Model):
 
     def __str__(self):
        return self.nom
+
+class Lot(models.Model):
+    nom=models.CharField(max_length=50)
+
+    def __str__(self):
+       return self.nom
        
 #création d'uo avec possiblité de choisir les champs dans des table differente 
 class Uo(models.Model):
@@ -111,16 +118,21 @@ class Uo(models.Model):
     niveauo = models.ForeignKey(Niveauuo,default = "",on_delete=models.CASCADE)
     projet = models.ForeignKey(Projet,default = "",on_delete=models.CASCADE)
     fonction = models.ForeignKey(Fonction,default = "",on_delete=models.CASCADE)
-    statutuo=models.ForeignKey(Statutuo,default = "",on_delete=models.CASCADE)
-    etatuo=models.ForeignKey(Etatuo,default = "",on_delete=models.CASCADE)
-    plateforme=models.ForeignKey(Plateforme,default = "",on_delete=models.CASCADE)
-    uet=models.ForeignKey(Uet,default = "",on_delete=models.CASCADE)
-    catalogue=models.ForeignKey(CatalogueUo,default = "",on_delete=models.CASCADE)
-   
+    statutuo = models.ForeignKey(Statutuo,default = "",on_delete=models.CASCADE)
+    etatuo = models.ForeignKey(Etatuo,default = "",on_delete=models.CASCADE)
+    plateforme = models.ForeignKey(Plateforme,default = "",on_delete=models.CASCADE)
+    uet = models.ForeignKey(Uet,default = "",on_delete=models.CASCADE)
+    catalogue = models.ForeignKey(CatalogueUo,default = "",on_delete=models.CASCADE)
+    lot = models.ForeignKey(Lot,default = "",on_delete=models.CASCADE)
+    jalaonD = models.CharField(max_length=20,default="")
+    jalaonF = models.CharField(max_length=20,default="")
+    ju = models.CharField(max_length=20,default="")
+
     def __str__(self):
         return self.numuo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet 
 
   #class pointage qui permet aux utilisateur de pointer sur l'uo  
+
 class Pointage(models.Model):
     uo =models.ForeignKey(Uo,on_delete=models.CASCADE,default = "")
     user=models.ForeignKey(User,on_delete=models.CASCADE,default = "")
@@ -129,6 +141,23 @@ class Pointage(models.Model):
 
     def __str__(self):
        return str(self.point)
-    
+
+
+class NotedeCadrage(models.Model):
+    uo=models.ForeignKey(Uo,on_delete=models.CASCADE,default = "")
+    reponseRSA=models.CharField(max_length=600,default="")
+
+
+class Activites(models.Model):
+    notedeCadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "")
+    donnesdentree=models.CharField(max_length=600,default="")
+    activiteAttendue=models.CharField(max_length=600,default="")	
+    pourcentagedactivite=models.FloatField()
+    Conditionsdereussite=models.CharField(max_length=600,default="")	
+    Datedonnéesdentrees=models.DateTimeField(default="", blank=True)
+    DatedeDemarragedActivite=models.DateTimeField(default="", blank=True)
+    LivrableAttendu=models.CharField(max_length=600,default="")	
+    DatedeReceptionAttenduduLivrable=models.DateTimeField(default="", blank=True)
+    CommentairesSurAttendu=models.CharField(max_length=600,default="")	
 
 
