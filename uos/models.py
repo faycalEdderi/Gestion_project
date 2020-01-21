@@ -124,9 +124,14 @@ class Uo(models.Model):
     uet = models.ForeignKey(Uet,default = "",on_delete=models.CASCADE)
     catalogue = models.ForeignKey(CatalogueUo,default = "",on_delete=models.CASCADE)
     lot = models.ForeignKey(Lot,default = "",on_delete=models.CASCADE)
-    jalaonD = models.CharField(max_length=20,default="")
-    jalaonF = models.CharField(max_length=20,default="")
+    jalonD = models.CharField(max_length=20,default="")
+    jalonF = models.CharField(max_length=20,default="")
     ju = models.CharField(max_length=20,default="")
+    DateDebutUO=models.DateTimeField(default=timezone.now(),blank=True)
+    DateLivraison=models.DateTimeField(default=timezone.now(),blank=True)
+    Client=models.CharField(max_length=20,default="")
+    avancement=models.FloatField(default=0)
+    piloteUo=models.CharField(max_length=20,default="")
 
     def __str__(self):
         return self.numuo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet 
@@ -142,12 +147,14 @@ class Pointage(models.Model):
     def __str__(self):
        return str(self.point)
 
+# class note de cadrage pour chaque uo une note de cadrage 'reflichir pour apres si on peut ajouter des numero pour les modification de note de cadrage  '
 
 class NotedeCadrage(models.Model):
     uo=models.ForeignKey(Uo,on_delete=models.CASCADE,default = "")
     reponseRSA=models.CharField(max_length=600,default="")
 
-
+  
+# classe activités pour chaque note de cadrage plusieur activitées 
 class Activites(models.Model):
     notedeCadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "")
     donnesdentree=models.CharField(max_length=600,default="")
@@ -155,9 +162,10 @@ class Activites(models.Model):
     pourcentagedactivite=models.FloatField()
     Conditionsdereussite=models.CharField(max_length=600,default="")	
     Datedonnéesdentrees=models.DateTimeField(default="", blank=True)
-    DatedeDemarragedActivite=models.DateTimeField(default="", blank=True)
+    DatedeDemarragedActivite=models.DateTimeField( default="",blank=True)
     LivrableAttendu=models.CharField(max_length=600,default="")	
     DatedeReceptionAttenduduLivrable=models.DateTimeField(default="", blank=True)
     CommentairesSurAttendu=models.CharField(max_length=600,default="")	
+
 
 
