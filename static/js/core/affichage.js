@@ -33,14 +33,14 @@ $().ready(function() {
 window.setTimeout( () => $('.alert').fadeOut('slow'), 3000 );
 
 
-let email = $("#id_email").val()
 
-$("#display_modal").click(function(){
 
-    alert("lol");
-});
+
    
 });  
+
+
+
     
 
 
