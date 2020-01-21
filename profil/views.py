@@ -92,7 +92,10 @@ def register(request):
 
             role = request.POST['role']
             email = request.POST['email']
-            new_poste = request.POST["post_name"] 
+            new_poste = request.POST["post_name"]
+            post_in_list = request.POST["poste"] 
+
+            print("post selectionné : ", post_in_list)
 
             if 'executant' in request.POST:
             #cette condition verifie qu'un champ executant est saisi lors de l'inscription
@@ -123,14 +126,25 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             
+            
+            
+           
+
             if new_poste != "" : 
                 check_poste = NewPostName(post_name=request.POST["post_name"])
                 check_poste, poste = NewPostName.objects.get_or_create(post_name=request.POST["post_name"])
-                
+
+                print("check_poste : ", check_poste)
+                print("poste : ", poste)
+                    
                 if poste :
-                    profile.poste = poste
+                    if  post_in_list != ""  :
+                        profile.poste = check_poste
+                    else: 
+                        profile.poste = request.POST["post_name"]
                 else:
                     profile.poste = check_poste
+            
 
             profile.save()
 

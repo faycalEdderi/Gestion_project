@@ -60,6 +60,7 @@ class RegistrationForm(UserCreationForm):
         return user
 
 class UserProfileForm(forms.ModelForm):
+    
     class Meta : 
         model = UserProfile 
         fields = (
@@ -89,7 +90,7 @@ class ChValidForm(forms.ModelForm):
 
 class AjoutPosteForm(forms.ModelForm):
     post_name = forms.CharField(required=False)
-    
+
     class Meta:
         model = NewPostName
         fields =(
