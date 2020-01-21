@@ -4,16 +4,10 @@
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-
-       
             <div class="col-md-12">
                <div class="card">
                 <div class="card-header ">
                   <h4 class="card-title">Création de compte</h4>
-                  
-             
-                  
-              
 
                 <div class="card-body">
                     <!--Afficher les messages d'erreurs-->
@@ -23,13 +17,11 @@
                         <a class="close" href="#" data-dismiss="alert">×</a>
 
                         <p class="text-center" >{{ message }}</p> 
-                        
-                        
-
+        
                     </div>
                     {% endfor %}
 
-                    <form method="post" enctype='multipart/form-data'>
+                    <form id="valid_register" method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
 
                     <p>
@@ -56,10 +48,7 @@
                         {{ form.email }}
 
                     </p>
-                 
-                    
-                   
-                    
+
                     <p>
                         <label for="{{  profile_form.poste.id_for_label }}">Poste:</label>
                         {{ profile_form.poste }}
@@ -91,20 +80,19 @@
  
                     </p> 
 
-                 
-                  
-
                     <p id="equipe_responsable"  >
                         <label for="{{  responsable_form.responsable.id_for_label }}">Ajouter un responsable:</label>
                         
                         {{responsable_form.responsable}}
-                        
-                        
+ 
                     </p>
                    
-        
-                    
-                    <button class="btn btn-primary" type="submit"> Valider </button>
+
+                    <button id="display_modal" type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                        Valider
+                      </button>
+                      
+
                     </form>
                  
                 </div>
@@ -114,6 +102,14 @@
           </div>
         </div>
       </div>
+
+      
+
+  <!-- Modal -->
+
+  <div id="affich_modal"></div>
+  
+
 
 
 

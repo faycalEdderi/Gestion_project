@@ -25,29 +25,21 @@ $().ready(function() {
             default:
                     $("#equipe_liv").hide();
                     $("#equipe_responsable").hide();
-        
-        
-
-
         }
-
-
     });
-
-    
 
 // suppression de l'alerte après 3 secondes
 // durée en millisecondes
 window.setTimeout( () => $('.alert').fadeOut('slow'), 3000 );
 
 
+let email = $("#id_email").val()
 
+$("#display_modal").click(function(){
 
-
-    
-    
-    
-    
+    alert("lol");
+});
+   
 });  
     
 

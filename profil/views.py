@@ -79,9 +79,7 @@ def register(request):
 
     form = RegistrationForm(request.POST)
     profile_form = UserProfileForm(request.POST or None, request.FILES or None)
-    
     equipe_form = LivForm(request.POST)
-
     ajout_responsable_form = ChValidForm(request.POST)
     addPoste_form = AjoutPosteForm(request.POST)
 
