@@ -30,7 +30,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    
+
+
+    'profil.apps.ProfilConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,8 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #application instalés
     'django_extensions',
+    'django_cleanup.apps.CleanupConfig', #Les anciennes images sont supprimés automatiquement 
     #applications crées 
-    'profil.apps.ProfilConfig',
+    
     'uos.apps.UosConfig'
     
 
@@ -142,7 +145,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-# Ci Dessoous parametres permettant la reception de mail via le shell 
+# Ci Dessous parametres permettant la reception de mail via le shell 
 # ecrire la cmd dans un nouveau shell : python -m smtpd -n -c DebuggingServer localhost:1025 
 # si rien ne s'affiche c'est normal il faut d'abord envoyé l'email.
 #EMAIL_HOST = 'localhost'

@@ -17,7 +17,7 @@
                       <div class="card-avatar">
                         <a href="#">
                         {% if user.userprofile.image %}
-                          <img class="img-fluid"  src="{{ user.userprofile.image.url }}" alt="photo de profile" >
+                          <img class="rounded-circle"  src="{{ user.userprofile.image.url }}" alt="photo de profile" >
                           {% else %}
                           <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" alt="photo de profile par défaut">
                         {% endif %}
@@ -62,6 +62,7 @@
                                 <input type="text" class="form-control" value="{{ user.userprofile.poste | upper  }}" disabled>
                               </div>
                             </div>
+                           
                             
                           </div>
                           <div class="row">
@@ -76,7 +77,70 @@
                                 </div>
                             </div>
                           </div>
+                         
+
                               
+
+                              
+                              
+                             
+                            
+                            </div>
+                          </div>
+                          {% if user.userprofile.poste == 'ch.MIL' or user.userprofile.poste == 'ch.HIL' or user.userprofile.poste == 'ch.IS'  %}
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Responsable : </label>
+                              <ul>
+                              
+
+                                <li>{{user.chvalid.responsable}}</li>
+
+                              
+                              </ul>
+                          {% endif %}
+
+
+                              
+                              
+                             
+                            
+                            </div>
+                          </div>
+
+                          {% if user.userprofile.poste == 'liv' %}
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="bmd-label-floating">Responsable : </label>
+                                <ul>
+                                
+  
+                                    {% for liv in  user.rt_liv.all  %}
+
+                                    <li>{{liv}}</li>
+    
+                                  {% endfor %}
+
+                                  
+                          
+                                
+                                </ul>
+                              
+
+                              
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Equipe</label>
+                              <ul>
+                              {% for executant in  user.liv.executant.all  %}
+
+                                <li>{{executant}}</li>
+
+                              {% endfor %}
+                              </ul>
+                        {% endif %}
                           
                     
                     

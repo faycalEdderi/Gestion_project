@@ -1,0 +1,61 @@
+{% load static %}
+{% include 'theme.html' %}                    
+                    
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+
+       
+            <div class="col-md-12">
+               <div class="card">
+                <div class="card-header ">
+                  <h4 class="card-title">Equipe</h4>
+                  
+             
+                  
+              
+
+                <div class="card-body">
+                    <!--Inclus les messages d'erreurs-->
+                    {% include 'error_message.html' %}
+
+                    <form method="post" enctype='multipart/form-data'>
+                    {% csrf_token %}
+
+                    <p>
+                      <label for="{{  equipe_form.equipe.id_for_label }}">Equipe:</label>
+                      {{ form.executant }}
+
+                  </p>
+                  <p>
+                    
+                    {{ user.liv.executant }}
+
+                </p>
+        
+                    
+                    <button class="btn btn-primary" type="submit"> Valider </button>
+                    </form>
+
+                    <h4 class="card-title">{{ user.executant | upper  }}</h4>
+                 
+                </div>
+              </div>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

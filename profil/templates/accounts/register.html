@@ -4,22 +4,24 @@
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-
-       
             <div class="col-md-12">
                <div class="card">
                 <div class="card-header ">
                   <h4 class="card-title">Création de compte</h4>
-                  
-             
-                  
-              
 
                 <div class="card-body">
-                    <!--Inclus les messages d'erreurs-->
-                    {% include 'error_message.html' %}
+                    <!--Afficher les messages d'erreurs-->
+    
+                    {% for message in messages %}
+                    <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
 
-                    <form method="post" enctype='multipart/form-data'>
+                        <p class="text-center" >{{ message }}</p> 
+        
+                    </div>
+                    {% endfor %}
+
+                    <form id="valid_register" method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
 
                     <p>
@@ -46,36 +48,54 @@
                         {{ form.email }}
 
                     </p>
-                    <!-- <p>
-                        <label for="{{ form.first_name.id_for_label }}">Mot de passe:</label>
-                        {{ form.password1 }}
 
-                    </p>
-                    <ul>
-                        <li>Votre mot de passe ne doit pas etre semblable à vos autres informations personnelles.</li><li>Votre mot de passe doit contenir au minimum 8 caractères.</li>
-                        <li>Votre mot de passe ne peut pas être un mot de passe couramment utilisé.</li>
-                        <li>Votre mot de passe ne peut pas être entièrement numérique.</li>
-                    </ul>
-
-
-                    <p>
-                        <label for="{{ form.first_name.id_for_label }}">Confirmer le mot de passe:</label>
-                        {{ form.password2 }}
-
-                        <span class="helptext">Saisissez le même mot de passe que précédemment, pour vérification.</span></p>
-
-                    </p>-->
-                    
-                   
-                    
                     <p>
                         <label for="{{  profile_form.poste.id_for_label }}">Poste:</label>
                         {{ profile_form.poste }}
 
                     </p>
-        
+                    <p >
+
+                      <span><i class="fas fa-plus-circle"></i></span>
+
+                        <label for="{{  ajout_poste_form.nom_de_poste.id_for_label }}">Ajouter un poste :</label>
+                        
+                        {{add_poste_form.post_name}}
+                        
+                        
+                    </p>  
+                    <p>
+                        <label for="{{  profile_form.role.id_for_label }}">Role:</label>
+                        {{ profile_form.role }}
+
+                    </p>
+
+                    <p id="equipe_liv" >
+                        <label for="{{ equipe_form.rt_liv.id_for_label }}">Lier ce compte a un RT :</label>
                     
-                    <button class="btn btn-primary" type="submit"> Valider </button>
+                        {{equipe_form.rt_liv}}
+
+                        <br/>
+                        
+                        <label  for="{{  equipe_form.equipe.id_for_label }}">Equipe:</label>
+                        
+                        {{equipe_form.executant}}
+ 
+                    </p> 
+
+                    <p id="equipe_responsable"  >
+                        <label for="{{  responsable_form.responsable.id_for_label }}">Ajouter un responsable:</label>
+                        
+                        {{responsable_form.responsable}}
+ 
+                    </p>
+                   
+
+                    <button id="display_modal" type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                        Valider
+                      </button>
+                      
+
                     </form>
                  
                 </div>
@@ -86,6 +106,12 @@
         </div>
       </div>
 
+      
+
+  <!-- Modal -->
+
+  <div id="affich_modal"></div>
+  
 
 
 
@@ -99,18 +125,4 @@
 
 
 
-<!-- 
 
-<p>Registration form</p>
-
-{% block body %}
-<div class="container">
-    <h1>Register</h1>
-    <form method="post" enctype='multipart/form-data'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        {{ profile_form.as_p }}
-        <button type="submit"> Submit </button>
-    </form>
-</div>
-{% endblock %}-->

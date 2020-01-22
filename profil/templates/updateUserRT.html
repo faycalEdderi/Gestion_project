@@ -9,14 +9,18 @@
                <div class="card">
                     {% include 'error_message.html' %}
                 <div class="card-header ">
-                  <h4 class="card-title">Création de compte</h4>
+                  <h4 class="card-title">Modification de compte</h4>
                 
                 
 
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                     
-                        
+                        <p>
+                            <label for="{{ form_profil.email.id_for_label }}">Email:</label>
+                            {{ form.email }}
+
+                        </p>
 
                         <p>
                             <label for="{{ form.last_name.id_for_label }}">Nom:</label>
@@ -32,16 +36,26 @@
                         </p>
                         
                         <p>
-                            <label for="{{ form_profile.image.id_for_label }}">Image:</label>
-                            {{ form_profile.image }}
+                            <label for="{{ form_profil.image.id_for_label }}">Image:</label>
+                            {{ form_profil.image }}
 
                         </p>
                         
                         <p>
-                            <label for="{{ form_profile.poste.id_for_label }}">Poste:</label>
-                            {{ form_profile.poste }}
+                            <label for="{{ form_profil.poste.id_for_label }}">Poste:</label>
+                            {{ form_profil.poste }}
 
                         </p>
+                        {% if user.is_authenticated  %}
+                        
+                            
+                        <p>
+                                <label for="{{ equipe_form_liv.executant.id_for_label }}">Chargés executants:</label> <br>
+                                {{ equipe_form_liv.executant }}
+    
+                        </p>
+                             
+                        {% endif %}
                         
                         
                     

@@ -14,10 +14,6 @@ from django.contrib.auth.views import (
 )
 from django.conf import settings
 from django.conf.urls.static import static
-
-
-
-
 from profil import views as profil_views
 from uos import views as uos_views
 
@@ -45,6 +41,18 @@ urlpatterns = [
     path('edit_profile', profil_views.edit_profile, name='edit_profile'),
     path('modifMdp', profil_views.change_pwd, name='modifMdp'),
     path('userList', profil_views.user_list, name='user_list'),
+    path('debug', profil_views.debug, name='debug'),
+
+
+
+    
+
+    
+
+
+    
+
+    #path('team', profil_views.userRelation, name='team'),
     
     path('user/<int:id>/update/', profil_views.update_user, name='update_user'),
   
