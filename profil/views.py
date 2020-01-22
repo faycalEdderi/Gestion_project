@@ -125,10 +125,6 @@ def register(request):
 
             profile = profile_form.save(commit=False)
             profile.user = user
-            
-            
-            
-           
 
             if new_poste != "" : 
                 check_poste = NewPostName(post_name=request.POST["post_name"])
@@ -136,12 +132,11 @@ def register(request):
 
                 print("check_poste : ", check_poste)
                 print("poste : ", poste)
-                    
+                    #FAIRE EN SORTE DE POUVOIR SELECTIONNER UN POSTE NUL
                 if poste :
-                    if  post_in_list != ""  :
+                    if  post_in_list != "" and new_poste != ""  :
                         profile.poste = check_poste
-                    else: 
-                        profile.poste = request.POST["post_name"]
+                    
                 else:
                     profile.poste = check_poste
             
