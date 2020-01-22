@@ -30,10 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    #django auto-complete
-    'dal',
-    'dal_select2',
-##################################
+
 
     'profil.apps.ProfilConfig',
     'django.contrib.admin',
@@ -42,8 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #application instalés
     'django_extensions',
     'django_cleanup.apps.CleanupConfig', #Les anciennes images sont supprimés automatiquement 
+    #applications crées 
+    
+    'uos.apps.UosConfig'
+    
+
 ]
 
 MIDDLEWARE = [
