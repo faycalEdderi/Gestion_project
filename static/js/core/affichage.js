@@ -4,6 +4,7 @@ $().ready(function() {
     $("#equipe_liv").hide();
     $("#equipe_responsable").hide();
     
+    
 /* Page de création de compte : 
  * Lorque le champs select du poste est modifié une liste de poste s'affiche
  * en fonction de la valeur
@@ -28,13 +29,9 @@ $().ready(function() {
         }
     });
 
-// suppression de l'alerte après 3 secondes
+// suppression de l'alerte après 10 secondes
 // durée en millisecondes
-window.setTimeout( () => $('.alert').fadeOut('slow'), 3000 );
-
-
-
-
+window.setTimeout( () => $('.alert').fadeOut('slow'), 10000 );
 
    
 });  

@@ -13,7 +13,8 @@
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css"  href="{% static 'css/google_font.css' %}">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+  
 
     
   <!-- CSS Files -->
@@ -22,8 +23,7 @@
   <link type="text/css" rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %} ">
   <link type="text/css" rel="stylesheet" href="{% static 'css/jquery-ui.structure.css' %}">
   <link type="text/css" rel="stylesheet" href="{% static 'css/jquery-ui.theme.min.css' %}">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
   
 
   <link href="{% static 'css/style.css' %}"  rel="stylesheet">
@@ -201,26 +201,14 @@
 <script>
 
   $(document).ready(function() {
-    
-   
-    
 /* Page de création de compte : 
  * Lorque le champs select du poste est modifié une liste de poste s'affiche
  * en fonction de la valeur
  */
-
     $( "input" ).addClass( "form-control" );
     $('th').addClass("text-center");
     $('td').addClass("text-center");
-
-    
-    
-//Dispartion des messages au bout de 5 seconde :
-    window.setTimeout( () => $('.alert').fadeOut('slow'), 10000 );
-    
-
     $().ready(function() { 
-
 
       $('.avancement').val
       
@@ -281,10 +269,14 @@
 
  // FIN DE LA FONCTION PROGRESSBAR AVANCEMENT  
 
+ //Fonction show/hide button "+" page register 
+  $("#add_poste_field").hide();
 
+  $("#add_new_poste").click(function(){
 
-   
+    $("#add_poste_field").toggle();
 
+  });
 
       $sidebar = $('.sidebar');
 
@@ -306,7 +298,6 @@
       }
 
       $('.fixed-plugin a').click(function(event) {
-        // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
         if ($(this).hasClass('switch-trigger')) {
           if (event.stopPropagation) {
             event.stopPropagation();
