@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
-#fonction qui prends tout les objets d'une classe et les renvoi dans une liste 
+# fonction qui prends tout les objets d'une classe et les renvoi dans une liste
 def choix(objectmodel):
     liste = objectmodel.objects.all()  
     l = []
@@ -13,23 +13,23 @@ def choix(objectmodel):
     return l
 
 
-#création de type d'uo pour chaque uo un type
+# création de type d'uo pour chaque uo un type
 class Typeuo(models.Model):
-    nom=models.CharField(max_length=20)
+    nom = models.CharField(max_length=20)
 
     def __str__(self):
         return self.nom  
 
 
-#création de niveau d'uo pour chaque uo un niveau
+# création de niveau d'uo pour chaque uo un niveau
 class Niveauuo(models.Model):
     nom=models.CharField(max_length=20)
 
     def __str__(self):
        return self.nom 
 
-#création de catalogue uo et que pour chaque type et niveau un prix et un nombre de jour définie 
 
+# création de catalogue uo et que pour chaque type et niveau un prix et un nombre de jour
 class CatalogueUo(models.Model):
     nom=models.CharField(max_length=20)
     typeuo=models.ForeignKey(Typeuo, on_delete=models.CASCADE,default = "")
@@ -40,7 +40,8 @@ class CatalogueUo(models.Model):
     def __str__(self):
         return self.nom   
 
-#création de périmetre et pour chaque périmetre un catalogue uo à respecter
+
+# création de périmetre et pour chaque périmetre un catalogue uo à respecter
 class Perimetre(models.Model):
     nom=models.CharField(max_length=20)
 
@@ -48,7 +49,7 @@ class Perimetre(models.Model):
         return self.nom 
 
       
-#création de work package et pour chaque wp plusieurs périmetres 
+# création de work package et pour chaque wp plusieurs périmetres
 class WorkPackage(models.Model):
     nom=models.CharField(max_length=20)
     perimetretravail=models.ForeignKey(Perimetre, 
@@ -58,7 +59,8 @@ class WorkPackage(models.Model):
     def __str__(self):
         return self.nom 
 
-#création de table fonction        
+
+# création de table fonction
 class Fonction(models.Model):
     nom=models.CharField(max_length=20)
 
@@ -66,7 +68,8 @@ class Fonction(models.Model):
        return self.nom  
 
 
-#création de statut uo comme une table pour qu'il puisse rajouter des statut ou modifier ou suprrimer 
+# création de statut uo comme une table pour qu'il puisse rajouter des statut ou modifier ou
+# suprrimer
 class Statutuo(models.Model):
     nom=models.CharField(max_length=20)
 
@@ -74,7 +77,8 @@ class Statutuo(models.Model):
        return self.nom
 
 
-##création d'état uo comme une table pour qu'il puisse rajouter des états ou modifier ou suprrimer 
+# création d'état uo comme une table pour qu'il puisse rajouter des états ou modifier ou
+# suprrimer
 class Etatuo(models.Model):
     nom=models.CharField(max_length=20)
 
@@ -82,14 +86,16 @@ class Etatuo(models.Model):
        return self.nom
 
 
-#création de projet comme une table pour qu'il puisse rajouter des projet ou modifier ou suprrimer 
+# création de projet comme une table pour qu'il puisse rajouter des projet ou modifier ou
+# suprrimer
 class Projet(models.Model):
     nom=models.CharField(max_length=20)
 
     def __str__(self):
        return self.nom
 
-#création de platforme et pour chaque platforme des projets differents 
+
+# création de platforme et pour chaque platforme des projets differents
 class Plateforme(models.Model):
     nom=models.CharField(max_length=20)
     projets = models.ForeignKey( Projet, on_delete=models.CASCADE,default = "")
@@ -97,7 +103,8 @@ class Plateforme(models.Model):
     def __str__(self):
        return self.nom
 
-#création d'uet et pour chaque uet des fonctions differentes
+
+# création d'uet et pour chaque uet des fonctions differentes
 class Uet(models.Model):
     nom=models.CharField(max_length=20)
     fonctions = models.ForeignKey(Fonction, on_delete=models.CASCADE,default = "")
@@ -105,13 +112,15 @@ class Uet(models.Model):
     def __str__(self):
        return self.nom
 
+
 class Lot(models.Model):
     nom=models.CharField(max_length=50)
 
     def __str__(self):
        return self.nom
-       
-#création d'uo avec possiblité de choisir les champs dans des table differente 
+
+
+# création d'uo avec possiblité de choisir les champs dans des table differente
 class Uo(models.Model):
     numuo = models.CharField(max_length=20)
     typeuo = models.ForeignKey(Typeuo,default = "",on_delete=models.CASCADE)
@@ -136,8 +145,8 @@ class Uo(models.Model):
     def __str__(self):
         return self.numuo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet 
 
-  #class pointage qui permet aux utilisateur de pointer sur l'uo  
 
+# class pointage qui permet aux utilisateur de pointer sur l'uo
 class Pointage(models.Model):
     uo =models.ForeignKey(Uo,on_delete=models.CASCADE,default = "")
     user=models.ForeignKey(User,on_delete=models.CASCADE,default = "")
@@ -147,8 +156,8 @@ class Pointage(models.Model):
     def __str__(self):
        return str(self.point)
 
-# class note de cadrage pour chaque uo une note de cadrage 'reflichir pour apres si on peut ajouter des numero pour les modification de note de cadrage  '
 
+# class note de cadrage pour chaque uo une note de cadrage 'reflichir pour apres si on peut ajouter des numero pour les modification de note de cadrage  '
 class NotedeCadrage(models.Model):
     uo=models.ForeignKey(Uo,on_delete=models.CASCADE,default = "")
     reponseRSA=models.CharField(max_length=600,default="")

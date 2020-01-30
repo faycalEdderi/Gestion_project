@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Creation d'UO</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} ">
+    <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+</head>
+<body>
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+
+   <!-- {{form_uo_principal.num_uo.label}}
+    {{form_uo_principal.num_uo}} -->
+
+    {{ form_type_uo.nom_type_uo.label }}
+    {{ form_type_uo.nom_type_uo }}
+
+    {{ form_niveau_uo.nom_niveau_uo.label }}
+    {{ form_niveau_uo.nom_niveau_uo }}
+
+    {{ form_projet.nom_projet.label }}
+    {{ form_projet.nom_projet }}
+
+    <!--{{form_uo_principal.select_niveau_uo.label}}
+    {{form_uo_principal.select_niveau_uo}}
+
+    {{form_uo_principal.select_type_uo.label}}
+    {{form_uo_principal.select_type_uo}}
+
+    {{form_uo_principal.select_projet.label}}
+    {{form_uo_principal.select_projet}} -->
+<p class="text-center font-weight-bold h1">Class UO</p>
+    {{form_uo_principal.as_p}}
+
+
+
+<button class="btn btn-primary">Valider</button>
+</form>
+</body>
+</html>

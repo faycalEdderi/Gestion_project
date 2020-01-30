@@ -43,16 +43,10 @@ urlpatterns = [
     path('userList', profil_views.user_list, name='user_list'),
     path('debug', profil_views.debug, name='debug'),
 
+    ##### LIEN APP UOS #####
+    path('uo/creation', uos_views.create_uo, name='create_uo'),
+    path('catalogue/creation', uos_views.create_catalogue_uo, name='create_catalogue_uo'),
 
-
-    
-
-    
-
-
-    
-
-    #path('team', profil_views.userRelation, name='team'),
     
     path('user/<int:id>/update/', profil_views.update_user, name='update_user'),
   

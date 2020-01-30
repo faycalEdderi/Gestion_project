@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #application instalés
+    # application installés
     'django_extensions',
-    'django_cleanup.apps.CleanupConfig', #Les anciennes images sont supprimés automatiquement 
+    'django_cleanup.apps.CleanupConfig', # Les anciennes images sont supprimés automatiquement
     #applications crées 
     
     'uos.apps.UosConfig'

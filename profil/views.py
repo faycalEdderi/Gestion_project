@@ -14,18 +14,10 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 
 
-"""
-Multi-ligne commentaire avec 3 guillemets
-
-Les prints renvoient des informations dans l'invit de commande du serveur
-
-"""
-#Affichage des information de l'utilisateur connecté 
-
 #@login_required(login_url="connexion")
 def profil(request):
 
-    equipe_list =  Liv.objects.all().prefetch_related('executant')
+    equipe_list = Liv.objects.all().prefetch_related('executant')
 
     context = {
         "equipe": equipe_list, 
@@ -354,7 +346,7 @@ def change_pwd(request):
             return redirect('profil')
         else:
             return redirect('modifMdp')
-    else :
+    else:
         form = PasswordChangeForm(user=request.user)
         args = {'form' : form}
 
