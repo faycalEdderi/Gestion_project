@@ -300,7 +300,6 @@ def create_pointage(request):
 
             recover_uo = Uo.objects.get(id = selected_uo_id )
             recover_user = User.objects.get(id=selected_user_id)
-            print("point : ", add_point)
 
             add_pointage = Pointage(
                 uo = recover_uo,
@@ -320,6 +319,38 @@ def create_pointage(request):
     }
 
     return render(request, "create_pointage.html", context)
+
+def create_note_cadrage(request):
+
+    if request.method == 'POST':
+        note_cadrage_form = NoteCadrageForm(request.POST)
+
+        print("request : ", request.POST)
+
+        if note_cadrage_form.is_valid():
+
+            selected_uo_id = request.POST['select_uo']
+            answer_rsa = request.POST['reponse_rsa']
+
+            recover_uo = Uo.objects.get(id = selected_uo_id )
+
+            add_note_cadrage = NotedeCadrage(
+                uo = recover_uo,
+                reponseRSA = answer_rsa
+            )
+            add_note_cadrage.save()
+
+            return redirect('create_note_cadrage')
+    else:
+        note_cadrage_form = NoteCadrageForm()
+
+    context = {
+        'form_note_cadrage': note_cadrage_form,
+
+    }
+
+    return render(request, "create_note_cadrage.html", context)
+
 
 
 

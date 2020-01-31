@@ -143,7 +143,7 @@ class Uo(models.Model):
     piloteUo=models.CharField(max_length=20,default="")
 
     def __str__(self):
-        return self.numuo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet 
+        return self.numuo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet
 
 
 # class pointage qui permet aux utilisateur de pointer sur l'uo
@@ -162,8 +162,11 @@ class NotedeCadrage(models.Model):
     uo=models.ForeignKey(Uo,on_delete=models.CASCADE,default = "")
     reponseRSA=models.CharField(max_length=600,default="")
 
+    def __str__(self):
+       return str(self.uo)
+
   
-# classe activités pour chaque note de cadrage plusieur activitées 
+# classe activités pour chaque note de cadrage plusieurs activitées
 class Activites(models.Model):
     notedeCadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "")
     donnesdentree=models.CharField(max_length=600,default="")

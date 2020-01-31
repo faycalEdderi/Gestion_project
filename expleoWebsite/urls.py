@@ -50,6 +50,7 @@ urlpatterns = [
     path('uet/creation', uos_views.creation_uet, name='creation_uet'),
     path('plateforme/creation', uos_views.create_plateforme, name='create_plateforme'),
     path('pointage/creation', uos_views.create_pointage, name='create_pointage'),
+    path('note_cadrage/creation', uos_views.create_note_cadrage, name="create_note_cadrage"),
 
     path('user/<int:id>/update/', profil_views.update_user, name='update_user'),
   

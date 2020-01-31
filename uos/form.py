@@ -227,3 +227,19 @@ class PointageForm(forms.Form):
             'semaine',
             'point'
         ]
+
+class NoteCadrageForm(forms.Form):
+    select_uo = forms.ModelChoiceField(
+        label="Selectionner une UO",
+        queryset=Uo.objects.all(),
+    )
+
+    reponse_rsa = forms.CharField(
+        label="Reponse RSA"
+    )
+    class Meta:
+        model = Pointage
+        fields =[
+            'uo',
+            'reponseRSA',
+        ]
