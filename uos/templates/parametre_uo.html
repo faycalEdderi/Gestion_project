@@ -10,6 +10,7 @@
 </head>
 <body>
 {% include "nav_bar.html" %}
+<p class="text-center font-weight-bold h1">Parametrer UO</p>
 {% if form.errors %}
     {% for field in form %}
         {% for error in field.errors %}
@@ -28,8 +29,32 @@
     {% csrf_token %}
 
 
-<p class="text-center font-weight-bold h1">Création UO</p>
-    {{form_uo_principal.as_p}}
+    {{ form_type_uo.nom_type_uo.label }}
+    {{ form_type_uo.nom_type_uo }}
+
+    {{ form_niveau_uo.nom_niveau_uo.label }}
+    {{ form_niveau_uo.nom_niveau_uo }}
+
+    {{ form_projet.nom_projet.label }}
+    {{ form_projet.nom_projet }}
+
+    {{ form_fonction.nom_fonction.label }}
+    {{ form_fonction.nom_fonction }}
+
+    {{ form_statut_uo.nom_statut_uo.label }}
+    {{ form_statut_uo.nom_statut_uo }}
+
+    {{ form_lot_uo.nom_lot_uo.label }}
+    {{ form_lot_uo.nom_lot_uo }}
+
+    {{ form_etat_uo.nom_etat_uo.label }}
+    {{ form_etat_uo.nom_etat_uo }}
+
+
+
+
+
+
 
 
 

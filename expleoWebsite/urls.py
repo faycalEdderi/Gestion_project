@@ -44,9 +44,11 @@ urlpatterns = [
     path('debug', profil_views.debug, name='debug'),
 
     ##### LIEN APP UOS #####
+    path('uo/parametres', uos_views.creation_parametre_uo, name='creation_parametre_uo'),
     path('uo/creation', uos_views.create_uo, name='create_uo'),
     path('catalogue/creation', uos_views.create_catalogue_uo, name='create_catalogue_uo'),
-
+    path('uet/creation', uos_views.creation_uet, name='creation_uet'),
+    path('plateforme/creation', uos_views.create_plateforme, name='create_plateforme'),
     
     path('user/<int:id>/update/', profil_views.update_user, name='update_user'),
   

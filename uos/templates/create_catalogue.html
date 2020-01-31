@@ -6,9 +6,11 @@
     <meta charset="UTF-8">
     <title>Creation d'UO</title>
     <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} ">
-    <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+
 </head>
 <body>
+{% include "nav_bar.html" %}
+
 {% if form.errors %}
     {% for field in form %}
         {% for error in field.errors %}
@@ -27,12 +29,14 @@
     {% csrf_token %}
 
 
-<p class="text-center font-weight-bold h1">Creation catalogue UO</p>
+<p class="text-center font-weight-bold h1">Création catalogue UO</p>
     {{form_catalogue_uo.as_p}}
 
 
 
 <button class="btn btn-primary">Valider</button>
 </form>
+<script src="{% static 'js/core/jquery.min.js' %}"></script>
+<script src="{% static 'js/core/bootstrap.min.js' %}"></script>
 </body>
 </html>

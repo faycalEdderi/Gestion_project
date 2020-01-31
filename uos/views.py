@@ -27,25 +27,151 @@ class UosCreate(CreateView):
     #fields = ['lot']
 
 
-# fonction de création des objects
-def create_fields_uo(name_niveau_uo, name_type_uo):
-    Niveauuo.objects.create(nom=name_niveau_uo)
-    Typeuo.objects.create(nom=name_type_uo)
+def creation_uet(request):
+    if request.method == 'POST':
+        uet_form = UetForm(request.POST)
+
+        print("request : ", request.POST)
+
+        if uet_form.is_valid():
+
+            uet_name = request.POST['nom_uet']
+            select_fonction_id = request.POST['select_fonction']
+            uet_select_fonction = Fonction.objects.get(id = select_fonction_id)
+
+            create_uet = Uet(
+                nom = uet_name,
+                fonctions = uet_select_fonction
+            )
+            create_uet.save()
+
+            return redirect('creation_uet')
+    else:
+        uet_form = UetForm()
+
+    context = {
+        'form_uet': uet_form,
+    }
+
+    return render(request, "create_uet.html", context)
+
+
+def create_plateforme(request):
+
+    if request.method == 'POST':
+        plateforme_form = PlateformeForm(request.POST)
+
+        print("request : ", request.POST)
+
+        if plateforme_form.is_valid():
+
+            plateforme_name = request.POST['nom_plateforme']
+            select_projet_id = request.POST['select_projet']
+            plateform_select_projet = Projet.objects.get(id = select_projet_id)
+
+            create_plateforme = Plateforme(
+                nom = plateforme_name,
+                projets = plateform_select_projet
+            )
+            create_plateforme.save()
+
+            return redirect('create_plateforme')
+    else:
+        plateforme_form = PlateformeForm()
+
+    context = {
+        'form_plateforme': plateforme_form,
+    }
+
+    return render(request, "create_plateforme.html", context)
+
+
+# fonction de création des objects ayant pour attribut nom
+def creation_fields_uo(object, field):
+    object.objects.create(nom=field)
+
+
+def creation_parametre_uo(request):
+
+    if request.method == 'POST':
+        type_uo_form = TypeUoForm(request.POST)
+        projet_form = ProjetForm(request.POST)
+        niveau_uo_form = NiveauUoForm(request.POST)
+        fonction_form = FonctionForm(request.POST)
+        statut_uo_form = StatutUoForm(request.POST)
+        etat_uo_form = EtatUoForm(request.POST)
+        lot_uo_form = LotUoForm(request.POST)
+
+        print("request : ", request.POST)
+
+        if type_uo_form.is_valid():
+
+            type_uo_name = request.POST['nom_type_uo']
+            niveau_uo_name = request.POST['nom_niveau_uo']
+            projet_name = request.POST['nom_projet']
+            fonction_name = request.POST['nom_fonction']
+            statut_uo_name = request.POST['nom_statut_uo']
+            etat_uo_name = request.POST['nom_etat_uo']
+            lot_uo_name = request.POST['nom_lot_uo']
+
+            count_name = [
+                type_uo_name,
+                niveau_uo_name,
+                projet_name,
+                fonction_name,
+                statut_uo_name,
+                etat_uo_name,
+                lot_uo_name
+            ]
+            use_object = [
+                Typeuo,
+                Niveauuo,
+                Projet,
+                Fonction,
+                Statutuo,
+                Etatuo,
+                Lot,
+            ]
+            i = 0
+            while i < len(count_name):
+                for object in use_object:
+                    show = creation_fields_uo(object, count_name[i])
+                    print(show)
+                    i += 1
+
+            return redirect('creation_parametre_uo')
+    else:
+        type_uo_form = TypeUoForm()
+        projet_form = ProjetForm()
+        niveau_uo_form = NiveauUoForm()
+        fonction_form = FonctionForm()
+        statut_uo_form = StatutUoForm()
+        etat_uo_form = EtatUoForm()
+        lot_uo_form = LotUoForm()
+
+    context = {
+        'form_type_uo': type_uo_form,
+        'form_projet': projet_form,
+        'form_niveau_uo': niveau_uo_form,
+        'form_fonction' : fonction_form,
+        'form_statut_uo' : statut_uo_form,
+        'form_etat_uo' : etat_uo_form,
+        'form_lot_uo' : lot_uo_form,
+
+    }
+
+    return render(request, "parametre_uo.html", context)
 
 
 def create_uo(request):
 
     if request.method == 'POST':
-        type_uo_form = TypeUoForm(request.POST)
-        niveau_uo_form = NiveauUoForm(request.POST)
-        uo_principal_form = UoForm(request.POST)
-        projet_form = ProjetForm(request.POST)
+
+        uo_creation_form = UoForm(request.POST)
 
         print("request : ", request.POST)
 
-        if type_uo_form.is_valid():
-            type_uo_name = request.POST['nom_type_uo']
-            niveau_uo_name = request.POST['nom_niveau_uo']
+        if uo_creation_form.is_valid():
 
             number_uo = request.POST['num_uo']
             jalon_d = request.POST['jalonD']
@@ -57,32 +183,61 @@ def create_uo(request):
             avancement = request.POST['avancement']
             pilote_uo = request.POST['pilote_uo']
 
-            # Appel de la fonction de création des objects
-            create_fields_uo(niveau_uo_name, type_uo_name)
+            type_uo_id = request.POST['select_type_uo']
+            niveau_uo_id = request.POST['select_niveau_uo']
+            projet_id = request.POST['select_projet']
+            fonction_id = request.POST['select_fonction']
+            satut_uo_id = request.POST['select_statut_uo']
+            etat_uo_id = request.POST['select_etat_uo']
+            plateform_id = request.POST['select_plateform']
+            uet_id = request.POST['select_uet']
+            catalogue_id = request.POST['select_catalogue']
+            lot_id = request.POST['select_lot']
 
-            Uo.objects.create(
-                numuo = number_uo,
-                jalonD = jalon_d,
-                jalonF = jalon_f,
-                ju = ju,
-                DateDebutUO = date_uo_start,
-                DateLivraison = date_uo_delivery,
-                Client = client,
-                avancement = avancement,
-                piloteUo = pilote_uo
+            get_type_uo = Typeuo.objects.get(id = type_uo_id )
+            get_niveau_uo = Niveauuo.objects.get(id = niveau_uo_id)
+            get_projet = Projet.objects.get(id = projet_id)
+            get_fonction = Fonction.objects.get(id = fonction_id )
+            get_statut_uo = Statutuo.objects.get(id = satut_uo_id)
+            get_etat_uo = Etatuo.objects.get(id = etat_uo_id )
+            get_plateform = Plateforme.objects.get(id = plateform_id )
+            get_uet = Uet.objects.get(id=uet_id)
+            get_catalogue_uo = CatalogueUo.objects.get(id = catalogue_id )
+            get_lot = Lot.objects.get(id = lot_id )
+
+            create_uo = Uo(
+                numuo=number_uo,
+                jalonD=jalon_d,
+                jalonF=jalon_f,
+                ju=ju,
+                DateDebutUO=date_uo_start,
+                DateLivraison=date_uo_delivery,
+                Client=client,
+                avancement=avancement,
+                piloteUo=pilote_uo,
+
+                typeuo= get_type_uo ,
+                niveauo= get_niveau_uo,
+                projet= get_projet,
+                fonction= get_fonction,
+                statutuo= get_statut_uo,
+                etatuo= get_etat_uo,
+                plateforme= get_plateform,
+                uet=get_uet,
+                catalogue= get_catalogue_uo,
+                lot=get_lot
             )
+            create_uo.save()
 
             return redirect('create_uo')
     else:
-        type_uo_form = TypeUoForm()
-        niveau_uo_form = NiveauUoForm()
-        uo_principal_form = UoForm()
-        projet_form = ProjetForm()
+
+        uo_creation_form = UoForm()
+
     context = {
-        'form_type_uo': type_uo_form,
-        'form_niveau_uo': niveau_uo_form,
-        'form_uo_principal': uo_principal_form,
-        'form_projet': projet_form
+
+        'form_uo_principal': uo_creation_form,
+
     }
 
     return render(request, "create_uo.html", context)
