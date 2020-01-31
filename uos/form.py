@@ -202,3 +202,28 @@ class UoForm(forms.Form):
     class Meta:
         model = Uo
         fields='__all__'
+
+
+class PointageForm(forms.Form):
+    select_uo = forms.ModelChoiceField(
+        label="Selectionner une UO",
+        queryset=Uo.objects.all(),
+    )
+    select_user = forms.ModelChoiceField(
+        label="Selectionner un utilisateur",
+        queryset=User.objects.all(),
+    )
+    semaine = forms.IntegerField(
+        label="Nombre de semaine"
+    )
+    point = forms.FloatField(
+        label="Nombre de points"
+    )
+    class Meta:
+        model = Pointage
+        fields =[
+            'uo',
+            'user',
+            'semaine',
+            'point'
+        ]

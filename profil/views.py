@@ -37,7 +37,7 @@ def connexion(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect('uo')
+                return redirect('uoslist')
 
         else:
             messages.error(request,'Adresse mail ou mot de passe incorrect') 

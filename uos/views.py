@@ -284,6 +284,45 @@ def create_catalogue_uo(request):
     return render(request, "create_catalogue.html", context)
 
 
+def create_pointage(request):
+
+    if request.method == 'POST':
+        pointage_form = PointageForm(request.POST)
+
+        print("request : ", request.POST)
+
+        if pointage_form.is_valid():
+
+            selected_uo_id = request.POST['select_uo']
+            selected_user_id = request.POST['select_user']
+            week = request.POST['semaine']
+            add_point = request.POST['point']
+
+            recover_uo = Uo.objects.get(id = selected_uo_id )
+            recover_user = User.objects.get(id=selected_user_id)
+            print("point : ", add_point)
+
+            add_pointage = Pointage(
+                uo = recover_uo,
+                user = recover_user,
+                semaine = week,
+                point = add_point
+            )
+            add_pointage.save()
+
+            return redirect('create_pointage')
+    else:
+        pointage_form = PointageForm()
+
+    context = {
+        'form_pointage': pointage_form,
+
+    }
+
+    return render(request, "create_pointage.html", context)
+
+
+
 
 
 

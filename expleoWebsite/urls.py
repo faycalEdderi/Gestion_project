@@ -49,7 +49,8 @@ urlpatterns = [
     path('catalogue/creation', uos_views.create_catalogue_uo, name='create_catalogue_uo'),
     path('uet/creation', uos_views.creation_uet, name='creation_uet'),
     path('plateforme/creation', uos_views.create_plateforme, name='create_plateforme'),
-    
+    path('pointage/creation', uos_views.create_pointage, name='create_pointage'),
+
     path('user/<int:id>/update/', profil_views.update_user, name='update_user'),
   
 
