@@ -19,14 +19,11 @@ from uos import views as uos_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', uos_views.uo_list, name='uoslist'),
     path('uoslist', uos_views.uo_list, name='uoslist'),
     path('createuo', uos_views.UosCreate, name='createuo'),
     path('diagramme', views.diagramme),
     path('pointages', views.pointages, name='pointages'),
-    path('uo', views.uo, name="uo"),
     path('historique', views.historique),
-    
 
     path("logout/", LogoutView.as_view(), name="logout"),
     path("reset_password", PasswordResetView.as_view(), name='reset_password'),
@@ -44,6 +41,7 @@ urlpatterns = [
     path('debug', profil_views.debug, name='debug'),
 
     ##### LIEN APP UOS #####
+    path('', uos_views.uo_list, name='uoslist'),
     path('uo/parametres', uos_views.creation_parametre_uo, name='creation_parametre_uo'),
     path('uo/creation', uos_views.create_uo, name='create_uo'),
     path('catalogue/creation', uos_views.create_catalogue_uo, name='create_catalogue_uo'),

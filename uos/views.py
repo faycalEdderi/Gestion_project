@@ -3,7 +3,6 @@ from django.db import models
 from uos.models import *
 from uos.form import *
 from django.contrib import messages
-
 from django.views import generic 
 from django.views.generic.edit import CreateView
 
@@ -19,7 +18,7 @@ def uo_list(request):
     context = {
         "Uo": uoListe,
     }
-    return render(request, "TableUos.html", context)
+    return render(request, "table_uo.html", context)
 
 
 class UosCreate(CreateView):

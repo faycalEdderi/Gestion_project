@@ -1,9 +1,11 @@
-{% include 'theme.html' %} 
+{% extends 'theme.html' %}
+{% block content %}
 <div class="content">
     <div class="container-fluid">
 
       <!--MENU DRODPDOWN FILTRES UO-->
-    
+        <a href="{% url 'create_uo' %}" ><button class="btn btn-primary"   > Créer nouvelle UO
+         </button></a>
      
         <div class="col-md-12">
             <div class="card">
@@ -64,3 +66,5 @@
               </div>
             </div>
           </div>
+        {% include 'footer.html' %}
+        {% endblock content %}
