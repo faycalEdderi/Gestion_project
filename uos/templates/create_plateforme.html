@@ -1,15 +1,9 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Creation d'UO</title>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} ">
-
-</head>
-<body>
+{% extends 'theme.html' %}
+{% block content %}
 {% include "nav_bar.html" %}
+
+
+
 
 {% if form.errors %}
     {% for field in form %}
@@ -25,18 +19,38 @@
         </div>
     {% endfor %}
 {% endif %}
-<form method="POST">
-    {% csrf_token %}
+<div class="container ">
+    <div class="panel-heading">
+        <h2 class="panel-title mt-2 text-center">Création plateforme</h2>
+    </div>
+    <div class="row centered-form d-flex justify-content-start">
+    <div class="col-sm-12 col-md-9 ">
+        <div class="panel panel-default">
 
-
-<p class="text-center font-weight-bold h1">Création Plateforme</p>
-    {{form_plateforme.as_p}}
-
-
-
-<button class="btn btn-primary">Valider</button>
-</form>
-<script src="{% static 'js/core/jquery.min.js' %}"></script>
-<script src="{% static 'js/core/bootstrap.min.js' %}"></script>
-</body>
-</html>
+                <div class="panel-body">
+                    <form method="POST">
+                    {% csrf_token %}
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{ form_plateforme.nom_plateforme.label }}
+                                    {{form_plateforme.nom_plateforme}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{ form_plateforme.select_projet.label }}
+                                    {{form_plateforme.select_projet}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start">
+                           <input type="submit" value="Valider" class="btn center-block btn-primary col-md-3 btn-block">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

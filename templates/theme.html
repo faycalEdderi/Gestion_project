@@ -14,18 +14,13 @@
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css"  href="{% static 'css/google_font.css' %}">
   <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
-  
 
-    
   <!-- CSS Files -->
   <link href="{% static 'css/material-dashboard.css' %}"  rel="stylesheet">
     <!--Jquery UI CSS Files-->
   <link type="text/css" rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %} ">
   <link type="text/css" rel="stylesheet" href="{% static 'css/jquery-ui.structure.css' %}">
   <link type="text/css" rel="stylesheet" href="{% static 'css/jquery-ui.theme.min.css' %}">
-  
-  
-
   <link href="{% static 'css/style.css' %}"  rel="stylesheet">
   <link href="{% static 'css/simple-sidebar.css' %}"  rel="stylesheet">
 
@@ -47,7 +42,7 @@
       </div>
 
      
-      {% include 'menu.html' %} 
+      {% include 'menu.html' %}
 
 
     </div>
@@ -56,21 +51,9 @@
 
         
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top  ">
+      <nav class="navbar navbar-expand-lg navbar-transparent ">
         
         <div class="container-fluid">
-
-     <!-- METTTRE UNE VARIABLE
-          <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">Uos</a>
-          </div>
-          -->
-
-
-
-
-
-
 
       <!--DROPDOWN MENU FILTRE-->
 
@@ -134,8 +117,8 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      {% block content %}{% endblock %}
-      {% block footer %}{% endblock %}
+      {% block content %}{% endblock content %}
+      {% block footer %}{% endblock footer%}
       
   
 
@@ -154,9 +137,6 @@
 
 <!-- Librairie JQuery UI-->
 <script src="{% static 'js/plugins/jquery-ui.min.js' %}"></script>
-
-
-
 <!-- Plugin for the momentJs  -->
 <script src="{% static 'js/plugins/moment.min.js' %}"></script>
 <!--  Plugin for Sweet Alert -->

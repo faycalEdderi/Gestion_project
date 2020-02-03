@@ -1,14 +1,5 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Creation d'UO</title>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} ">
-    <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
-</head>
-<body>
+{% extends 'theme.html' %}
+{% block content %}
 {% include "nav_bar.html" %}
 {% if form.errors %}
     {% for field in form %}
@@ -24,16 +15,164 @@
         </div>
     {% endfor %}
 {% endif %}
-<form method="POST">
-    {% csrf_token %}
 
 
-<p class="text-center font-weight-bold h1">Création UO</p>
-    {{form_uo_principal.as_p}}
+<div class="container ">
+    <div class="panel-heading">
+        <h2 class="panel-title mt-2 text-center">Création UO</h2>
+    </div>
+    <div class="row centered-form d-flex justify-content-start">
+    <div class="col-sm-12 col-md-9 ">
+        <div class="panel panel-default">
+
+                <div class="panel-body">
+                    <form method="POST">
+                    {% csrf_token %}
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.num_uo.label}}
+                                    {{form_uo_principal.num_uo}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.select_type_uo.label}}
+                                    {{form_uo_principal.select_type_uo}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.select_niveau_uo.label}}
+                                    {{form_uo_principal.select_niveau_uo}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.select_projet.label}}
+                                    {{form_uo_principal.select_projet}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.select_fonction.label}}
+                                    {{form_uo_principal.select_fonction}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.select_statut_uo.label}}
+                                    {{form_uo_principal.select_statut_uo}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.select_etat_uo.label}}
+                                    {{form_uo_principal.select_etat_uo}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.select_plateform.label}}
+                                    {{form_uo_principal.select_plateform}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.select_uet.label}}
+                                    {{form_uo_principal.select_uet}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.select_catalogue.label}}
+                                    {{form_uo_principal.select_catalogue}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.select_lot.label}}
+                                    {{form_uo_principal.select_lot}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.jalonD.label}}
+                                    {{form_uo_principal.jalonD}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.jalonF.label}}
+                                    {{form_uo_principal.jalonF}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.ju.label}}
+                                    {{form_uo_principal.ju}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.date_debut_uo.label}}
+                                    {{form_uo_principal.date_debut_uo}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.date_livraison_uo.label}}
+                                    {{form_uo_principal.date_livraison_uo}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.client.label}}
+                                    {{form_uo_principal.client}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.avancement.label}}
+                                    {{form_uo_principal.avancement}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.pilote_uo.label}}
+                                    {{form_uo_principal.pilote_uo}}
+                                </div>
+                            </div>
+
+                        </div>
 
 
+                        <div class="d-flex justify-content-start">
+                           <input type="submit" value="Valider" class="btn center-block btn-primary col-md-3 btn-block">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<button class="btn btn-primary">Valider</button>
-</form>
-</body>
-</html>
+{% endblock content %}
