@@ -10,20 +10,26 @@ from django.forms import ModelForm
 #Uniquement pour RT et +
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(
+        label = 'Email :',
         required=True,
         error_messages={'required': 'Veuillez entrer une Adresse Mail'},
+
         )
     username = forms.CharField(
         required=False,
         )
     first_name = forms.CharField(
+        label='Nom : ',
         required=True,
         error_messages={'required': 'Veuillez entrer un Nom'},
+
          
         )
     last_name = forms.CharField(
+        label='Prénom : ',
         required=True,
         error_messages={'required': 'Veuillez entrer un Prénom'},
+
         
         )
     password1 = forms.CharField(
@@ -62,9 +68,15 @@ class RegistrationForm(UserCreationForm):
 
 class UserProfileForm(forms.ModelForm):
     poste = forms.ModelChoiceField(
-        label = "Seectionner un poste :",
+        label = "Selectionner un poste :",
         queryset=NewPostName.objects.all()
     )
+    role = forms.ChoiceField(
+        label="Selectionner un role :",
+
+    )
+
+
     class Meta : 
         model = UserProfile 
         fields = (

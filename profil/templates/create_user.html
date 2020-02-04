@@ -30,32 +30,41 @@
                     </p>
 
                     <p>
-                        <label for="{{ form.last_name.id_for_label }}">Nom:</label>
+                       {{ form.last_name.label }}
                         {{ form.last_name }}
                     </p>
 
 
 
                     <p>
-                        <label for="{{ form.first_name.id_for_label }}">Prénom:</label>
+                        {{ form.first_name.label }}
                         {{ form.first_name }}
 
                     </p>
 
                     <p>
-                        <label for="{{ form.email.id_for_label }}">Email:</label>
+                        {{ form.email.label }}
                         {{ form.email }}
 
                     </p>
 
 
                     <p id="equipe_responsable"  >
-                        <label for="{{  responsable_form.responsable.id_for_label }}">Ajouter un responsable:</label>
+                        {{  responsable_form.responsable.id_for_label }}
 
                         {{responsable_form.responsable}}
-
                     </p>
-                        {{form_profil.as_p}}
+                    <p>
+                        {{form_profil.poste.label}}
+                        {{form_profil.poste}}
+                    </p>
+                    <p>
+
+                        {{form_profil.role.label}}
+                        {{form_profil.role}}
+                    </p>
+
+
 
 
                     <button id="display_modal" type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
