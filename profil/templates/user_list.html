@@ -1,4 +1,5 @@
-
+{% extends  'theme.html' %}
+{% block content %}
 <div class="content">
     <div class="container-fluid">
       <div class="col-md-12">
@@ -23,35 +24,19 @@
               
                   <td class="{{ user.userprofile.is_active }}">{{user.last_name}}</td>
                   <td>{{user.first_name}}</td>
-                  
-                  
                   <td>{{user.email}}</td>
                   <td>{{user.userprofile.poste}}</td>
                 
                   <td><a href="{% url 'update_user' user.id %}" class="btn btn-info">Modifier</button></a>
-               
-                 <!-- <td>{{user.id}}</td>-->
-                
                  <td>
                    
                       {{ user.userprofile.is_active }}
                       
                   </td>
                   <td><input type="checkbox" class="btn check btn-dark" ></input></td>
-                  
-                  
-
-                 
-                 
 
                 </tr>
-                
                 {% endfor %}
-
-                
-
-
-
               </tbody>
             </table>
           </div>
@@ -60,6 +45,8 @@
     </div>    
   </div>
 </div>
+
+{% endblock content %}
 
          
 

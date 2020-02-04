@@ -1,10 +1,9 @@
 {% extends 'theme.html' %}
+{% load static %}
 {% block content %}
-
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-
             <div class="col-md-12">
                <div class="card">
                 <div class="card-header ">
@@ -43,7 +42,6 @@
                             </div>
                           </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-6">
                               <div class="form-group">
@@ -57,8 +55,6 @@
                                 <input type="text" class="form-control" value="{{ user.userprofile.poste | upper  }}" disabled>
                               </div>
                             </div>
-                           
-                            
                           </div>
                           <div class="row">
                             <div class="col-md-6">
@@ -72,17 +68,18 @@
                                 </div>
                             </div>
                           </div>
-
-                            </div>
                           </div>
                           {% if user.userprofile.poste == 'ch.MIL' or user.userprofile.poste == 'ch.HIL' or user.userprofile.poste == 'ch.IS'  %}
                           <div class="col-md-6">
                             <div class="form-group">
                               <label class="bmd-label-floating">Responsable : </label>
                               <ul>
+
                                 <li>{{user.chvalid.responsable}}</li>
+
                               </ul>
                           {% endif %}
+
                             </div>
                           </div>
 
@@ -91,14 +88,11 @@
                               <div class="form-group">
                                 <label class="bmd-label-floating">Responsable : </label>
                                 <ul>
-                                
-  
                                     {% for liv in  user.rt_liv.all  %}
 
                                     <li>{{liv}}</li>
     
                                   {% endfor %}
-
                                 </ul>
                             </div>
                           </div>
@@ -113,18 +107,9 @@
                               {% endfor %}
                               </ul>
                         {% endif %}
-                          
-                    
-                    
-                   
-                    
+
                   </form>
                 </div>
               </div>
             </div>
-      
-          </div>
-        </div>
-      </div>
-      {% include 'modal.html' %}
 {% endblock content %}

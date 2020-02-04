@@ -19,8 +19,7 @@ from uos import views as uos_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('uoslist', uos_views.uo_list, name='uoslist'),
-    path('createuo', uos_views.UosCreate, name='createuo'),
+    path('uos/list', uos_views.uo_list, name='uoslist'),
     path('diagramme', views.diagramme),
     path('pointages', views.pointages, name='pointages'),
     path('historique', views.historique),
@@ -35,10 +34,10 @@ urlpatterns = [
     path('connexion', profil_views.connexion, name='connexion'),#Il faudra definir cette page comme page d'acceuil
     path('profil', profil_views.profil, name="profil"), 
     path('register', profil_views.register, name='register'),
-    path('edit_profile', profil_views.edit_profile, name='edit_profile'),
-    path('modifMdp', profil_views.change_pwd, name='modifMdp'),
-    path('userList', profil_views.user_list, name='user_list'),
-    path('debug', profil_views.debug, name='debug'),
+    path('edit/profil', profil_views.edit_profile, name='edit_profile'),
+    path('change/mdp', profil_views.change_pwd, name='modifMdp'),
+    path('users/list', profil_views.user_list, name='user_list'),
+
 
     ##### LIEN APP UOS #####
     path('', uos_views.uo_list, name='uoslist'),

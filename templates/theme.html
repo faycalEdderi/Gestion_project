@@ -44,7 +44,6 @@
      
       {% include 'menu.html' %}
 
-
     </div>
     
     <div class="main-panel  ">
@@ -118,7 +117,9 @@
       </nav>
       <!-- End Navbar -->
       {% block content %}{% endblock content %}
-      {% block footer %}{% endblock footer%}
+      {% block footer %}
+      {% include 'footer.html' %}
+      {% endblock footer%}
       
   
 

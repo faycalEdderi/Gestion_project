@@ -24,7 +24,7 @@ def profil(request):
         
     }
 
-    return render(request,'accounts/profil.html', context)
+    return render(request,'user_profil.html', context)
 
 #Fonction de connection
 def connexion(request):
@@ -55,7 +55,7 @@ def user_list(request):
     context = {
         "user": userList, 
     }
-    return render(request, "accounts/users.html", context)
+    return render(request, "user_list.html", context)
 
 
       #if request.user.userprofile.role == "rt" or "chf_project":
@@ -212,7 +212,8 @@ def register(request):
         }
     return render(request, 'accounts/register.html', context)
 
-#Fonction modification de profile par USER sur son profile personnel
+
+# Fonction modification de profile par USER sur son profile personnel
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
@@ -245,7 +246,8 @@ def edit_profile(request):
         args = {'form' : form, 'form_profil' : form_profil, }
 
 
-        return render(request, 'accounts/edit_profile.html', args)
+        return render(request, 'update_user.html', args)
+
 
 #Fonction de update user par RT : 
 # !!!!!Reste a definir un accès restreint uniquement pour RT ET + !!!!!
@@ -321,7 +323,8 @@ def update_user(request, id=None):
             
             }
 
-    return render(request, "accounts/edit_profileRT.html", context)
+    return render(request, "update_user_rt.html", context)
+
 
 #Fonction de modification de mot de passe a partir du profile User.
 
@@ -352,17 +355,7 @@ def change_pwd(request):
 
         return render(request, 'accounts/change_password.html', args)
 
-def debug(request):
 
-    respObj = ChValid.objects.first()
-   # responsable = respObj.liv.get(id=19)
-    #responsable = respObj.liv.all()
-    responsable = User.objects.get(liv = 19)
 
-    context = {
-        "affiche": responsable, 
-    }
-
-    return render(request,'accounts/debug.html', context)
 
 

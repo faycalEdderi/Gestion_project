@@ -27,25 +27,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
+
 
 INSTALLED_APPS = [
-
-
-    'profil.apps.ProfilConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # application installés
     'django_extensions',
-    'django_cleanup.apps.CleanupConfig', # Les anciennes images sont supprimés automatiquement
-    #applications crées 
-    
+    'django_cleanup.apps.CleanupConfig',
+    'profil.apps.ProfilConfig',
     'uos.apps.UosConfig'
-    
 
 ]
 

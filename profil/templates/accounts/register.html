@@ -1,6 +1,5 @@
-{% load static %}
-{% include 'theme.html' %}                    
-                    
+{% extends 'theme.html' %}
+{% block content %}
       <div class="content">
         <div class="container-fluid">
           <div class="row">
@@ -112,7 +111,9 @@
   <!-- Modal -->
 
   <div id="affich_modal"></div>
-  
+
+          {% endblock content %}
+
 
 
 

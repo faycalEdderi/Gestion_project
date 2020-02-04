@@ -12,18 +12,17 @@ def choix(objectmodel):
     return liste
 
 
-# Create your views here.
 def uo_list(request):
     uoListe= Uo.objects.all()
     context = {
         "Uo": uoListe,
     }
-    return render(request, "table_uo.html", context)
+    return render(request, "uos_list.html", context)
 
 
 class UosCreate(CreateView):
     model = Uo
-    #fields = ['lot']
+    # fields = ['lot']
 
 
 def creation_uet(request):
@@ -227,6 +226,10 @@ def create_uo(request):
                 lot=get_lot
             )
             create_uo.save()
+            messages.add_message(
+                request,
+                messages.INFO,
+                'L\'UO a etais créée correctement ')
 
             return redirect('create_uo')
     else:
