@@ -37,6 +37,7 @@ urlpatterns = [
     path('edit/profil', profil_views.edit_profile, name='edit_profile'),
     path('change/mdp', profil_views.change_pwd, name='modifMdp'),
     path('users/list', profil_views.user_list, name='user_list'),
+    path('user/create', profil_views.create_account, name='create_account'),
 
 
     ##### LIEN APP UOS #####

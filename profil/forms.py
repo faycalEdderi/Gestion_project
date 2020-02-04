@@ -5,14 +5,14 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import * 
 from django.forms import ModelForm
 
+
 # FORM DE CREATION DE COMPTE 
 #Uniquement pour RT et +
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(
         required=True,
         error_messages={'required': 'Veuillez entrer une Adresse Mail'},
-        ) 
-#username n'est plus requis pour la creation de compte car c'est avec l'adresse mail qu'on se connecte
+        )
     username = forms.CharField(
         required=False,
         )
@@ -37,8 +37,7 @@ class RegistrationForm(UserCreationForm):
         error_messages={'required': 'Les deux mots de passes ne sont pas identiques'},
         widget=forms.PasswordInput,  
         )
-    
-     
+
     class Meta:
         model = User
         fields = (
@@ -49,6 +48,7 @@ class RegistrationForm(UserCreationForm):
             'password1',
             'password2',          
         )
+
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
         user.first_name = self.cleaned_data['first_name']
@@ -59,8 +59,12 @@ class RegistrationForm(UserCreationForm):
             user.save()
         return user
 
+
 class UserProfileForm(forms.ModelForm):
-    
+    poste = forms.ModelChoiceField(
+        label = "Seectionner un poste :",
+        queryset=NewPostName.objects.all()
+    )
     class Meta : 
         model = UserProfile 
         fields = (
@@ -78,15 +82,18 @@ class LivForm(forms.ModelForm):
            'rt_liv',            
         )
 
+
 class ChValidForm(forms.ModelForm):
     chValid_list=forms.CharField(
         required=False,
     )
+
     class Meta:
         model = ChValid
         fields =(
             'responsable',    
         )
+
 
 class AjoutPosteForm(forms.ModelForm):
     post_name = forms.CharField(required=False)
@@ -102,15 +109,9 @@ class AjoutPosteForm(forms.ModelForm):
                 'unique': 'Ce poste existe déja !'
             },
         }
-        
-        
-        
-       
-          
-#########################FIN DE CREATION DE COMPTE #####################
 
-#FORM MODIFICATION DE PROFIL ACCESSIBLE PAR TOUS USER 
 
+# FORM MODIFICATION DE PROFIL ACCESSIBLE PAR TOUS USER
 
 class EditProfileForm(forms.ModelForm):
     first_name = forms.CharField(
@@ -118,7 +119,7 @@ class EditProfileForm(forms.ModelForm):
         error_messages={'required': 'Veuillez entrer un prénom'}, 
          
         )
-    #ajout de class bootstrap pour modifier le style de l'input
+    # ajout de class bootstrap pour modifier le style de l'input
     first_name.widget = forms.TextInput(attrs={'class': 'form-control',})
     
     last_name = forms.CharField(

@@ -356,6 +356,60 @@ def change_pwd(request):
         return render(request, 'accounts/change_password.html', args)
 
 
+def create_account(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        form_profil = UserProfileForm(request.POST)
+        print("Request : ", request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            nom = request.POST['last_name']
+            prenom = request.POST['first_name']
+            username = request.POST['last_name'] + "_" + request.POST['first_name']
+            mdp = "motdepasse78"
+
+            select_poste = request.POST['poste']
+            select_role = request.POST['role']
+            get_poste = NewPostName.objects.get(id = select_poste )
+            # get_role = User.objects.get(id = select_poste )
+
+            new_user = User.objects.create_user(
+                username= username,
+                email=email,
+                password = mdp,
+                first_name = prenom,
+                last_name= nom,
+            )
+            print(new_user)
+            new_profil = UserProfile(
+                user = new_user,
+                poste = get_poste,
+                role = select_role
+            )
+            new_profil.save()
+            # get_new_user = User.objects.get(username = new_user )
+
+            send_mail(
+                'Votre compte a été créé',
+                'Votre mdp : ' + mdp,
+                'Admin@expleogroup.com',
+                [email],
+                fail_silently=False,
+            )
+
+            return redirect('create_account')
+        else:
+            return redirect('create_account')
+    else:
+        form = RegistrationForm()
+        form_profil = UserProfileForm()
+        args = {
+            'form': form,
+            'form_profil': form_profil
+        }
+
+        return render(request, 'create_user.html', args)
+
 
 
 
