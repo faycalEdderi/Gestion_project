@@ -60,7 +60,7 @@ class UserProfile(models.Model):
         default='charge_execution'
     )
 
-    is_active = models.CharField(null=True, blank=True, max_length=15 ,choices=IS_ACTIVE, default='activate')
+
 
     def __str__(self):
         return self.user.username

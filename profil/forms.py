@@ -186,5 +186,5 @@ class EditProfileUserForm(ModelForm):
         fields = ( 
             'image', 
             'poste',
-            'is_active',
+           
         )
