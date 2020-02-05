@@ -28,12 +28,7 @@
                   <td>{{user.userprofile.poste}}</td>
                 
                   <td><a href="{% url 'update_user' user.id %}" class="btn btn-info">Modifier</button></a>
-                 <td>
-                   
-                      {{ user.userprofile.is_active }}
-                      
-                  </td>
-                  <td><input type="checkbox" class="btn check btn-dark" ></input></td>
+
 
                 </tr>
                 {% endfor %}

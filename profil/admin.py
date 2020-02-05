@@ -11,3 +11,5 @@ admin.site.register(NewPostName)
 
 admin.site.register(ChValid)
 
+admin.site.register(Role)
+

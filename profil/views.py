@@ -57,16 +57,6 @@ def user_list(request):
     }
     return render(request, "user_list.html", context)
 
-
-      #if request.user.userprofile.role == "rt" or "chf_project":
-           # else :
-         #   return render(request,'pages/error404.html')
-
-#Fonction de creation de compte UNIQUEMENT POUR RT ET +
-# Ajouter la condition ci dessus pour restreindre accès a RT 
-# 
-
-
 def register(request):
 
     form = RegistrationForm(request.POST)
