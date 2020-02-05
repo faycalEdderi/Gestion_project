@@ -71,12 +71,12 @@ class UserProfileForm(forms.ModelForm):
         label = "Selectionner un poste :",
         queryset=NewPostName.objects.all()
     )
-    role = forms.ChoiceField(
+    role = forms.ModelChoiceField(
         label="Selectionner un role :",
+        queryset=Role.objects.all()
 
     )
-
-
+    
     class Meta : 
         model = UserProfile 
         fields = (
@@ -171,7 +171,7 @@ class EditProfileUserForm(ModelForm):
         ('pmo', 'PMO'),
         ('rsop', 'RSOP'),
         
-    ) 
+    )
 
     poste = forms.ChoiceField(choices=POSTE, widget=forms.Select(attrs={'class': 'custom-select mr-sm-2"'}) )
 

@@ -371,7 +371,7 @@ def create_account(request):
             select_poste = request.POST['poste']
             select_role = request.POST['role']
             get_poste = NewPostName.objects.get(id = select_poste )
-            # get_role = User.objects.get(id = select_poste )
+            get_role = Role.objects.get(id = select_role )
 
             new_user = User.objects.create_user(
                 username= username,
@@ -384,7 +384,7 @@ def create_account(request):
             new_profil = UserProfile(
                 user = new_user,
                 poste = get_poste,
-                role = select_role
+                role = get_role
             )
             new_profil.save()
             # get_new_user = User.objects.get(username = new_user )

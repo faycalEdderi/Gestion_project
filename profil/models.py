@@ -24,22 +24,22 @@ class NewPostName(models.Model):
         return self.post_name
 
 
+class Role(models.Model):
+
+    role_name = models.CharField(
+        max_length= 150,
+        unique=True
+    )
+
+    def __str__(self):
+        return self.role_name
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    ROLES = (
-        ('pmo', 'PMO'),
-        ('rsop', 'RSOP'),
-        ('rt', 'RT'),
-        ('pilote_activite', 'PILOTE D\'ACTIVITÉ'),
-        ('charge_execution', 'CH.EXECUTION'),
-    )
+    role = models.ForeignKey(Role, null=True,on_delete=models.CASCADE)
 
-    IS_ACTIVE = (
-        ('activate', 'actif'),
-        ('desactivate', 'desactive '),
-    )
- 
     poste = models.ForeignKey(
         NewPostName,  
         null=True, 
@@ -52,15 +52,6 @@ class UserProfile(models.Model):
             null=True,
             blank=True,
         )
-   
-    role = models.CharField(
-
-        max_length=20 ,
-        choices=ROLES,
-        default='charge_execution'
-    )
-
-
 
     def __str__(self):
         return self.user.username
