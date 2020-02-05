@@ -71,22 +71,21 @@ class UserProfileForm(forms.ModelForm):
         label = "Selectionner un poste :",
         queryset=NewPostName.objects.all()
     )
-    role = forms.ModelChoiceField(
+    role = forms.ChoiceField(
         label="Selectionner un role :",
-        queryset=Role.objects.all()
-
 
     )
 
-    class Meta :
-        model = UserProfile
+
+    class Meta : 
+        model = UserProfile 
         fields = (
             'poste',
-            'image',
-            'role'
+            'image', 
+            'role'    
         )
 
-
+       
 class LivForm(forms.ModelForm):   
     class Meta : 
         model = Liv
@@ -187,4 +186,5 @@ class EditProfileUserForm(ModelForm):
         fields = ( 
             'image', 
             'poste',
+            'is_active',
         )
