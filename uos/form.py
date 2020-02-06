@@ -4,7 +4,6 @@ from uos.models import *
 
 
 
-
 class TypeUoForm(forms.Form):
     nom_type_uo = forms.CharField(
         label="Type d'UO : ",
@@ -83,6 +82,7 @@ class EtatUoForm(forms.Form):
     class Meta:
         model = Etatuo
         fields = ['nom']
+
 
 class LotUoForm(forms.Form):
     nom_lot_uo = forms.CharField(
@@ -214,7 +214,7 @@ class PointageForm(forms.Form):
         queryset=User.objects.all(),
     )
     semaine = forms.IntegerField(
-        label="Nombre de semaine"
+        label="Semaine"
     )
     point = forms.FloatField(
         label="Nombre de points"

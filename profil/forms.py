@@ -69,14 +69,15 @@ class RegistrationForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     poste = forms.ModelChoiceField(
         label = "Selectionner un poste :",
-        queryset=NewPostName.objects.all()
+        queryset=NewPostName.objects.all(),
+        required= False,
     )
     role = forms.ModelChoiceField(
         label="Selectionner un role :",
         queryset=Role.objects.all()
 
     )
-    
+
     class Meta : 
         model = UserProfile 
         fields = (

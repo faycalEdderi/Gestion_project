@@ -231,7 +231,7 @@ def create_uo(request):
                 messages.INFO,
                 'L\'UO a etais créée correctement ')
 
-            return redirect('create_uo')
+            return redirect('uo_list')
     else:
 
         uo_creation_form = UoForm()

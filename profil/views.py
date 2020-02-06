@@ -360,6 +360,8 @@ def create_account(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         form_profil = UserProfileForm(request.POST)
+        form_new_poste = AjoutPosteForm(request.POST)
+
         print("Request : ", request.POST)
         if form.is_valid():
             email = request.POST['email']
@@ -370,8 +372,18 @@ def create_account(request):
 
             select_poste = request.POST['poste']
             select_role = request.POST['role']
-            get_poste = NewPostName.objects.get(id = select_poste )
             get_role = Role.objects.get(id = select_role )
+
+            get_new_poste = request.POST['post_name']
+            new_poste = NewPostName(
+                post_name=get_new_poste
+            )
+            new_poste.save()
+
+            if select_poste != "" or new_poste == "":
+                get_poste = NewPostName.objects.get(id = select_poste )
+            else:
+                get_poste = NewPostName.objects.get(post_name = get_new_poste )
 
             new_user = User.objects.create_user(
                 username= username,
@@ -380,14 +392,13 @@ def create_account(request):
                 first_name = prenom,
                 last_name= nom,
             )
-            print(new_user)
+
             new_profil = UserProfile(
                 user = new_user,
-                poste = get_poste,
-                role = get_role
+                role = get_role,
+                poste=get_poste,
             )
             new_profil.save()
-            # get_new_user = User.objects.get(username = new_user )
 
             send_mail(
                 'Votre compte a été créé',
@@ -403,9 +414,11 @@ def create_account(request):
     else:
         form = RegistrationForm()
         form_profil = UserProfileForm()
+        form_new_poste = AjoutPosteForm()
         args = {
             'form': form,
-            'form_profil': form_profil
+            'form_profil': form_profil,
+            'form_new_poste': form_new_poste,
         }
 
         return render(request, 'create_user.html', args)

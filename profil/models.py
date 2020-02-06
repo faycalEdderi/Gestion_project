@@ -13,10 +13,10 @@ def upload_location(instance, filename):
 
 
 class NewPostName(models.Model):
-    
+
     post_name = models.CharField(
         max_length=150,
-        unique=True, 
+        unique=True,
         error_messages={'unique':"Ce poste existe déja !"},
         )
 
@@ -43,7 +43,8 @@ class UserProfile(models.Model):
     poste = models.ForeignKey(
         NewPostName,  
         null=True, 
-        blank=True, 
+        blank=True,
+
         on_delete=models.PROTECT, 
         )
 
