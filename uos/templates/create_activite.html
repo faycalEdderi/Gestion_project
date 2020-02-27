@@ -20,7 +20,7 @@
 
 <div class="container ">
     <div class="panel-heading">
-        <h2 class="panel-title mt-2 text-center">Création note de cadrage</h2>
+        <h2 class="panel-title mt-2 text-center">Création Activité</h2>
     </div>
     <div class="row centered-form d-flex justify-content-start">
     <div class="col-sm-12 col-md-9 ">
@@ -32,14 +32,63 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-4">
                                 <div class="form-group d-flex flex-column">
-                                    {{form_note_cadrage.select_uo.label}}
-                                    {{form_note_cadrage.select_uo}}
+                                    {{form_activite.select_note_cadrage.label}}
+                                    {{form_activite.select_note_cadrage}}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-4">
                                 <div  class="form-group d-flex flex-column">
-                                    {{form_note_cadrage.reponse_rsa.label}}
-                                    {{form_note_cadrage.reponse_rsa}}
+                                    {{form_activite.donnee_entree.label}}
+                                    {{form_activite.donnee_entree}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.activite_attendue.label}}
+                                    {{form_activite.activite_attendue}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.pourcentage_activite.label}}
+                                    {{form_activite.pourcentage_activite}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.conditions_reussite.label}}
+                                    {{form_activite.conditions_reussite}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.date_donnee_entree.label}}
+                                    {{form_activite.date_donnee_entree}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.date_demarrage_activite.label}}
+                                    {{form_activite.date_demarrage_activite}}
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.livrable_attendu.label}}
+                                    {{form_activite.livrable_attendu}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.date_reception_livrable.label}}
+                                    {{form_activite.date_reception_livrable}}
+                                </div>
+                            </div>
+                             <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.commentaire.label}}
+                                    {{form_activite.commentaire}}
                                 </div>
                             </div>
                         </div>

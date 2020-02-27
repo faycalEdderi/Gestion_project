@@ -15,7 +15,9 @@ def choix(objectmodel):
 
 # création de type d'uo pour chaque uo un type
 class Typeuo(models.Model):
-    nom = models.CharField(max_length=20)
+    nom = models.CharField(
+        max_length=20,
+    )
 
     def __str__(self):
         return self.nom  
@@ -23,7 +25,9 @@ class Typeuo(models.Model):
 
 # création de niveau d'uo pour chaque uo un niveau
 class Niveauuo(models.Model):
-    nom=models.CharField(max_length=20)
+    nom=models.CharField(
+        max_length=20,
+    )
 
     def __str__(self):
        return self.nom 
@@ -179,5 +183,6 @@ class Activites(models.Model):
     DatedeReceptionAttenduduLivrable=models.DateTimeField(default="", blank=True)
     CommentairesSurAttendu=models.CharField(max_length=600,default="")	
 
-
+    def __str__(self):
+       return str(self.activiteAttendue)
 

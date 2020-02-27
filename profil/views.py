@@ -326,7 +326,7 @@ def update_user(request, id=None):
     return render(request, "update_user_rt.html", context)
 
 
-#Fonction de modification de mot de passe a partir du profile User.
+# Fonction de modification de mot de passe a partir du profile User.
 
 def change_pwd(request):
     
@@ -356,11 +356,13 @@ def change_pwd(request):
         return render(request, 'accounts/change_password.html', args)
 
 
+# Fonction de création utilisateur
 def create_account(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         form_profil = UserProfileForm(request.POST)
         form_new_poste = AjoutPosteForm(request.POST)
+        form_ch_valid = ChValidForm(request.POST)
 
         print("Request : ", request.POST)
         if form.is_valid():
@@ -375,10 +377,14 @@ def create_account(request):
             get_role = Role.objects.get(id = select_role )
 
             get_new_poste = request.POST['post_name']
-            new_poste = NewPostName(
-                post_name=get_new_poste
-            )
-            new_poste.save()
+            if get_new_poste != "":
+
+                new_poste = NewPostName(
+                    post_name=get_new_poste
+                )
+                new_poste.save()
+            else:
+                new_poste = None
 
             if select_poste != "" or new_poste == "":
                 get_poste = NewPostName.objects.get(id = select_poste )
@@ -399,6 +405,20 @@ def create_account(request):
                 poste=get_poste,
             )
             new_profil.save()
+
+# Liaison entre class user et role
+            if select_role == "1":
+
+                new_ch_execut = ChValid(
+                    user=new_user
+                )
+                new_ch_execut.save()
+
+            if select_role == "2":
+                new_ch_execut = Liv(
+                    user=new_user
+                )
+                new_ch_execut.save()
 
             send_mail(
                 'Votre compte a été créé',

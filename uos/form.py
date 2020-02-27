@@ -2,11 +2,10 @@ from django import forms
 from uos.models import *
 
 
-
-
 class TypeUoForm(forms.Form):
     nom_type_uo = forms.CharField(
         label="Type d'UO : ",
+        required=False
     )
 
     class Meta:
@@ -16,7 +15,8 @@ class TypeUoForm(forms.Form):
 
 class NiveauUoForm(forms.Form):
     nom_niveau_uo = forms.CharField(
-        label="Niveau d'UO :"
+        label="Niveau d'UO :",
+        required=False
     )
 
     class Meta:
@@ -26,8 +26,10 @@ class NiveauUoForm(forms.Form):
 
 class ProjetForm(forms.Form):
     nom_projet = forms.CharField(
-        label = "Projet : "
+        label = "Projet : ",
+        required=False
     )
+
     class Meta:
         model = Projet
         fields = '__all__'
@@ -59,7 +61,8 @@ class CatalogueForm(forms.Form):
 
 class FonctionForm(forms.Form):
     nom_fonction = forms.CharField(
-        label="Fonction"
+        label="Fonction",
+        required=False
     )
 
     class Meta:
@@ -69,16 +72,21 @@ class FonctionForm(forms.Form):
 
 class StatutUoForm(forms.Form):
     nom_statut_uo = forms.CharField(
-        label="Satut UO"
+        label="Satut UO",
+        required=False
     )
+
     class Meta:
         model = Statutuo
         fields = ['nom']
 
+
 class EtatUoForm(forms.Form):
     nom_etat_uo = forms.CharField(
-        label="Etat UO"
+        label="Etat UO",
+        required=False
     )
+
     class Meta:
         model = Etatuo
         fields = ['nom']
@@ -86,11 +94,14 @@ class EtatUoForm(forms.Form):
 
 class LotUoForm(forms.Form):
     nom_lot_uo = forms.CharField(
-        label="Lot UO"
+        label="Lot UO",
+        required=False
     )
+
     class Meta:
         model = Lot
         fields = ['nom']
+
 
 class PlateformeForm(forms.Form):
     nom_plateforme = forms.CharField(
@@ -100,12 +111,14 @@ class PlateformeForm(forms.Form):
         label = "Selectionner un projet",
         queryset=Projet.objects.all()
     )
+
     class Meta:
         model = Plateforme
         fields=[
             'nom',
             'projet'
         ]
+
 
 class UetForm(forms.Form):
     nom_uet = forms.CharField(
@@ -115,12 +128,14 @@ class UetForm(forms.Form):
         label = "Selectionner une fonction",
         queryset=Fonction.objects.all()
     )
+
     class Meta:
         model = Plateforme
         fields=[
             'nom',
             'fonction'
         ]
+
 
 class UoForm(forms.Form):
     num_uo = forms.CharField(
@@ -219,6 +234,7 @@ class PointageForm(forms.Form):
     point = forms.FloatField(
         label="Nombre de points"
     )
+
     class Meta:
         model = Pointage
         fields =[
@@ -227,6 +243,7 @@ class PointageForm(forms.Form):
             'semaine',
             'point'
         ]
+
 
 class NoteCadrageForm(forms.Form):
     select_uo = forms.ModelChoiceField(
@@ -243,3 +260,41 @@ class NoteCadrageForm(forms.Form):
             'uo',
             'reponseRSA',
         ]
+
+
+class ActivitesForm(forms.Form):
+    select_note_cadrage = forms.ModelChoiceField(
+        label = "Selectionner note de cadrage ",
+        queryset = NotedeCadrage.objects.all()
+    )
+    donnee_entree = forms.CharField(
+        label = "Donnée entrée"
+    )
+    activite_attendue = forms.CharField(
+        label="Activité attendue"
+    )
+    pourcentage_activite = forms.FloatField(
+        label="Donnée entrée"
+    )
+    conditions_reussite = forms.CharField(
+        label="Condition de reussite"
+    )
+    date_donnee_entree = forms.DateTimeField(
+        label="Date donnée d'entrée"
+    )
+    date_demarrage_activite = forms.DateTimeField(
+        label="Date demarrage activité"
+    )
+    livrable_attendu = forms.CharField(
+        label="livrable attendu"
+    )
+    date_reception_livrable = forms.DateTimeField(
+        label="Date de récéption attendu du livrable"
+    )
+    commentaire = forms.CharField(
+        label="Commentaire"
+    )
+
+    class Meta:
+        model = Activites
+        fields = '__all__'

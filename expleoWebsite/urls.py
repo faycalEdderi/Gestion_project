@@ -41,7 +41,7 @@ urlpatterns = [
 
 
     ##### LIEN APP UOS #####
-    path('', uos_views.uo_list, name='uoslist'),
+    path('', uos_views.uo_list, name='uo_list'),
     path('uo/parametres', uos_views.creation_parametre_uo, name='creation_parametre_uo'),
     path('uo/creation', uos_views.create_uo, name='create_uo'),
     path('catalogue/creation', uos_views.create_catalogue_uo, name='create_catalogue_uo'),
@@ -49,7 +49,7 @@ urlpatterns = [
     path('plateforme/creation', uos_views.create_plateforme, name='create_plateforme'),
     path('pointage/creation', uos_views.create_pointage, name='create_pointage'),
     path('note_cadrage/creation', uos_views.create_note_cadrage, name="create_note_cadrage"),
-
+    path('activite/creation', uos_views.create_activite, name="create_activite"),
     path('user/<int:id>/update/', profil_views.update_user, name='update_user'),
   
 
