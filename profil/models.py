@@ -54,7 +54,7 @@ class UserProfile(models.Model):
         )
 
     def __str__(self):
-        return self.user.username
+        return str(self.user.username)
 
 
 class Rt(models.Model):
@@ -79,6 +79,8 @@ class ChValid(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
 
 
 
