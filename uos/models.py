@@ -179,5 +179,24 @@ class Activites(models.Model):
     DatedeReceptionAttenduduLivrable=models.DateTimeField(default="", blank=True)
     CommentairesSurAttendu=models.CharField(max_length=600,default="")	
 
+    def __str__(self):
+       return str(self.activiteAttendue)
 
 
+#class de livraison d'activité 
+class Livraison(models.Model):
+    nomduLivrable=models.ForeignKey(Activites,on_delete=models.CASCADE,default="")
+    systèmeADAS=models.ForeignKey(Fonction,default = "",on_delete=models.CASCADE)	
+    projet=models.ForeignKey(Projet,default = "",on_delete=models.CASCADE)
+    jalon=models.CharField(max_length=60,default="")
+    numeroUO=models.ForeignKey(Uo,on_delete=models.CASCADE,default="")
+    typeuo=models.ForeignKey(Typeuo,on_delete=models.CASCADE,default="")
+    niveauUO=models.ForeignKey(Niveauuo,on_delete=models.CASCADE,default="")
+    pourcentagelivre=models.FloatField()
+    commentaire  = models.CharField(max_length=600,default="")
+
+    def __str__(self):
+       return str(self.nomduLivrable)
+
+    
+   
