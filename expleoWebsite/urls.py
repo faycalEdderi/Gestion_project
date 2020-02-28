@@ -33,8 +33,7 @@ urlpatterns = [
         ##### LIEN APP PROFILE #####
     path('connexion', profil_views.connexion, name='connexion'),#Il faudra definir cette page comme page d'acceuil
     path('profil', profil_views.profil, name="profil"), 
-    path('register', profil_views.register, name='register'),
-    path('edit/profil', profil_views.edit_profile, name='edit_profile'),
+
     path('change/mdp', profil_views.change_pwd, name='modifMdp'),
     path('users/list', profil_views.user_list, name='user_list'),
     path('user/create', profil_views.create_account, name='create_account'),
@@ -50,8 +49,7 @@ urlpatterns = [
     path('pointage/creation', uos_views.create_pointage, name='create_pointage'),
     path('note_cadrage/creation', uos_views.create_note_cadrage, name="create_note_cadrage"),
     path('activite/creation', uos_views.create_activite, name="create_activite"),
-    path('user/<int:id>/update/', profil_views.update_user, name='update_user'),
-  
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

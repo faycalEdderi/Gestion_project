@@ -26,37 +26,40 @@
                     <p>
          <!-- on defini quand meme un username egale a l'adresse mail utile uniquement pour l'administrateur
         Voir la view register dans profil  -->
-                        {{ form.username.as_hidden  }}
+                        {{ form_user.username.as_hidden  }}
+                        {{ form_user.username.errors  }}
                     </p>
 
                     <p>
-                       {{ form.last_name.label }}
-                        {{ form.last_name }}
+                        {{ form_user.last_name.label }}
+                        {{ form_user.last_name }}
+                        {{ form_user.last_name.errors }}
                     </p>
 
 
 
                     <p>
-                        {{ form.first_name.label }}
-                        {{ form.first_name }}
+                        {{ form_user.first_name.label }}
+                        {{ form_user.first_name }}
+                        {{ form_user.first_name.errors }}
 
                     </p>
 
                     <p>
-                        {{ form.email.label }}
-                        {{ form.email }}
+                        {{ form_user.email.label }}
+                        {{ form_user.email }}
+                        {{ form_user.email.errors }}
 
                     </p>
-
-
-                    <p id="equipe_responsable"  >
-                        {{  responsable_form.responsable.id_for_label }}
-
-                        {{responsable_form.responsable}}
+                        {{form_profil.phone.label}}
+                        {{form_profil.phone}}
+                        {{ form_profil.phone.errors }}
                     </p>
+
                     <p>
                         {{form_profil.poste.label}}
                         {{form_profil.poste}}
+                        {{form_profil.poste.errors}}
                     </p>
                     <p>
                        {{form_new_poste.as_p}}
@@ -65,6 +68,7 @@
 
                         {{form_profil.role.label}}
                         {{form_profil.role}}
+                        {{form_profil.role.errors}}
                     </p>
 
 
