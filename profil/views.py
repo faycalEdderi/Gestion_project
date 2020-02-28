@@ -105,21 +105,25 @@ def create_account(request):
             select_poste = request.POST['poste']
             select_role = request.POST['role']
             get_role = Role.objects.get(id = select_role )
-
             get_new_poste = request.POST['post_name']
+
             if get_new_poste != "":
 
                 new_poste = NewPostName(
                     post_name=get_new_poste
                 )
                 new_poste.save()
-            else:
-                new_poste = None
 
-            if select_poste != "" or new_poste == "":
+            if select_poste != "" and get_new_poste == "" :
                 get_poste = NewPostName.objects.get(id = select_poste )
+
+            elif select_poste == "" and get_new_poste != "":
+                get_poste = NewPostName.objects.get(post_name=get_new_poste)
+
+            elif select_poste != "" and get_new_poste != "" :
+                get_poste = NewPostName.objects.get(post_name=get_new_poste)
             else:
-                get_poste = NewPostName.objects.get(post_name = get_new_poste )
+                get_poste = None
 
             if select_role == "1":
                 new_ch_execut = Executant(
@@ -133,7 +137,7 @@ def create_account(request):
                 )
                 new_ch_execut.set_password(mdp)
                 new_ch_execut.save()
-                
+
             if select_role == "2":
                 new_pilote = Pilote(
                     username=nom + "_" + prenom,
@@ -146,6 +150,45 @@ def create_account(request):
                 )
                 new_pilote.set_password(mdp)
                 new_pilote.save()
+
+            if select_role == "3":
+                new_rt = RespTechnique(
+                    username=nom + "_" + prenom,
+                    email=email,
+                    first_name=prenom,
+                    last_name=nom,
+                    role=get_role,
+                    poste=get_poste,
+                    phone_number=phone_number
+                )
+                new_rt.set_password(mdp)
+                new_rt.save()
+
+            if select_role == "4":
+                new_chef_projet = ChefdeProjet(
+                    username=nom + "_" + prenom,
+                    email=email,
+                    first_name=prenom,
+                    last_name=nom,
+                    role=get_role,
+                    poste=get_poste,
+                    phone_number=phone_number
+                )
+                new_chef_projet.set_password(mdp)
+                new_chef_projet.save()
+
+            if select_role == "5":
+                new_resp_sop = RespSOP(
+                    username=nom + "_" + prenom,
+                    email=email,
+                    first_name=prenom,
+                    last_name=nom,
+                    role=get_role,
+                    poste=get_poste,
+                    phone_number=phone_number
+                )
+                new_resp_sop.set_password(mdp)
+                new_resp_sop.save()
             '''
             send_mail(
                 'Votre compte a été créé',
