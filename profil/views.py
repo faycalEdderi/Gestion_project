@@ -133,6 +133,19 @@ def create_account(request):
                 )
                 new_ch_execut.set_password(mdp)
                 new_ch_execut.save()
+                
+            if select_role == "2":
+                new_pilote = Pilote(
+                    username=nom + "_" + prenom,
+                    email=email,
+                    first_name=prenom,
+                    last_name=nom,
+                    role=get_role,
+                    poste=get_poste,
+                    phone_number=phone_number
+                )
+                new_pilote.set_password(mdp)
+                new_pilote.save()
             '''
             send_mail(
                 'Votre compte a été créé',
