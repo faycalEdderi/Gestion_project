@@ -124,3 +124,26 @@ class AjoutPosteForm(forms.ModelForm):
             },
         }
 
+
+# Edit Profil pour user connecté
+class EditProfileForm(forms.ModelForm):
+
+    image = forms.ImageField(
+        required=False,
+        error_messages={ 'invalid': "Veuillez selectionner uniquement un fichier de type "
+                                    "image"},
+        widget=forms.FileInput,
+    )
+    phone_number = forms.CharField(
+        required=False,
+        label="Téléphone",
+        error_messages={
+            'invalid': "Veuillez entrer un numéro de téléphone valide"}
+    )
+
+    class Meta:
+        model = MyUsers
+        fields = (
+            'phone_number',
+            'image',
+        )

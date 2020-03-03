@@ -32,11 +32,13 @@ urlpatterns = [
 
         ##### LIEN APP PROFILE #####
     path('connexion', profil_views.connexion, name='connexion'),#Il faudra definir cette page comme page d'acceuil
-    path('profil', profil_views.profil, name="profil"), 
+    path('profil', profil_views.display_profil, name="profil"),
 
     path('change/mdp', profil_views.change_pwd, name='modifMdp'),
     path('users/list', profil_views.user_list, name='user_list'),
     path('user/create', profil_views.create_account, name='create_account'),
+    path('user/edit/profil', profil_views.edit_profil, name='edit_profil'),
+
 
 
     ##### LIEN APP UOS #####

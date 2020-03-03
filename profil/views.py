@@ -12,9 +12,39 @@ from django.core.mail import send_mail
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+
+# fonction restriction d'accès
+def login_exempt(view):
+    view.login_exempt = True
+    return view
 
 
-#Fonction de connection
+# Class restriction accès pour user connecté
+class LoginRequiredMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        return self.get_response(request)
+
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        if getattr(view_func, 'login_exempt', False):
+            return
+
+        if request.user.is_authenticated:
+            return
+
+        return login_required(view_func)(request, *view_args, **view_kwargs)
+
+
+# Fonction d'affichage du profil
+def display_profil(request):
+    return render(request, "user_profil.html")
+
+# Fonction d'identification
+# login_exempt : acceder a cette page sans etre connecté
+@login_exempt
 def connexion(request):
 
     if request.method == 'POST':
@@ -35,7 +65,8 @@ def connexion(request):
         return render(request,'pages/uo.html')   
     else:
         form = AuthenticationForm()
-    return render(request, 'pages/connexion.html', {'form': form})   
+    return render(request, 'pages/connexion.html', {'form': form})
+
 
 # POUR RT : Affichage d'une liste d'utilisateur
 def user_list(request):
@@ -47,15 +78,7 @@ def user_list(request):
     return render(request, "user_list.html", context)
 
 
-# @login_required(login_url="connexion")
-def profil(request):
-
-    return render(request, 'user_profil.html')
-
-
-
 # Fonction de modification de mot de passe a partir du profile User.
-
 def change_pwd(request):
     
     if request.method == 'POST':
@@ -216,3 +239,25 @@ def create_account(request):
         }
 
         return render(request, 'create_user.html', args)
+
+
+def edit_profil(request):
+    if request.method == "POST":
+        form_edit_profil = EditProfileForm(request.POST, request.FILES  or None,
+                                           instance=request.user.myusers)
+        print("Request : ", request.POST)
+        if form_edit_profil.is_valid():
+
+            form_edit_profil.save()
+
+            return redirect("edit_profil")
+        else:
+            messages.error(request, "Erreur dans le formulaire")
+            return redirect('edit_profil')
+    else:
+        form_edit_profil = EditProfileForm(instance=request.user.myusers)
+        args = { 'form_edit_profil' : form_edit_profil }
+
+        return render(request, 'edit_profil.html', args )
+
+

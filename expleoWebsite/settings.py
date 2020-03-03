@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'profil.views.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'expleoWebsite.urls'
@@ -136,6 +137,7 @@ STATICFILES_DIRS=(
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
 LOGOUT_REDIRECT_URL = "connexion"
+LOGIN_URL = "connexion"
 
 
 #Rediriger vers la class EmailBackend (qui permet de se connecter avc sont adersse mail)
