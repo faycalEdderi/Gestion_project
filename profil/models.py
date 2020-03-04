@@ -102,7 +102,7 @@ class RespSOP(MyUsers):
 
 # un user chef de projet hérite de mes user et il peut avoir un responsable chef
 class ChefdeProjet(MyUsers):
-    superior = models.ForeignKey(RespSOP, on_delete=models.CASCADE)
+    superior = models.ForeignKey(RespSOP,blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -112,7 +112,7 @@ class ChefdeProjet(MyUsers):
 
 
 class RespTechnique(MyUsers):
-    superior = models.ForeignKey(ChefdeProjet, on_delete=models.CASCADE)
+    superior = models.ForeignKey(ChefdeProjet,blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.first_name + " " + self.last_name

@@ -19,18 +19,7 @@ def diagramme(request):
     return render(request,'pages/diagramme.html')
 
 
-def pointages(request):
-
-    return render(request,'pages/pointages.html')
-
-
 def uo(request):
-   # if request.user.userprofile.role == "rt":
-        return render(request,'pages/uo.html')
-    #else :
-    #    return render(request,'pages/error404.html')
 
+    return render(request,'pages/uo.html')
 
-def historique(request):
-
-    return render(request,'pages/historique.html')

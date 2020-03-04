@@ -1,18 +1,17 @@
-    
-<!-- End Navbar -->
+{% extends 'theme.html' %}
+{% block content %}
 <div class="content">
   <div class="container-fluid">
     <a href="./pointages" class="btn expleoColorB">Pointage</a>
     <a href="./historique" class="btn expleoColorB ">Historique</a>
-      <span class="ui-button-icon ui-icon ui-icon-gear"></span>
           <div class="row">
       {% include 'filtresPointage.html' %}
-      
+
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title  ">Table pointage</h4>
-                 
+
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -23,28 +22,28 @@
                           LIV/Ch. VALID
                         </th>
                       -->
-                      
+
                         <th>n° UO</th>
                         <th>Type UO</th>
                         <th>Niveau UO</th>
                         <th>Projet</th>
                         <th>Fonction</th>
                         <th>Budget ( j ) </th>
-                        
-                       
-                        <!--POUR RT 
+
+
+                        <!--POUR RT
                         <th>Statut </th>
                         -->
                         <th>Consommé ( j ) </th>
                         <th>Pointage ( j ) </th>
                         <th>Avancement </th>
-                         <!--POUR RT 
+                         <!--POUR RT
                         <th>Description</th>
                         <th>Pilote UO</th>
                         -->
                         <th>Etat </th>
-                        
-                        
+
+
                       </thead>
                       <tbody>
                         <tr>
@@ -57,15 +56,15 @@
                           <td>30</td>
                           <td> 20 </td>
                           <td><div class="w-75 progressbar" ><div class="progress-label"></div>  </div>
-                            
+
                             <!--<button class="moins">-</button><button class="plus">+</button>-->
 
                             <!--CHANGER LES BOUTON PAR UN INPUT QUI PREND ET AFFICHE LA VALEUR DIRECMENT DANS LA PROGRESSBAR-->
-           
+
                           </td>
                           <td><button class="btn btn-danger"> </button></td>
-                          
-                          <!--POUR RT                          
+
+                          <!--POUR RT
                           <td> <a class="btn btn-success" href="">Valider</a> </td>
                           <td> <a class="btn btn-danger" href="">Rejeter</a> </td>
                            -->
@@ -80,14 +79,14 @@
                             <td>60</td>
                             <td> 15 </td>
                             <td><div class="w-75 progressbar" ><div class="progress-label"></div>  </div>
-                              
-                             <!--<button class="moins">-</button><button class="plus">+</button>--> 
-             
+
+                             <!--<button class="moins">-</button><button class="plus">+</button>-->
+
                             </td>
                             <td><button class="btn btn-success"> </button></td>
-                            
-                            
-                            <!--POUR RT                          
+
+
+                            <!--POUR RT
                             <td> <a class="btn btn-success" href="">Valider</a> </td>
                             <td> <a class="btn btn-danger" href="">Rejeter</a> </td>
                              -->
@@ -102,13 +101,13 @@
                               <td>10</td>
                               <td> 5 </td>
                               <td><div class="w-75 progressbar" ><div class="progress-label"></div>  </div>
-                                
+
                                 <!--<button class="moins">-</button><button class="plus">+</button>-->
-               
+
                               </td>
                               <td><button class="btn btn-warning"> </button></td>
-                              
-                              <!--POUR RT                          
+
+                              <!--POUR RT
                               <td> <a class="btn btn-success" href="">Valider</a> </td>
                               <td> <a class="btn btn-danger" href="">Rejeter</a> </td>
                                -->
@@ -123,22 +122,22 @@
                                 <td>70</td>
                                 <td> 45 </td>
                                 <td><div class="w-75 progressbar" ><div class="progress-label"></div>  </div>
-                                  
+
                                   <!--<button class="moins">-</button><button class="plus">+</button>-->
-                 
+
                                 </td>
                                 <td><button class="btn btn-danger"> </button></td>
-                                
-                                <!--POUR RT                          
+
+                                <!--POUR RT
                                 <td> <a class="btn btn-success" href="">Valider</a> </td>
                                 <td> <a class="btn btn-danger" href="">Rejeter</a> </td>
                                  -->
                               </tr>
-      
-    
-  
 
-                        
+
+
+
+
                       </tbody>
                     </table>
                   </div>
@@ -147,5 +146,9 @@
             </div>
   </div>
 </div>
+</div>
 
-     
+{% endblock content %}
+
+
+

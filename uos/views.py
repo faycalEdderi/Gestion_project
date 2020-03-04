@@ -12,17 +12,24 @@ def choix(objectmodel):
     return liste
 
 
+
+
+
+def pointages(request):
+
+    return render(request,'table_pointage.html')
+
+def historique_pointage(request):
+
+    return render(request,'table_pointage_historique.html')
+
+# Affichage de tous les uos
 def uo_list(request):
-    uoListe= Uo.objects.all()
+    uo_liste= Uo.objects.all()
     context = {
-        "Uo": uoListe,
+        "Uo": uo_liste,
     }
     return render(request, "uos_list.html", context)
-
-
-class UosCreate(CreateView):
-    model = Uo
-    # fields = ['lot']
 
 
 def creation_uet(request):

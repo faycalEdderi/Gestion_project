@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 {% if user.is_authenticated %}
+
       <div class="content">
         <div class="container-fluid">
           <div class="row">
@@ -19,7 +20,7 @@
                           <img class="rounded-circle"  src="{{ user.myusers.image.url }}"
                                alt="photo de profile" >
                           {% else %}
-                          <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" alt="photo de profile par défaut">
+                          <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" alt="photo de profil par défaut">
                         {% endif %}
                         </a>
                       </div>
@@ -66,9 +67,19 @@
                                        value="{{ user.myusers.poste | upper  }}" disabled>
                               </div>
                             </div>
-
+                          </div>
+                      <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Téléphone</label>
+                                    <input type="text" class="form-control"
+                                       value="{{ user.myusers.phone_number}}"
+                                       disabled>
+                              </div>
+                            </div>
 
                           </div>
+
                           <div class="row">
                             <div class="col-md-6">
                               <div class="form-group">
@@ -82,7 +93,6 @@
                             </div>
                           </div>
 
-                </div>
                </div>
             </div>
             </div>

@@ -19,15 +19,15 @@ class RegistrationForm(UserCreationForm):
         required=False,
     )
     first_name = forms.CharField(
-        label='Nom : ',
+        label='Prénom : ',
         required=True,
-        error_messages={'required': 'Veuillez entrer un Nom'},
+        error_messages={'required': 'Veuillez entrer un prénom'},
 
     )
     last_name = forms.CharField(
-        label='Prénom : ',
+        label='Nom : ',
         required=True,
-        error_messages={'required': 'Veuillez entrer un Prénom'},
+        error_messages={'required': 'Veuillez entrer un nom'},
 
     )
     password1 = forms.CharField(
