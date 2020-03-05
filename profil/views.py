@@ -124,9 +124,9 @@ def create_account(request):
 
             print("Request : ", request.POST)
             if form_profil.is_valid():
-                print("form is valid")
+
                 email = request.POST['email']
-                phone_number = request.POST['phone']
+                phone_number = request.POST['phone_number']
                 nom = request.POST['last_name']
                 prenom = request.POST['first_name']
 
@@ -137,15 +137,10 @@ def create_account(request):
 
                 if get_new_poste != "":
                     try:
-                        NewPostName.objects.get(post_name = get_new_poste )
+                        NewPostName.objects.get_or_create(post_name = get_new_poste )
 
-                    except NameError:
+                    except:
                         print("Ce poste n'exste pas")
-
-                        new_poste = NewPostName(
-                            post_name=get_new_poste
-                        )
-                        new_poste.save()
 
                 if select_poste != "" and get_new_poste == "" :
                     get_poste = NewPostName.objects.get(id = select_poste )
@@ -252,9 +247,11 @@ def create_account(request):
     else :
         return  render(request, "pages/error404.html")
 
+
 # Fonction de modification de profil
 def edit_profil(request):
     if request.method == "POST":
+
         form_edit_profil = EditProfileForm(request.POST, request.FILES  or None,
                                            instance=request.user.myusers)
         print("Request : ", request.POST)
@@ -271,5 +268,40 @@ def edit_profil(request):
         args = { 'form_edit_profil' : form_edit_profil }
 
         return render(request, 'edit_profil.html', args )
+
+
+# Fonction de modification de user par superieur
+def update_account(request, pk=None):
+    select_user_update = MyUsers.objects.get(id=pk)
+    if request.method == "POST":
+        form_update_account = EditAccountForm(request.POST or None, instance=select_user_update)
+        form_new_poste = AjoutPosteForm(request.POST)
+
+        print("Request : ", request.POST)
+        if form_update_account.is_valid():
+            new_poste = request.POST['post_name']
+            if new_poste != "":
+                NewPostName.objects.get_or_create(post_name = new_poste)
+
+                select_user_update.poste = NewPostName.objects.get(post_name = new_poste )
+
+            form_update_account.save()
+
+            return redirect("user_list")
+        else:
+            messages.error(request, "Erreur dans le formulaire")
+            return redirect('user_list')
+    else:
+        form_update_account = EditAccountForm(instance=select_user_update)
+        form_new_poste = AjoutPosteForm()
+
+        args = {
+            'form_update_account' : form_update_account,
+            'form_new_poste' : form_new_poste
+
+        }
+
+        return render(request, 'update_account.html', args)
+
 
 

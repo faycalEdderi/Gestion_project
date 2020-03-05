@@ -31,7 +31,7 @@
                     <td>{{utilisateur.myusers.poste}}</td>
                     <td>{{utilisateur.myusers.phone_number}}</td>
 
-                    <td><a href="#" class="btn btn-info">Modifier</button></a>
+                    <td><a href="{% url 'update_account' utilisateur.id %}" class="btn btn-info">Modifier</button></a>
 
                     <td><input type="checkbox" class="btn check btn-dark" checked></td>
 

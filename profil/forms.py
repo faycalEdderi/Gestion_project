@@ -31,12 +31,14 @@ class RegistrationForm(UserCreationForm):
 
     )
     password1 = forms.CharField(
+        label="Mot de passe",
         required=False,
         error_messages={'required': 'Les deux mots de passes ne sont pas identiques'},
         widget=forms.PasswordInput,
 
     )
     password2 = forms.CharField(
+        label="Saisir à nouveau le mot de passe",
         required=False,
         error_messages={'required': 'Les deux mots de passes ne sont pas identiques'},
         widget=forms.PasswordInput,
@@ -66,7 +68,7 @@ class RegistrationForm(UserCreationForm):
 
 class UserProfileForm(forms.ModelForm):
 
-    phone = forms.CharField(
+    phone_number = forms.CharField(
         label='Téléphone : ',
         required=False,
         error_messages={'required': 'Problème avec le numéro de téléphone'},
@@ -88,7 +90,7 @@ class UserProfileForm(forms.ModelForm):
     class Meta : 
         model = MyUsers
         fields = (
-            'phone',
+            'phone_number',
             'poste',
             'role',
 
@@ -146,4 +148,57 @@ class EditProfileForm(forms.ModelForm):
         fields = (
             'phone_number',
             'image',
+        )
+
+
+# Edit Profil pour user connecté
+class EditAccountForm(forms.ModelForm):
+
+
+    phone_number = forms.CharField(
+        required=False,
+        label="Téléphone",
+        error_messages={
+            'invalid': "Veuillez entrer un numéro de téléphone valide"}
+    )
+    email = forms.EmailField(
+        label='Email :',
+        required=True,
+        error_messages={'required': 'Veuillez entrer une Adresse Mail'},
+
+    )
+
+    first_name = forms.CharField(
+        label='Prénom : ',
+        required=True,
+        error_messages={'required': 'Veuillez entrer un prénom'},
+
+    )
+    last_name = forms.CharField(
+        label='Nom : ',
+        required=True,
+        error_messages={'required': 'Veuillez entrer un nom'},
+
+    )
+    role = forms.ModelChoiceField(
+        label="Selectionner un role :",
+        queryset=Role.objects.all()
+
+    )
+
+    poste = forms.ModelChoiceField(
+        label="Selectionner un poste :",
+        queryset=NewPostName.objects.all(),
+        required=False,
+    )
+
+    class Meta:
+        model = MyUsers
+        fields = (
+            'phone_number',
+            'first_name',
+            'last_name',
+            'email',
+            'role',
+            'poste'
         )

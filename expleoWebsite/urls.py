@@ -36,6 +36,7 @@ urlpatterns = [
     path('users/list', profil_views.user_list, name='user_list'),
     path('user/create', profil_views.create_account, name='create_account'),
     path('user/edit/profil', profil_views.edit_profil, name='edit_profil'),
+    path('user/<int:pk>/update/account', profil_views.update_account, name='update_account'),
 
 
 
