@@ -19,7 +19,7 @@ from uos import views as uos_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('uos/list', uos_views.uo_list, name='uoslist'),
+    #path('uos/list', uos_views.uo_list, name='uoslist'),
     path('diagramme', views.diagramme),
     path('pointages', views.pointages, name='pointages'),
     path('historique', views.historique),
@@ -49,11 +49,7 @@ urlpatterns = [
     path('plateforme/creation', uos_views.create_plateforme, name='create_plateforme'),
     path('pointage/creation', uos_views.create_pointage, name='create_pointage'),
     path('note_cadrage/creation', uos_views.create_note_cadrage, name="create_note_cadrage"),
-
     path('user/<int:id>/update/', profil_views.update_user, name='update_user'),
   
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-
