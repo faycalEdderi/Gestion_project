@@ -8,6 +8,8 @@ from django.contrib.auth import update_session_auth_hash, get_user_model
 from django.contrib import messages
 from django import forms
 import random
+import copy
+from copy import deepcopy
 from django.core.mail import send_mail
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
@@ -89,7 +91,7 @@ def change_pwd(request):
     
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
-        
+        print("Request : ", request.POST)
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
@@ -110,7 +112,7 @@ def change_pwd(request):
         form = PasswordChangeForm(user=request.user)
         args = {'form' : form}
 
-        return render(request, 'accounts/change_password.html', args)
+        return render(request, 'change_password.html', args)
 
 
 # Fonction de création utilisateur
@@ -248,7 +250,7 @@ def create_account(request):
         return  render(request, "pages/error404.html")
 
 
-# Fonction de modification de profil
+# Fonction de modification de profil par la personne elle meme
 def edit_profil(request):
     if request.method == "POST":
 
@@ -273,6 +275,7 @@ def edit_profil(request):
 # Fonction de modification de user par superieur
 def update_account(request, pk=None):
     select_user_update = MyUsers.objects.get(id=pk)
+    old_role = select_user_update.role
     if request.method == "POST":
         form_update_account = EditAccountForm(request.POST or None, instance=select_user_update)
         form_new_poste = AjoutPosteForm(request.POST)
@@ -280,12 +283,50 @@ def update_account(request, pk=None):
         print("Request : ", request.POST)
         if form_update_account.is_valid():
             new_poste = request.POST['post_name']
+            select_role = request.POST['role']
+            new_role = Role.objects.get(id = select_role)
+
+            print("old_role : ", old_role, "/ new_role : ", new_role)
             if new_poste != "":
                 NewPostName.objects.get_or_create(post_name = new_poste)
 
                 select_user_update.poste = NewPostName.objects.get(post_name = new_poste )
 
-            form_update_account.save()
+            if new_role != old_role:
+                print("add new role")
+
+                old_obj = deepcopy(select_user_update)
+                old_obj.role = new_role
+                old_obj.id = None
+
+                old_obj.save()
+
+                new_pilote = Pilote(
+                    username= select_user_update.username + '_new',
+                    email=old_obj.email,
+                    first_name=old_obj.first_name,
+                    last_name=old_obj.last_name,
+                    role=old_obj.role,
+                    poste=old_obj.poste,
+                    phone_number=old_obj.phone_number
+                )
+                new_pilote.save()
+                print("new_objt id : ", old_obj.id, "old_user id : ", select_user_update.id)
+
+
+
+
+
+
+
+
+
+
+            # new_objet = copy.deepcopy(select_user_update)
+
+
+
+            #form_update_account.save()
 
             return redirect("user_list")
         else:

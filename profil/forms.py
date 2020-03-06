@@ -151,7 +151,7 @@ class EditProfileForm(forms.ModelForm):
         )
 
 
-# Edit Profil pour user connecté
+# Formulaire permettant a un superieur de modifier les comptes
 class EditAccountForm(forms.ModelForm):
 
 
