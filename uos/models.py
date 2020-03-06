@@ -34,7 +34,9 @@ class Perimetre(models.Model):
 
     # création de niveau d'uo pour chaque uo un niveau
 class Niveauuo(models.Model):
-    nom=models.CharField(max_length=20)
+    nom=models.CharField(
+        max_length=20,
+    )
 
     def __str__(self):
        return self.nom 

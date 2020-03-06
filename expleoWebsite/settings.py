@@ -27,8 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,7 +37,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_cleanup.apps.CleanupConfig',
     'profil.apps.ProfilConfig',
-    'uos.apps.UosConfig'
+    'uos.apps.UosConfig',
+
 
 ]
 
@@ -51,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'profil.views.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'expleoWebsite.urls'
@@ -103,6 +103,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -131,6 +137,7 @@ STATICFILES_DIRS=(
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
 LOGOUT_REDIRECT_URL = "connexion"
+LOGIN_URL = "connexion"
 
 
 #Rediriger vers la class EmailBackend (qui permet de se connecter avc sont adersse mail)

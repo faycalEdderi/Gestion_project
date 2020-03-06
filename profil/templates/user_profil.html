@@ -1,29 +1,36 @@
 {% extends 'theme.html' %}
 {% load static %}
 {% block content %}
+{% if user.is_authenticated %}
+
       <div class="content">
         <div class="container-fluid">
           <div class="row">
+{{user.myusers.role}}
             <div class="col-md-12">
                <div class="card">
                 <div class="card-header ">
                   <h4 class="card-title">Mon Profil</h4>
-                  
+
                 </div>
                     <div class="card card-profile profile_test">
                       <div class="card-avatar">
                         <a href="#">
-                        {% if user.userprofile.image %}
-                          <img class="rounded-circle"  src="{{ user.userprofile.image.url }}" alt="photo de profile" >
+                        {% if user.myusers.image %}
+                          <img class="rounded-circle"  src="{{ user.myusers.image.url }}"
+                               alt="photo de profile" >
                           {% else %}
-                          <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" alt="photo de profile par défaut">
+                          <img class="img-fluid"  src="{% static 'img/userLogo.png' %}" alt="photo de profil par défaut">
                         {% endif %}
                         </a>
                       </div>
+                    <div class="card card-profile profile_test">
+
                       <div class="card-body">
-                        <h6 class="card-category text-gray">{{ user.last_name }} {{ user.first_name }}</h6>
-                        <h4 class="card-title">{{ user.userprofile.poste | upper  }}</h4>
-                        
+                        <h6 class="card-category text-gray">{{ user.last_name }}
+                            {{ user.first_name }}</h6>
+                        <h4 class="card-title">{{ user.myusers.poste | upper  }}</h4>
+
                       </div>
                     </div>
                 <div class="card-body">
@@ -32,30 +39,47 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               <label class="bmd-label-floating">Nom</label>
-                              <input type="text" class="form-control" value="{{ user.last_name | capfirst }}" disabled>
+                              <input type="text" class="form-control"
+                                     value="{{ user.last_name | capfirst }}" disabled>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label class="bmd-label-floating">Prénom</label>
-                              <input type="text" class="form-control" value="{{ user.first_name | capfirst }}" disabled>
+                              <input type="text" class="form-control"
+                                     value="{{ user.first_name | capfirst }}" disabled>
                             </div>
                           </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Email</label>
-                                <input type="text" class="form-control" value="{{ user.email }}" disabled>
+                                <input type="text" class="form-control"
+                                       value="{{ user.email }}" disabled>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Poste</label>
-                                <input type="text" class="form-control" value="{{ user.userprofile.poste | upper  }}" disabled>
+                                <input type="text" class="form-control"
+                                       value="{{ user.myusers.poste | upper  }}" disabled>
                               </div>
                             </div>
                           </div>
+                      <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Téléphone</label>
+                                    <input type="text" class="form-control"
+                                       value="{{ user.myusers.phone_number}}"
+                                       disabled>
+                              </div>
+                            </div>
+
+                          </div>
+
                           <div class="row">
                             <div class="col-md-6">
                               <div class="form-group">
@@ -64,52 +88,48 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <a href="{% url 'edit_profile' %}">Modifier mes informations</a>
+                                    <a href="{% url 'edit_profil' %}">Modifier mes informations</a>
                                 </div>
                             </div>
                           </div>
-                          </div>
-                          {% if user.userprofile.poste == 'ch.MIL' or user.userprofile.poste == 'ch.HIL' or user.userprofile.poste == 'ch.IS'  %}
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="bmd-label-floating">Responsable : </label>
-                              <ul>
 
-                                <li>{{user.chvalid.responsable}}</li>
-
-                              </ul>
-                          {% endif %}
-
-                            </div>
-                          </div>
-
-                          {% if user.userprofile.poste == 'liv' %}
-                          <div class="col-md-6">
-                              <div class="form-group">
-                                <label class="bmd-label-floating">Responsable : </label>
-                                <ul>
-                                    {% for liv in  user.rt_liv.all  %}
-
-                                    <li>{{liv}}</li>
-    
-                                  {% endfor %}
-                                </ul>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="bmd-label-floating">Equipe</label>
-                              <ul>
-                              {% for executant in  user.liv.executant.all  %}
-
-                                <li>{{executant}}</li>
-
-                              {% endfor %}
-                              </ul>
-                        {% endif %}
-
+               </div>
+            </div>
+            </div>
+          </div>
                   </form>
                 </div>
               </div>
             </div>
+
+          </div>
+        </div>
+      </div>
+      {% include 'modal.html' %}
+ {% else %}
+ <div class="content">
+        <div class="container-fluid d-flex justify-content-center">
+          <div class="row">
+
+            <div class="col-md-12">
+               <div class="card">
+
+
+                    <div class="card card-profile ">
+
+                      <div class="card-body">
+                        <h6 class="card-category text-gray">Veuillez vous connecter</h6>
+                        <h4 class="card-title"> <a class="text-center" href="{% url 'connexion' %}">Se connecter</a></h4>
+
+                      </div>
+                    </div>
+
+               </div>
+            </div>
+          </div>
+        </div>
+
+
+
+{% endif %}
 {% endblock content %}

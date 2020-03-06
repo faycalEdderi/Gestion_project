@@ -1,0 +1,107 @@
+{% extends 'theme.html' %}
+{% block content %}
+{% include "nav_bar.html" %}
+
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="container ">
+    <div class="panel-heading">
+        <h2 class="panel-title mt-2 text-center">Création Activité</h2>
+    </div>
+    <div class="row centered-form d-flex justify-content-start">
+    <div class="col-sm-12 col-md-9 ">
+        <div class="panel panel-default">
+
+                <div class="panel-body">
+                    <form method="POST">
+                    {% csrf_token %}
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_activite.select_note_cadrage.label}}
+                                    {{form_activite.select_note_cadrage}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.donnee_entree.label}}
+                                    {{form_activite.donnee_entree}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.activite_attendue.label}}
+                                    {{form_activite.activite_attendue}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.pourcentage_activite.label}}
+                                    {{form_activite.pourcentage_activite}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.conditions_reussite.label}}
+                                    {{form_activite.conditions_reussite}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.date_donnee_entree.label}}
+                                    {{form_activite.date_donnee_entree}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.date_demarrage_activite.label}}
+                                    {{form_activite.date_demarrage_activite}}
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.livrable_attendu.label}}
+                                    {{form_activite.livrable_attendu}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.date_reception_livrable.label}}
+                                    {{form_activite.date_reception_livrable}}
+                                </div>
+                            </div>
+                             <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_activite.commentaire.label}}
+                                    {{form_activite.commentaire}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-start">
+                           <input type="submit" value="Valider" class="btn center-block btn-primary col-md-3 btn-block">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

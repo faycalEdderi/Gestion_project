@@ -1,0 +1,64 @@
+{% extends 'theme.html' %}
+{% block content %}
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+               <div class="card">
+                <div class="card-header ">
+                  <h4 class="card-title">Modifier mes informations</h4>
+
+                <div class="card-body">
+                    <!--Afficher les messages d'erreurs-->
+    
+                    {% for message in messages %}
+                    <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+
+                        <p class="text-center" >{{ message }}</p> 
+        
+                    </div>
+                    {% endfor %}
+
+                    <form id="valid_register" method="post" enctype='multipart/form-data'>
+                    {% csrf_token %}
+
+                    <p>
+                        {{ form_edit_profil.as_p  }}
+                    </p>
+
+
+
+
+                    <button  class="btn btn-primary">
+                        Valider
+                      </button>
+                      
+
+                    </form>
+                 
+                </div>
+              </div>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+
+
+          {% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

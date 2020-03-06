@@ -3,8 +3,10 @@ from django.contrib.auth.models import User
 from django import forms
 import random
 
-#création d'une classe mesusers pour tout mon site qui a comme plus un numéro de téléphone et une image 
-class Mesusers(User):
+
+# création d'une classe mesusers pour tout mon site qui a comme plus un numéro de téléphone
+# et une image
+class MesUsers(User):
     numerotel = models.CharField(max_length=50)
     image = models.ImageField(
         upload_to=upload_location,
@@ -12,20 +14,17 @@ class Mesusers(User):
         blank=True,
         )
 
-    
-##############################################################################################################""    
 
-#un client peut avoir son responsableuet de meme profil il est client aussi (elle hérite de mes users)
-class Client(Mesusers):
+# un client peut avoir son responsableuet de meme profil il est client aussi (elle hérite de
+# mes users)
+class Client(MesUsers):
     responsableUET=models.ForeignKey('self', blank = True, null=True)
     
     class Meta:
         verbose_name='Client'
 
-###############################################################################################################
 
-
-#ce qu'elle fait ?????  mot de passe automatique 
+# generer mot de passe automatique aleatoire
 def upload_location(instance, filename):
     filebase, extension = filename.split(".")
     chars= 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
@@ -56,7 +55,8 @@ class Role(models.Model):
     def __str__(self):
         return self.role_name
 
-class UserSite(Mesusers):
+
+class UserSite(MesUsers):
     role = models.ForeignKey(Role, null=True,on_delete=models.CASCADE)
 
     poste = models.ForeignKey(
@@ -67,52 +67,47 @@ class UserSite(Mesusers):
         )
     
     class Meta:
-        verbose_name='Client'
+        verbose_name='User du site'
 
 
-#########################################################################################################################
-
-
-
-
-
-#un user chef hérite de mes user et il peut avoir un responsable qui a un profil chef comme lui 
-class chef(UserSite):
+# un user chef hérite de mes user et il peut avoir un responsable qui a un profil chef comme
+# lui
+class Chef(UserSite):
     responsable=models.ForeignKey('self', blank = True, null=True)
 
     class Meta:
-        verbose_name='Responsable dactivitées'
+        verbose_name='Responsable d\'activitées / SOP'
 
-#un user chef de projet hérite de mes user et il peut avoir un responsable chef
+
+# un user chef de projet hérite de mes user et il peut avoir un responsable chef
 class ChefdeProjet(UserSite):
-    responsable=models.ForeignKey(chef)
+    responsable=models.ForeignKey(Chef)
     
     class Meta:
-        verbose_name='chefde projet'
+        verbose_name='chef de projet'
 
 
-
-#rt son responsbale c'est un chef 
+# rt son responsbale c'est un chef
 class Rt(UserSite):
     responsable=models.ForeignKey(ChefdeProjet)
     
     class Meta:
         verbose_name='Rt'
 
-class liv(UserSite):
+
+class Liv(UserSite):
     responsable=models.ForeignKey(Rt)
     executant = models.ManyToManyField('ChValid', blank=True, related_name='liv')
 
     class Meta:
-        verbose_name='liv'
+        verbose_name='Pilote d\'activité'
 
 
-class chv(UserSite):
-    responsable=models.ForeignKey(liv)
+class ChValid(UserSite):
+    responsable=models.ForeignKey(Liv)
 
     class Meta:
-        verbose_name='chv'
-      
+        verbose_name='Executant'
 
     def __str__(self):
         return str(self.user.username) 

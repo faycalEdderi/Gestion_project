@@ -12,17 +12,24 @@ def choix(objectmodel):
     return liste
 
 
+
+
+
+def pointages(request):
+
+    return render(request,'table_pointage.html')
+
+def historique_pointage(request):
+
+    return render(request,'table_pointage_historique.html')
+
+# Affichage de tous les uos
 def uo_list(request):
-    uoListe= Uo.objects.all()
+    uo_liste= Uo.objects.all()
     context = {
-        "Uo": uoListe,
+        "Uo": uo_liste,
     }
     return render(request, "uos_list.html", context)
-
-
-class UosCreate(CreateView):
-    model = Uo
-    # fields = ['lot']
 
 
 def creation_uet(request):
@@ -84,11 +91,6 @@ def create_plateforme(request):
     return render(request, "create_plateforme.html", context)
 
 
-# fonction de création des objects ayant pour attribut nom
-def creation_fields_uo(object, field):
-    object.objects.create(nom=field)
-
-
 def creation_parametre_uo(request):
 
     if request.method == 'POST':
@@ -112,30 +114,42 @@ def creation_parametre_uo(request):
             etat_uo_name = request.POST['nom_etat_uo']
             lot_uo_name = request.POST['nom_lot_uo']
 
-            count_name = [
-                type_uo_name,
-                niveau_uo_name,
-                projet_name,
-                fonction_name,
-                statut_uo_name,
-                etat_uo_name,
-                lot_uo_name
-            ]
-            use_object = [
-                Typeuo,
-                Niveauuo,
-                Projet,
-                Fonction,
-                Statutuo,
-                Etatuo,
-                Lot,
-            ]
-            i = 0
-            while i < len(count_name):
-                for object in use_object:
-                    show = creation_fields_uo(object, count_name[i])
-                    print(show)
-                    i += 1
+            str_type_name = str(type_uo_name)
+            str_niv_name = str(niveau_uo_name)
+            str_projet_name = str(projet_name)
+            str_fonction_name= str(fonction_name)
+            str_statut_name = str(statut_uo_name)
+            str_etat_name = str(etat_uo_name)
+            str_lot_name = str(lot_uo_name)
+
+            uo_type =   Typeuo( nom = type_uo_name )
+            uo_niveau = Niveauuo( nom = niveau_uo_name )
+            project =   Projet( nom = projet_name )
+            fonction =  Fonction( nom = fonction_name)
+            uo_statu =  Statutuo(nom = statut_uo_name)
+            uo_state =  Etatuo(nom = etat_uo_name)
+            lot =       Lot(nom = lot_uo_name)
+
+            if str_type_name and not str_type_name.isspace():
+                uo_type.save()
+
+            if str_niv_name and not str_niv_name.isspace():
+                uo_niveau.save()
+
+            if str_projet_name and not str_projet_name.isspace():
+                project.save()
+
+            if str_fonction_name and not str_fonction_name.isspace():
+                fonction.save()
+
+            if str_statut_name and not str_statut_name.isspace():
+                uo_statu.save()
+
+            if str_etat_name and not str_etat_name.isspace():
+                uo_state.save()
+
+            if str_lot_name and not str_lot_name.isspace():
+                lot.save()
 
             return redirect('creation_parametre_uo')
     else:
@@ -231,7 +245,7 @@ def create_uo(request):
                 messages.INFO,
                 'L\'UO a etais créée correctement ')
 
-            return redirect('create_uo')
+            return redirect('uo_list')
     else:
 
         uo_creation_form = UoForm()
@@ -322,6 +336,7 @@ def create_pointage(request):
 
     return render(request, "create_pointage.html", context)
 
+
 def create_note_cadrage(request):
 
     if request.method == 'POST':
@@ -354,7 +369,53 @@ def create_note_cadrage(request):
     return render(request, "create_note_cadrage.html", context)
 
 
+def create_activite(request):
 
+    if request.method == 'POST':
+        activite_form = ActivitesForm(request.POST)
+
+        print("request : ", request.POST)
+
+        if activite_form.is_valid():
+
+            select_note_cadrage_id = request.POST['select_note_cadrage']
+            data = request.POST['donnee_entree']
+            activity = request.POST['activite_attendue']
+            percentage = request.POST['pourcentage_activite']
+            success_condition = request.POST['conditions_reussite']
+            data_date = request.POST['date_donnee_entree']
+            activity_start = request.POST['date_demarrage_activite']
+            expected_deliverable = request.POST['livrable_attendu']
+            delivery_date_available = request.POST['date_reception_livrable']
+            commentary = request.POST['commentaire']
+
+            get_note_cadrage = NotedeCadrage.objects.get(id = select_note_cadrage_id )
+
+            add_activite = Activites(
+                notedeCadrage = get_note_cadrage,
+                donnesdentree = data,
+                activiteAttendue = activity ,
+                pourcentagedactivite = percentage ,
+                Conditionsdereussite = success_condition ,
+                Datedonnéesdentrees = data_date ,
+                DatedeDemarragedActivite = activity_start ,
+                LivrableAttendu = expected_deliverable ,
+                DatedeReceptionAttenduduLivrable = delivery_date_available ,
+                CommentairesSurAttendu = commentary ,
+
+            )
+            add_activite.save()
+
+            return redirect('create_activite')
+    else:
+        activite_form = ActivitesForm()
+
+    context = {
+        'form_activite': activite_form,
+
+    }
+
+    return render(request, "create_activite.html", context)
 
 
 

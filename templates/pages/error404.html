@@ -1,9 +1,85 @@
 {% load static %}
-{% include 'theme.html' %}
+<!DOCTYPE html>
+<html lang="fr">
 
-<h1 class="text-center">404 Not found </h1>
-<p  class="lead text-center" >Cette page n'est pas autorisé </p>
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href=" {% static 'img/apple-icon.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'img/a.png' %}">
 
-<img class="mx-auto d-block" src="{% static 'img/homer.jpg' %}" ></img>
+  <title>
+   ADAS VALID SITE
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css"  href="{% static 'css/google_font.css' %}">
+  <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
 
-{% include 'footer.html' %}
+  <!-- CSS Files -->
+  <link href="{% static 'css/material-dashboard.css' %}"  rel="stylesheet">
+    <!--Jquery UI CSS Files-->
+  <link type="text/css" rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %} ">
+  <link type="text/css" rel="stylesheet" href="{% static 'css/jquery-ui.structure.css' %}">
+  <link type="text/css" rel="stylesheet" href="{% static 'css/jquery-ui.theme.min.css' %}">
+  <link href="{% static 'css/style.css' %}"  rel="stylesheet">
+  <link href="{% static 'css/simple-sidebar.css' %}"  rel="stylesheet">
+</head>
+
+<body >
+<style>
+
+body { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMC8yOS8xMiKqq3kAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABHklEQVRIib2Vyw6EIAxFW5idr///Qx9sfG3pLEyJ3tAwi5EmBqRo7vHawiEEERHS6x7MTMxMVv6+z3tPMUYSkfTM/R0fEaG2bbMv+Gc4nZzn+dN4HAcREa3r+hi3bcuu68jLskhVIlW073tWaYlQ9+F9IpqmSfq+fwskhdO/AwmUTJXrOuaRQNeRkOd5lq7rXmS5InmERKoER/QMvUAPlZDHcZRhGN4CSeGY+aHMqgcks5RrHv/eeh455x5KrMq2yHQdibDO6ncG/KZWL7M8xDyS1/MIO0NJqdULLS81X6/X6aR0nqBSJcPeZnlZrzN477NKURn2Nus8sjzmEII0TfMiyxUuxphVWjpJkbx0btUnshRihVv70Bv8ItXq6Asoi/ZiCbU6YgAAAABJRU5ErkJggg==);}
+.error-template {padding: 40px 15px;text-align: center;}
+.error-actions {margin-top:15px;margin-bottom:15px;}
+.error-actions .btn { margin-right:10px; }
+
+
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="mt-5">
+                <h1 class="text-center display-1 ">
+                    Oops!</h1>
+                <h2 class="text-center font-weight-bold">
+                    404 Not Found
+                </h2>
+                <div class="text-center display-4" >
+                    Désolé une erreur est survenue. Cette page n'existe pas.
+                </div>
+
+                <div class="text-center mt-4">
+                    <a  href="{% url 'uoslist' %}" class="btn btn-primary btn-lg">
+                        <span class="glyphicon glyphicon-home"></span>
+                        Retour à l'accueil </a>
+                    <a href="#" class="btn btn-default btn-lg">
+                        <span
+                        class="glyphicon glyphicon-envelope"></span>
+                        Contacter admin
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+
+
+      <!--   Core JS Files   -->
+<script src="{% static 'js/core/jquery.min.js' %}"></script>
+<script src="{% static 'js/core/affichage.js' %}" ></script>
+<script src="{% static 'js/core/registration_modal.js' %}" ></script>
+<script src="{% static 'js/core/popper.min.js' %}"></script>
+
+
+
+
+
+
+
+
+
+
