@@ -29,6 +29,11 @@ class ProjetForm(forms.Form):
         label = "Projet : ",
         required=False
     )
+    plateforme = forms.ModelChoiceField(
+        label="Selectionner une plateforme",
+        required = False,
+        queryset=Plateforme.objects.all(),
+    )
 
     class Meta:
         model = Projet
@@ -62,12 +67,21 @@ class CatalogueForm(forms.Form):
 class FonctionForm(forms.Form):
     nom_fonction = forms.CharField(
         label="Fonction",
-        required=False
+        required= False
+
+    )
+    uet = forms.ModelChoiceField(
+        label = "Selectionner une UET",
+        required=False,
+        queryset= Uet.objects.all()
     )
 
     class Meta:
         model = Fonction
-        fields = ['nom']
+        fields = [
+            'nom',
+            'uet'
+        ]
 
 
 class StatutUoForm(forms.Form):
@@ -107,26 +121,17 @@ class PlateformeForm(forms.Form):
     nom_plateforme = forms.CharField(
         label="Plateforme"
     )
-    select_projet = forms.ModelChoiceField(
-        label = "Selectionner un projet",
-        queryset=Projet.objects.all()
-    )
 
     class Meta:
         model = Plateforme
         fields=[
             'nom',
-            'projet'
         ]
 
 
 class UetForm(forms.Form):
     nom_uet = forms.CharField(
         label="UET"
-    )
-    select_fonction = forms.ModelChoiceField(
-        label = "Selectionner une fonction",
-        queryset=Fonction.objects.all()
     )
 
     class Meta:

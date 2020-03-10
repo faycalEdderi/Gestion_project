@@ -7,21 +7,21 @@ from django.views import generic
 from django.views.generic.edit import CreateView
 
 
+
 def choix(objectmodel):
     liste = objectmodel.objects.all()  
     return liste
-
-
-
 
 
 def pointages(request):
 
     return render(request,'table_pointage.html')
 
+
 def historique_pointage(request):
 
     return render(request,'table_pointage_historique.html')
+
 
 # Affichage de tous les uos
 def uo_list(request):
@@ -41,12 +41,10 @@ def creation_uet(request):
         if uet_form.is_valid():
 
             uet_name = request.POST['nom_uet']
-            select_fonction_id = request.POST['select_fonction']
-            uet_select_fonction = Fonction.objects.get(id = select_fonction_id)
 
             create_uet = Uet(
                 nom = uet_name,
-                fonctions = uet_select_fonction
+
             )
             create_uet.save()
 
@@ -71,12 +69,9 @@ def create_plateforme(request):
         if plateforme_form.is_valid():
 
             plateforme_name = request.POST['nom_plateforme']
-            select_projet_id = request.POST['select_projet']
-            plateform_select_projet = Projet.objects.get(id = select_projet_id)
 
             create_plateforme = Plateforme(
                 nom = plateforme_name,
-                projets = plateform_select_projet
             )
             create_plateforme.save()
 
@@ -114,6 +109,9 @@ def creation_parametre_uo(request):
             etat_uo_name = request.POST['nom_etat_uo']
             lot_uo_name = request.POST['nom_lot_uo']
 
+            select_uet = request.POST['uet']
+            select_plateforme = request.POST['plateforme']
+
             str_type_name = str(type_uo_name)
             str_niv_name = str(niveau_uo_name)
             str_projet_name = str(projet_name)
@@ -124,32 +122,65 @@ def creation_parametre_uo(request):
 
             uo_type =   Typeuo( nom = type_uo_name )
             uo_niveau = Niveauuo( nom = niveau_uo_name )
-            project =   Projet( nom = projet_name )
-            fonction =  Fonction( nom = fonction_name)
+
             uo_statu =  Statutuo(nom = statut_uo_name)
             uo_state =  Etatuo(nom = etat_uo_name)
             lot =       Lot(nom = lot_uo_name)
 
             if str_type_name and not str_type_name.isspace():
                 uo_type.save()
+                messages.success(request, 'Création d\'un nouveau Type UO effectué')
 
             if str_niv_name and not str_niv_name.isspace():
                 uo_niveau.save()
+                messages.success(request, 'Création d\'une nouveau Niveau UO effectué')
+
+            if projet_name == "" and select_plateforme != "":
+
+                messages.error(request, 'Veuillez saisir un Projet.')
 
             if str_projet_name and not str_projet_name.isspace():
-                project.save()
+
+                if select_plateforme != "":
+                    get_plateforme = Plateforme.objects.get(id=select_plateforme)
+                    project = Projet(
+                        nom=projet_name,
+                        plateforme=get_plateforme
+                    )
+                    project.save()
+                    messages.success(request, 'Création d\'une nouvelle Plateforme effectué')
+                else:
+                    messages.error(request, 'Veuillez selectionner une plateforme.')
+
+            if fonction_name == "" and select_uet != "":
+
+                messages.error(request, 'Veuillez saisir une Fonction.')
 
             if str_fonction_name and not str_fonction_name.isspace():
-                fonction.save()
+                if select_uet != "":
+                    get_uet = Uet.objects.get(id=select_uet)
+
+                    fonction = Fonction(
+                        nom=fonction_name,
+                        uet = get_uet
+                    )
+
+                    fonction.save()
+                    messages.success(request, 'Création d\'une nouvelle UET effectué')
+                else:
+                    messages.error(request,'Veuillez selectionner une UET.')
 
             if str_statut_name and not str_statut_name.isspace():
                 uo_statu.save()
+                messages.success(request, 'Création d\'un nouveau statut d\'UO effectué')
 
             if str_etat_name and not str_etat_name.isspace():
                 uo_state.save()
+                messages.success(request, 'Création d\'un nouvel Etat d\'UO effectuée')
 
             if str_lot_name and not str_lot_name.isspace():
                 lot.save()
+                messages.success(request, 'Création d\'un nouveau Lot effectuée')
 
             return redirect('creation_parametre_uo')
     else:

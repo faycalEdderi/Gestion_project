@@ -16,6 +16,16 @@
     {% endfor %}
 {% endif %}
 
+{% if messages%}
+<ul class="messages">
+    {% for message in messages %}
+
+     <li {% if message.tags %} class="{{ message.tags }} text-center"{% endif %}>
+         {{ message }} </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 
 <div class="container ">
     <div class="panel-heading">
@@ -45,6 +55,8 @@
                                 <div class="form-group d-flex flex-column">
                                     {{ form_projet.nom_projet.label }}
                                     {{ form_projet.nom_projet }}
+                                    {{ form_projet.plateforme.label }}
+                                    {{ form_projet.plateforme }}
                                 </div>
                             </div>
 
@@ -54,6 +66,8 @@
                                 <div class="form-group d-flex flex-column">
                                     {{ form_fonction.nom_fonction.label }}
                                     {{ form_fonction.nom_fonction }}
+                                     {{ form_fonction.uet.label }}
+                                    {{ form_fonction.uet }}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-4">
