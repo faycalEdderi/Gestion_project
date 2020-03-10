@@ -342,17 +342,16 @@ def create_note_cadrage(request):
     if request.method == 'POST':
         note_cadrage_form = NoteCadrageForm(request.POST)
 
+
         print("request : ", request.POST)
 
         if note_cadrage_form.is_valid():
 
-            selected_uo_id = request.POST['select_uo']
+            cadrage_name = request.POST['nom_cadrage']
             answer_rsa = request.POST['reponse_rsa']
 
-            recover_uo = Uo.objects.get(id = selected_uo_id )
-
             add_note_cadrage = NotedeCadrage(
-                uo = recover_uo,
+                nom = cadrage_name,
                 reponseRSA = answer_rsa
             )
             add_note_cadrage.save()

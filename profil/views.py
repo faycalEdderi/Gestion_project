@@ -74,10 +74,12 @@ def connexion(request):
 def user_list(request):
     if str(request.user.myusers.role) == "RT" or str(request.user.myusers.role) == "PMO" or \
             str(request.user.myusers.role) == "RSOP":
-        userList = User.objects.all()
+
+        # users_list = User.objects.all()
+        users_list = User.objects.filter(is_active = True).order_by('last_name')
 
         context = {
-            "users": userList,
+            "users": users_list,
         }
         print(request.user.myusers.role)
 
@@ -155,7 +157,7 @@ def create_account(request):
                 else:
                     get_poste = None
 
-                if select_role == "1":
+                if str(get_role) == "CH.EXECUTION":
                     new_ch_execut = Executant(
                         username=nom + "_" + prenom,
                         email=email,
@@ -168,7 +170,7 @@ def create_account(request):
                     new_ch_execut.set_password("mdp78")
                     new_ch_execut.save()
 
-                if select_role == "2":
+                if str(get_role) == "PILOTE_ACTIVITE":
                     new_pilote = Pilote(
                         username=nom + "_" + prenom,
                         email=email,
@@ -181,7 +183,7 @@ def create_account(request):
                     new_pilote.set_password("mdp78")
                     new_pilote.save()
 
-                if select_role == "3":
+                if str(get_role) == "RT":
                     new_rt = RespTechnique(
                         username=nom + "_" + prenom,
                         email=email,
@@ -194,7 +196,7 @@ def create_account(request):
                     new_rt.set_password("mdp78")
                     new_rt.save()
 
-                if select_role == "4":
+                if str(get_role) == "PMO":
                     new_chef_projet = ChefdeProjet(
                         username=nom + "_" + prenom,
                         email=email,
@@ -207,7 +209,7 @@ def create_account(request):
                     new_chef_projet.set_password("mdp78")
                     new_chef_projet.save()
 
-                if select_role == "5":
+                if str(get_role) == "RSOP":
                     new_resp_sop = RespSOP(
                         username=nom + "_" + prenom,
                         email=email,
@@ -286,7 +288,8 @@ def update_account(request, pk=None):
             select_role = request.POST['role']
             new_role = Role.objects.get(id = select_role)
 
-            print("old_role : ", old_role, "/ new_role : ", new_role)
+            form_update_account.save()
+
             if new_poste != "":
                 NewPostName.objects.get_or_create(post_name = new_poste)
 
@@ -296,35 +299,109 @@ def update_account(request, pk=None):
                 print("add new role")
 
                 old_obj = deepcopy(select_user_update)
-                old_obj.role = new_role
+                old_obj.username = str(select_user_update.username) + str(old_obj.id) +"_old"
+                old_obj.is_active = False
                 old_obj.id = None
-
                 old_obj.save()
 
-                new_pilote = Pilote(
-                    username= select_user_update.username + '_new',
-                    email=old_obj.email,
-                    first_name=old_obj.first_name,
-                    last_name=old_obj.last_name,
-                    role=old_obj.role,
-                    poste=old_obj.poste,
-                    phone_number=old_obj.phone_number
-                )
-                new_pilote.save()
+                if str(new_role) == "CH.EXECUTION":
+                    check_user = Executant.objects.filter(email = select_user_update.email )
+                    if not check_user:
+                        new_executant = Executant(
+                            username= select_user_update.username ,
+                            email=old_obj.email,
+                            first_name=old_obj.first_name,
+                            last_name=old_obj.last_name,
+                            role=old_obj.role,
+                            poste=old_obj.poste,
+                            phone_number=old_obj.phone_number
+                        )
+
+                        new_executant.save()
+                    else:
+                        find_user = Executant.objects.get(email=select_user_update.email)
+                        find_user.is_active = True
+                        find_user.username = select_user_update.username
+                        find_user.save()
+
+                if str(new_role) == "PILOTE_ACTIVITE":
+                    check_user = Pilote.objects.filter(email=select_user_update.email)
+                    if not check_user:
+                        new_pilote = Pilote(
+                            username=select_user_update.username,
+                            email=old_obj.email,
+                            first_name=old_obj.first_name,
+                            last_name=old_obj.last_name,
+                            role=old_obj.role,
+                            poste=old_obj.poste,
+                            phone_number=old_obj.phone_number
+                        )
+                        new_pilote.save()
+                    else:
+                        find_user = Pilote.objects.get(email=select_user_update.email)
+                        find_user.is_active = True
+                        find_user.username = select_user_update.username
+                        find_user.save()
+
+                if str(new_role) == "RT":
+                    check_user = RespTechnique.objects.filter(email=select_user_update.email)
+                    if not check_user:
+                        new_rt = RespTechnique(
+                            username=select_user_update.username,
+                            email=old_obj.email,
+                            first_name=old_obj.first_name,
+                            last_name=old_obj.last_name,
+                            role=old_obj.role,
+                            poste=old_obj.poste,
+                            phone_number=old_obj.phone_number
+                        )
+                        new_rt.save()
+                    else:
+                        find_user = RespTechnique.objects.get(email=select_user_update.email)
+                        find_user.is_active = True
+                        find_user.username = select_user_update.username
+                        find_user.save()
+
+                if str(new_role) == "PMO":
+                    check_user = ChefdeProjet.objects.filter(email=select_user_update.email)
+                    if not check_user:
+                        new_pmo = ChefdeProjet(
+                            username= select_user_update.username ,
+                            email=old_obj.email,
+                            first_name=old_obj.first_name,
+                            last_name=old_obj.last_name,
+                            role=old_obj.role,
+                            poste=old_obj.poste,
+                            phone_number=old_obj.phone_number
+                        )
+                        new_pmo.save()
+                    else:
+                        find_user = ChefdeProjet.objects.get(email=select_user_update.email)
+                        find_user.is_active = True
+                        find_user.username = select_user_update.username
+                        find_user.save()
+
+                if str(new_role) == "RSOP":
+                    check_user = RespSOP.objects.filter(email=select_user_update.email)
+                    if not check_user:
+                        new_rsop = RespSOP(
+                            username= select_user_update.username ,
+                            email=old_obj.email,
+                            first_name=old_obj.first_name,
+                            last_name=old_obj.last_name,
+                            role=old_obj.role,
+                            poste=old_obj.poste,
+                            phone_number=old_obj.phone_number
+                        )
+                        new_rsop.save()
+                    else:
+                        find_user = RespSOP.objects.get(email=select_user_update.email)
+                        find_user.is_active = True
+                        find_user.username = select_user_update.username
+                        find_user.save()
+
+
                 print("new_objt id : ", old_obj.id, "old_user id : ", select_user_update.id)
-
-
-
-
-
-
-
-
-
-
-            # new_objet = copy.deepcopy(select_user_update)
-
-
 
             #form_update_account.save()
 

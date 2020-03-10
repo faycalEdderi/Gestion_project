@@ -246,19 +246,25 @@ class PointageForm(forms.Form):
 
 
 class NoteCadrageForm(forms.Form):
-    select_uo = forms.ModelChoiceField(
-        label="Selectionner une UO",
-        queryset=Uo.objects.all(),
+    nom_cadrage = forms.CharField(
+        label="Entrer reference note de cadrage",
     )
 
     reponse_rsa = forms.CharField(
-        label="Reponse RSA"
+        label="Reponse RSA",
+        required=False,
     )
+    select_activite = forms.ModelMultipleChoiceField(
+        label="Selectionner activité ",
+        queryset=Activites.objects.all()
+    )
+
     class Meta:
         model = Pointage
         fields =[
-            'uo',
+            'nom_cadrage',
             'reponseRSA',
+            'select_activite',
         ]
 
 

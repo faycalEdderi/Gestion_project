@@ -13,6 +13,7 @@
           <div class="table-responsive">
             <table class="table">
               <thead class=" expleoColorT">
+                  <th>Username </th>
                   <th>Nom </th>
                   <th>Prénom</th>
                   <th>Email</th>
@@ -20,20 +21,23 @@
                   <th>Numéro de téléphone</th>
                   <th>Modifier</th>
                   <th>Activer / Désactiver utilisateur</th>
+                  <th>Role</th>
               </thead>
               <tbody>
               {% for utilisateur in users %}
                 <tr>
-              
+                    <td>{{utilisateur.username}}</td>
                     <td>{{utilisateur.last_name}}</td>
                     <td>{{utilisateur.first_name}}</td>
                     <td>{{utilisateur.email}}</td>
                     <td>{{utilisateur.myusers.poste}}</td>
                     <td>{{utilisateur.myusers.phone_number}}</td>
 
-                    <td><a href="{% url 'update_account' utilisateur.id %}" class="btn btn-info">Modifier</button></a>
 
-                    <td><input type="checkbox" class="btn check btn-dark" checked></td>
+                    <td><a href="{% url 'update_account' utilisateur.id %}" class="btn btn-info">Modifier</button></a>
+                    <td>{{utilisateur.is_active}}</td>
+                    <td>{{utilisateur.myusers.role}}</td>
+                   <!-- <td><input type="checkbox" class="btn check btn-dark" checked></td> -->
 
                 </tr>
                 {% endfor %}
