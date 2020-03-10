@@ -2,10 +2,6 @@ from profil.models import *
 import traceback, sys
 from django.contrib.auth.models import User
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 6296efaf95be801fa75dd8483ed793c7a9aa2053
 def run ():
     try:
         User.objects.create_superuser(
@@ -14,10 +10,7 @@ def run ():
             'tfsbea94'
         )
         print("Superuser created")
-<<<<<<< HEAD
-=======
         '''
->>>>>>> 6296efaf95be801fa75dd8483ed793c7a9aa2053
         i = 0
         while i < 5:
             User.objects.create_user(
@@ -28,13 +21,9 @@ def run ():
                 last_name="last_name" + str(i)
             )
             i += 1
-<<<<<<< HEAD
-        print("Users created")
-=======
         
         print("Users created")
         '''
->>>>>>> 6296efaf95be801fa75dd8483ed793c7a9aa2053
 
         Role.objects.create(
             role_name="CH.EXECUTION"
@@ -53,9 +42,5 @@ def run ():
         )
         print("Roles created")
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 6296efaf95be801fa75dd8483ed793c7a9aa2053
     except:
         traceback.print_exc(file=sys.stdout)

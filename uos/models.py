@@ -1,8 +1,9 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
+from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP,Client
 from django.utils import timezone
-
+from datetime import date
 
 # fonction qui prends tout les objets d'une classe et les renvoi dans une liste
 def choix(objectmodel):
@@ -60,8 +61,8 @@ class CatalogueUo(models.Model):
     typeuo=models.ForeignKey(Typeuo, 
     on_delete=models.CASCADE,
     default = "")
-    nbrjouruo=models.CharField(max_length=5)
-    prixuo=models.CharField(max_length=20)
+    nbr_jour_uo=models.CharField(max_length=5)
+    prix_uo=models.CharField(max_length=20)
 
     def __str__(self):
         return self.nom   
@@ -121,10 +122,11 @@ class Lot(models.Model):
 
 # class pointage qui permet aux utilisateur de pointer sur l'uo
 class Pointage(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE,default = "")
-    semaine= models.IntegerField()
-    point=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5)])
-
+    pilote=models.ForeignKey(Pilote,on_delete=models.CASCADE,default = "")
+    excutant=models.ManyToManyField(Executant,default = "")
+    semaine= models.DateTimeField(default=timezone.now(),blank=True, null=True)
+    point_pilote=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5)])
+    point_exceutant=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5)])
     def __str__(self):
        return str(self.point)
 
@@ -141,27 +143,30 @@ class NotedeCadrage(models.Model):
 
 # création d'uo avec possiblité de choisir les champs dans des table differente
 class Uo(models.Model):
-    numuo = models.CharField(max_length=20)
-    typeuo = models.ForeignKey(Typeuo,default = "",on_delete=models.CASCADE,blank=True, null=True)
-    niveauo = models.ForeignKey(Niveauuo,default = "",on_delete=models.CASCADE,blank=True, null=True)
+    num_uo = models.CharField(max_length=20)
+    type_uo = models.ForeignKey(Typeuo,default = "",on_delete=models.CASCADE,blank=True, null=True)
+    nivea_uo = models.ForeignKey(Niveauuo,default = "",on_delete=models.CASCADE,blank=True, null=True)
     projet = models.ForeignKey(Projet,default = "",on_delete=models.CASCADE,blank=True, null=True)
     fonction = models.ForeignKey(Fonction,default = "",on_delete=models.CASCADE,blank=True, null=True)
-    statutuo = models.ForeignKey(Statutuo,default = "",on_delete=models.CASCADE,blank=True, null=True)
-    etatuo = models.ForeignKey(Etatuo,default = "",on_delete=models.CASCADE,blank=True, null=True)
+    statut_uo = models.ForeignKey(Statutuo,default = "",on_delete=models.CASCADE,blank=True, null=True)
+    etat_uo = models.ForeignKey(Etatuo,default = "",on_delete=models.CASCADE,blank=True, null=True)
     plateforme = models.ForeignKey(Plateforme,default = "",on_delete=models.CASCADE,blank=True, null=True)
     uet = models.ForeignKey(Uet,default = "",on_delete=models.CASCADE,blank=True, null=True)
     catalogue = models.ForeignKey(CatalogueUo,default = "",on_delete=models.CASCADE,blank=True, null=True)
     lot = models.ForeignKey(Lot,default = "",on_delete=models.CASCADE,blank=True)
-    jalonD = models.CharField(max_length=20,default="",blank=True, null=True)
-    jalonF = models.CharField(max_length=20,default="",blank=True, null=True)
+    jalon_d= models.CharField(max_length=20,default="",blank=True, null=True)
+    jalon_f = models.CharField(max_length=20,default="",blank=True, null=True)
     ju = models.CharField(max_length=20,default="",blank=True, null=True)
-    DateDebutUO=models.DateTimeField(default=timezone.now(),blank=True, null=True)
-    DateLivraison=models.DateTimeField(default=timezone.now(),blank=True, null=True)
-    Client=models.CharField(max_length=20,default="",blank=True, null=True)
+    date_debut_uo=models.DateTimeField(default=timezone.now(),blank=True, null=True)
+    date_livraison=models.DateTimeField(default=timezone.now(),blank=True, null=True)
     avancement=models.FloatField(default=0,blank=True, null=True)
     pointage =models.ForeignKey(Pointage,on_delete=models.CASCADE,default = "",blank=True, null=True)
-    piloteUo=models.CharField(max_length=20,default="",blank=True, null=True)
-    notedeCadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "",blank=True, null=True)
+    note_de_cadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "",blank=True, null=True)
+    pilote_activitees=models.ForeignKey(Pilote,default = "",on_delete=models.CASCADE,blank=True, null=True)
+    client=models.ForeignKey(Client, default = "", on_delete=models.CASCADE,blank=True, null=True)
+
+
+    
     def __str__(self):
         return self.numuo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet
 
@@ -169,16 +174,16 @@ class Uo(models.Model):
   
 # classe activités pour chaque note de cadrage plusieurs activitées
 class Activites(models.Model):
-    notedeCadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "")
-    donnesdentree=models.CharField(max_length=600,default="")
-    activiteAttendue=models.CharField(max_length=600,default="")	
-    pourcentagedactivite=models.FloatField()
-    Conditionsdereussite=models.CharField(max_length=600,default="")	
-    Datedonnéesdentrees=models.DateTimeField(default="", blank=True)
-    DatedeDemarragedActivite=models.DateTimeField( default="",blank=True)
-    LivrableAttendu=models.CharField(max_length=600,default="")	
-    DatedeReceptionAttenduduLivrable=models.DateTimeField(default="", blank=True)
-    CommentairesSurAttendu=models.CharField(max_length=600,default="")	
+    note_de_cadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "")
+    donnees_dentree=models.CharField(max_length=600,default="")
+    activite_attendue=models.CharField(max_length=600,default="")	
+    pourcentage_dactivite=models.FloatField()
+    conditions_de_reussite=models.CharField(max_length=600,default="")	
+    date_donnees_dentrees=models.DateTimeField(default="", blank=True)
+    date_de_demarrage_dactivite=models.DateTimeField( default="",blank=True)
+    livrable_attendu=models.CharField(max_length=600,default="")	
+    date_reception_attendu_du_Livrable=models.DateTimeField(default="", blank=True)
+    commentaires_sur_attendu=models.CharField(max_length=600,default="")	
 
     def __str__(self):
        return str(self.activiteAttendue)
@@ -188,14 +193,14 @@ class Activites(models.Model):
    
 ##class livraison d'activité 
 class Livraison(models.Model):
-    nomduLivrable=models.ForeignKey(Activites,on_delete=models.CASCADE,default="")
-    systèmeADAS=models.ForeignKey(Fonction,default = "",on_delete=models.CASCADE)	
+    nom_livrable=models.ForeignKey(Activites,on_delete=models.CASCADE,default="")
+    systeme_adas=models.ForeignKey(Fonction,default = "",on_delete=models.CASCADE)	
     projet=models.ForeignKey(Projet,default = "",on_delete=models.CASCADE)
     jalon=models.CharField(max_length=60,default="")
-    numeroUO=models.ForeignKey(Uo,on_delete=models.CASCADE,default="")
-    typeuo=models.ForeignKey(Typeuo,on_delete=models.CASCADE,default="")
-    niveauUO=models.ForeignKey(Niveauuo,on_delete=models.CASCADE,default="")
-    pourcentagelivre=models.FloatField()
+    numero_uo=models.ForeignKey(Uo,on_delete=models.CASCADE,default="")
+    type_uo=models.ForeignKey(Typeuo,on_delete=models.CASCADE,default="")
+    niveau_uo=models.ForeignKey(Niveauuo,on_delete=models.CASCADE,default="")
+    pourcentage_livre=models.FloatField()
     commentaire  = models.CharField(max_length=600,default="")
 
     def __str__(self):
