@@ -86,6 +86,63 @@ def create_plateforme(request):
     return render(request, "create_plateforme.html", context)
 
 
+def create_workpackage(request):
+
+    if request.method == 'POST':
+        workpackage_form = WorkPackageForm(request.POST)
+
+        print("request : ", request.POST)
+
+        if workpackage_form.is_valid():
+
+            workpackage_name = request.POST['nom_workpackage']
+
+            creation_workpackage = WorkPackage(
+                nom = workpackage_name,
+            )
+            creation_workpackage.save()
+
+            return redirect('create_workpackage')
+    else:
+        workpackage_form = WorkPackageForm()
+
+    context = {
+        'form_workpackage': workpackage_form,
+    }
+
+    return render(request, "create_workpackage.html", context)
+
+def create_perimetre(request):
+
+    if request.method == 'POST':
+        perimetre_form = PerimetreForm(request.POST)
+
+        print("request : ", request.POST)
+
+        if perimetre_form.is_valid():
+
+            perimetre_name = request.POST['nom_perimetre']
+            select_workpackage = request.POST['workpackage']
+
+            get_workpackage = WorkPackage.objects.get(id = select_workpackage)
+            print("workpackage : ", get_workpackage)
+            creation_workpackage = Perimetre(
+                nom = perimetre_name,
+                workPackage = get_workpackage
+            )
+            creation_workpackage.save()
+
+            return redirect('create_perimetre')
+    else:
+        perimetre_form = PerimetreForm()
+
+    context = {
+        'form_perimetre': perimetre_form,
+    }
+
+    return render(request, "create_perimetre.html", context)
+
+
 def creation_parametre_uo(request):
 
     if request.method == 'POST':
@@ -302,9 +359,10 @@ def create_catalogue_uo(request):
             catalogue_name = request.POST['nom_catalogue']
             select_uo_type = request.POST['catalogue_select_type_uo']
             day_number = request.POST['nombre_jours_uo']
-            select_uo_niveau = request.POST['catalogue_select_niveau_uo']
+            select_uo_niveau = request.POST['niveau_uo']
             price_uo = request.POST['prix_uo']
-
+            select_perimetre = request.POST['perimetre']
+            get_perimetre = Perimetre.objects.get(id = select_perimetre)
             recover_type_uo_id = Typeuo.objects.get(id = select_uo_type )
             recover_niveau_uo_id = Niveauuo.objects.get(id = select_uo_niveau )
             print("type uo : ", recover_type_uo_id)
@@ -312,10 +370,11 @@ def create_catalogue_uo(request):
 
             add_catalogue = CatalogueUo(
                 nom=catalogue_name,
+                perimetre = get_perimetre,
+                niveauuo=recover_niveau_uo_id,
+                typeuo=recover_type_uo_id,
                 nbrjouruo=day_number,
                 prixuo=price_uo,
-                typeuo=recover_type_uo_id,
-                niveauuo=recover_niveau_uo_id,
             )
             add_catalogue.save()
 

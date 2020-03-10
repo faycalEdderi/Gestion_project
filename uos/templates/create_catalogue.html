@@ -37,14 +37,20 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-4">
                                 <div class="form-group d-flex flex-column">
+                                    {{ form_catalogue_uo.perimetre.label }}
+                                    {{form_catalogue_uo.perimetre}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
                                    {{ form_catalogue_uo.catalogue_select_type_uo.label }}
                                     {{form_catalogue_uo.catalogue_select_type_uo}}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-4">
                                 <div class="form-group d-flex flex-column">
-                                    {{ form_catalogue_uo.catalogue_select_niveau_uo.label }}
-                                    {{form_catalogue_uo.catalogue_select_niveau_uo}}
+                                    {{ form_catalogue_uo.niveau_uo.label }}
+                                    {{form_catalogue_uo.niveau_uo}}
                                 </div>
                             </div>
 
@@ -61,23 +67,6 @@
                                     {{ form_catalogue_uo.prix_uo.label }}
                                     {{form_catalogue_uo.prix_uo}}
 
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-4">
-                                <div class="form-group d-flex flex-column">
-                                    {{ form_lot_uo.nom_lot_uo.label }}
-                                    {{ form_lot_uo.nom_lot_uo }}
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-
-                            <div class="col-xs-6 col-sm-6 col-md-4">
-                                <div class="form-group d-flex flex-column">
-
-                                    {{ form_etat_uo.nom_etat_uo.label }}
-                                    {{ form_etat_uo.nom_etat_uo }}
                                 </div>
                             </div>
                         </div>

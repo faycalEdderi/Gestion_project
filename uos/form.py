@@ -13,6 +13,33 @@ class TypeUoForm(forms.Form):
         fields = ['nom']
 
 
+class WorkPackageForm(forms.Form):
+    nom_workpackage = forms.CharField(
+        label="Workpackage : ",
+    )
+
+    class Meta:
+        model = WorkPackage
+        fields = ['nom']
+
+
+class PerimetreForm(forms.Form):
+    nom_perimetre = forms.CharField(
+        label="Périmètre : ",
+    )
+    workpackage = forms.ModelChoiceField(
+        label = "Selectionner un Workpackage",
+        queryset = WorkPackage.objects.all()
+    )
+
+    class Meta:
+        model = Perimetre
+        fields = [
+            'nom',
+            'workPackage'
+        ]
+
+
 class NiveauUoForm(forms.Form):
     nom_niveau_uo = forms.CharField(
         label="Niveau d'UO :",
@@ -44,13 +71,17 @@ class CatalogueForm(forms.Form):
     nom_catalogue=forms.CharField(
         label="Nom Catalogue "
     )
-    catalogue_select_type_uo = forms.ModelChoiceField(
-        label="Selectionner un type UO",
-        queryset=Typeuo.objects.all(),
+    perimetre = forms.ModelChoiceField(
+        label="Selectionner un perimetre",
+        queryset=Perimetre.objects.all(),
     )
-    catalogue_select_niveau_uo = forms.ModelChoiceField(
-        label="Selectionner un niveau UO",
-        queryset=Niveauuo.objects.all(),
+    niveau_uo = forms.ModelChoiceField(
+        label="Selectionner un Niveau UO",
+        queryset = Niveauuo.objects.all()
+    )
+    type_uo = forms.ModelChoiceField(
+        label="Selectionner un Type d'UO",
+        queryset = Typeuo.objects.all()
     )
     nombre_jours_uo = forms.CharField(
         label="Nombre de jours UO"

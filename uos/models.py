@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP,Client
 from django.utils import timezone
 from datetime import date
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 # fonction qui prends tout les objets d'une classe et les renvoi dans une liste
@@ -47,13 +48,9 @@ class Niveauuo(models.Model):
 # création de type d'uo pour chaque uo un type
 class Typeuo(models.Model):
     nom = models.CharField(max_length=20)
-    success_message = "%(nom) was created successfully"
 
     def __str__(self):
-        return self.success_message % dict(
-            cleaned_data,
-            calculated_field=self.object.calculated_field,
-        )
+        return self.nom
 
 
 # création de catalogue uo et que pour chaque type et niveau un prix et un nombre de jour
@@ -97,7 +94,6 @@ class Fonction(models.Model):
 
     def __str__(self):
        return self.nom  
-
 
 # création de statut uo comme une table pour qu'il puisse rajouter des statut ou modifier ou
 # suprrimer

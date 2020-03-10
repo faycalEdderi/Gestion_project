@@ -1,6 +1,8 @@
 from profil.models import *
+from uos.models import *
 import traceback, sys
 from django.contrib.auth.models import User
+
 
 def run ():
     try:
@@ -10,11 +12,6 @@ def run ():
             'tfsbea94'
         )
         print("Superuser created")
-
-
-
-        print("Users created")
-
 
         Role.objects.create(
             role_name="CH.EXECUTION"
@@ -33,7 +30,7 @@ def run ():
         )
         print("Roles created")
 
-        i = 0
+        i = 1
         rt = Role.objects.get(id=3)
         while i < 5:
             MyUsers.objects.create_user(
@@ -44,7 +41,44 @@ def run ():
                 last_name="last_name" + str(i),
                 role=rt
             )
-            i += 1
 
-    except:
+
+            Typeuo.objects.create(
+               nom = "Type UO " + str(i)
+            )
+            Niveauuo.objects.create(
+                nom="Niveau UO " + str(i)
+            )
+            Statutuo.objects.create(
+                nom="Statut UO " + str(i)
+            )
+            Lot.objects.create(
+                nom="Lot UO " + str(i)
+            )
+            Etatuo.objects.create(
+                nom="Etat UO " + str(i)
+            )
+            Plateforme.objects.create(
+                nom="Plateform UO " + str(i)
+            )
+            Uet.objects.create(
+                nom="Uet UO " + str(i)
+            )
+            WorkPackage.objects.create(
+                nom="Workpackage " + str(i)
+            )
+            get_uet = Uet.objects.get(id = i)
+            Fonction.objects.create(
+                nom = "Fonction " + str(i),
+                uet = get_uet
+            )
+            get_plateforme = Plateforme.objects.get(id=i)
+            Projet.objects.create(
+                nom="Projet " + str(i),
+                plateforme=get_plateforme
+            )
+            i += 1
+        print("Users created")
+        print("Uos created")
+    except NameError:
         traceback.print_exc(file=sys.stdout)
