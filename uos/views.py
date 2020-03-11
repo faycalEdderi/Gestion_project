@@ -263,6 +263,11 @@ def creation_parametre_uo(request):
     return render(request, "parametre_uo.html", context)
 
 
+def find_object(object_name, pk):
+    find_obj = object_name.objects.get(id = pk )
+    return find_obj
+
+
 def create_uo(request):
 
     if request.method == 'POST':
@@ -279,9 +284,7 @@ def create_uo(request):
             ju = request.POST['ju']
             date_uo_start = request.POST['date_debut_uo']
             date_uo_delivery = request.POST['date_livraison_uo']
-            client = request.POST['client']
             avancement = request.POST['avancement']
-            pilote_uo = request.POST['pilote_uo']
 
             type_uo_id = request.POST['select_type_uo']
             niveau_uo_id = request.POST['select_niveau_uo']
@@ -294,6 +297,14 @@ def create_uo(request):
             catalogue_id = request.POST['select_catalogue']
             lot_id = request.POST['select_lot']
 
+            client_id = request.POST['client']
+            pointage_id = request.POST['pointage']
+            pilote_id = request.POST['pilote_uo']
+            cadrage_id = request.POST['note_cadrage']
+
+            result = find_object(Typeuo, type_uo_id)
+            print("object : ", result)
+
             get_type_uo = Typeuo.objects.get(id = type_uo_id )
             get_niveau_uo = Niveauuo.objects.get(id = niveau_uo_id)
             get_projet = Projet.objects.get(id = projet_id)
@@ -305,29 +316,39 @@ def create_uo(request):
             get_catalogue_uo = CatalogueUo.objects.get(id = catalogue_id )
             get_lot = Lot.objects.get(id = lot_id )
 
+            get_pilote = Pilote.objects.get(id=pilote_id)
+            get_client = Client.objects.get(id=client_id)
+            get_pointage = Pointage.objects.get(id=pointage_id)
+            get_cadrage = NotedeCadrage.objects.get(id = cadrage_id )
+            
             create_uo = Uo(
-                numuo=number_uo,
-                jalonD=jalon_d,
-                jalonF=jalon_f,
+                num_uo=number_uo,
+                jalon_d=jalon_d,
+                jalon_f=jalon_f,
                 ju=ju,
-                DateDebutUO=date_uo_start,
-                DateLivraison=date_uo_delivery,
-                Client=client,
+                date_debut_uo=date_uo_start,
+                date_livraison=date_uo_delivery,
                 avancement=avancement,
-                piloteUo=pilote_uo,
 
-                typeuo= get_type_uo ,
-                niveauo= get_niveau_uo,
+
+                type_uo= get_type_uo ,
+                niveau_uo= get_niveau_uo,
                 projet= get_projet,
                 fonction= get_fonction,
-                statutuo= get_statut_uo,
-                etatuo= get_etat_uo,
+                statut_uo= get_statut_uo,
+                etat_uo= get_etat_uo,
                 plateforme= get_plateform,
                 uet=get_uet,
                 catalogue= get_catalogue_uo,
-                lot=get_lot
+                lot=get_lot,
+
+                pointage = get_pointage,
+                note_de_cadrage = get_cadrage,
+                pilote_activitees=get_pilote,
+                client=get_client,
             )
             create_uo.save()
+
             messages.add_message(
                 request,
                 messages.INFO,
@@ -357,11 +378,12 @@ def create_catalogue_uo(request):
         if catalogue_uo_form.is_valid():
 
             catalogue_name = request.POST['nom_catalogue']
-            select_uo_type = request.POST['catalogue_select_type_uo']
+            select_uo_type = request.POST['type_uo']
             day_number = request.POST['nombre_jours_uo']
             select_uo_niveau = request.POST['niveau_uo']
             price_uo = request.POST['prix_uo']
             select_perimetre = request.POST['perimetre']
+
             get_perimetre = Perimetre.objects.get(id = select_perimetre)
             recover_type_uo_id = Typeuo.objects.get(id = select_uo_type )
             recover_niveau_uo_id = Niveauuo.objects.get(id = select_uo_niveau )
@@ -371,12 +393,13 @@ def create_catalogue_uo(request):
             add_catalogue = CatalogueUo(
                 nom=catalogue_name,
                 perimetre = get_perimetre,
-                niveauuo=recover_niveau_uo_id,
+                niveau=recover_niveau_uo_id,
                 typeuo=recover_type_uo_id,
-                nbrjouruo=day_number,
-                prixuo=price_uo,
+                nbr_jour_uo=day_number,
+                prix_uo=price_uo,
             )
             add_catalogue.save()
+            messages.success(request, 'Création d\'un nouveau Catalogue effectué')
 
             return redirect('create_catalogue_uo')
     else:
@@ -399,21 +422,23 @@ def create_pointage(request):
 
         if pointage_form.is_valid():
 
-            selected_uo_id = request.POST['select_uo']
-            selected_user_id = request.POST['select_user']
+            selected_pilote = request.POST['select_pilote']
+            select_executant = request.POST['select_executant']
             week = request.POST['semaine']
-            add_point = request.POST['point']
+            add_point_pil = request.POST['point_pilote']
+            add_point_exec = request.POST['point_executant']
 
-            recover_uo = Uo.objects.get(id = selected_uo_id )
-            recover_user = User.objects.get(id=selected_user_id)
+            get_pilote = Pilote.objects.get(id = selected_pilote )
+            get_executant = Executant.objects.filter(id=select_executant)
 
-            add_pointage = Pointage(
-                uo = recover_uo,
-                user = recover_user,
-                semaine = week,
-                point = add_point
+            pointage = Pointage.objects.create(
+                pilote=get_pilote,
+                semaine=week,
+                point_pilote=add_point_pil,
+                point_executant=add_point_exec
             )
-            add_pointage.save()
+            pointage.executant.set(get_executant)
+
 
             return redirect('create_pointage')
     else:

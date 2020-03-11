@@ -84,10 +84,24 @@ class CatalogueForm(forms.Form):
         queryset = Typeuo.objects.all()
     )
     nombre_jours_uo = forms.CharField(
-        label="Nombre de jours UO"
+        label="Nombre de jours UO",
+        validators=[
+            RegexValidator(r'^\d{1,10}$',
+                           message='Veuillez entrer un nombre de jour valide'
+                           )
+        ],
+        error_messages = {'max_length': "Le nombre de jour le ne doit pas depasser 5 chiffres"}
     )
     prix_uo = forms.CharField(
-        label="Prix de l'UO "
+        label="Prix de l'UO ",
+        max_length=20,
+        validators=[
+            RegexValidator(r'^\d{1,10}$',
+                           message='Veuillez saisir un prix valide'
+                           )
+        ],
+        error_messages={'max_length': "Le prix le ne doit pas depasser 20 chiffres"}
+
     )
 
     class Meta:
@@ -193,7 +207,7 @@ class UoForm(forms.Form):
     select_fonction = forms.ModelChoiceField(
         label="Selectionner une fonction",
         queryset=Fonction.objects.all(),
-        required=False
+
     )
     select_statut_uo = forms.ModelChoiceField(
         label="Selectionner un statut d'UO",
@@ -240,14 +254,24 @@ class UoForm(forms.Form):
     date_livraison_uo = forms.DateField(
         label="Date de livraison UO"
     )
-    client = forms.CharField(
-        label="Client "
+    client = forms.ModelChoiceField(
+        label="Client ",
+        queryset= Client.objects.all()
     )
     avancement = forms.FloatField(
         label="Avancement "
     )
-    pilote_uo = forms.CharField(
-        label="Pilote UO"
+    pilote_uo = forms.ModelChoiceField(
+        label="Pilote UO",
+        queryset= Pilote.objects.all(),
+    )
+    pointage = forms.ModelChoiceField(
+        label = "Pointage : ",
+        queryset = Pointage.objects.all()
+    )
+    note_cadrage = forms.ModelChoiceField(
+        label="Note de cadrage : ",
+        queryset = NotedeCadrage.objects.all()
     )
 
     class Meta:
@@ -256,28 +280,32 @@ class UoForm(forms.Form):
 
 
 class PointageForm(forms.Form):
-    select_uo = forms.ModelChoiceField(
+    select_pilote = forms.ModelChoiceField(
         label="Selectionner une UO",
-        queryset=Uo.objects.all(),
+        queryset=Pilote.objects.all(),
     )
-    select_user = forms.ModelChoiceField(
+    select_executant = forms.ModelMultipleChoiceField(
         label="Selectionner un utilisateur",
-        queryset=User.objects.all(),
+        queryset=Executant.objects.all(),
     )
-    semaine = forms.IntegerField(
+    semaine = forms.DateTimeField(
         label="Semaine"
     )
-    point = forms.FloatField(
-        label="Nombre de points"
+    point_pilote = forms.FloatField(
+        label="Nombre de points pilote"
+    )
+    point_executant = forms.FloatField(
+        label="Nombre de points executant"
     )
 
     class Meta:
         model = Pointage
         fields =[
-            'uo',
-            'user',
+            'pilote',
+            'executant',
             'semaine',
-            'point'
+            'point_pilote',
+            'point_executant'
         ]
 
 

@@ -20,6 +20,15 @@
 <div class="container ">
     <div class="panel-heading">
         <h2 class="panel-title mt-2 text-center">Création UO</h2>
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+
+                 <li {% if message.tags %} class="{{ message.tags }} text-center"{% endif %}>
+                    {{ message }} </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
     </div>
     <div class="row centered-form d-flex justify-content-start">
     <div class="col-sm-12 col-md-9 ">
@@ -159,6 +168,18 @@
                                 <div class="form-group d-flex flex-column">
                                     {{form_uo_principal.pilote_uo.label}}
                                     {{form_uo_principal.pilote_uo}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.note_cadrage.label}}
+                                    {{form_uo_principal.note_cadrage}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div class="form-group d-flex flex-column">
+                                    {{form_uo_principal.pointage.label}}
+                                    {{form_uo_principal.pointage}}
                                 </div>
                             </div>
 

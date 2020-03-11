@@ -31,7 +31,7 @@ $().ready(function() {
 
 // suppression de l'alerte après 10 secondes
 // durée en millisecondes
-window.setTimeout( () => $('.alert').fadeOut('slow'), 10000 );
+window.setTimeout( () => $('.alert-success').fadeOut('slow'), 10000 );
 
    
 });  

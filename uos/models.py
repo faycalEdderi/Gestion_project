@@ -5,7 +5,7 @@ from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP
 from django.utils import timezone
 from datetime import date
 from django.contrib.messages.views import SuccessMessageMixin
-
+from django.core.validators import RegexValidator
 
 # fonction qui prends tout les objets d'une classe et les renvoi dans une liste
 def choix(objectmodel):
@@ -65,7 +65,7 @@ class CatalogueUo(models.Model):
     typeuo=models.ForeignKey(Typeuo, 
     on_delete=models.CASCADE,
     default = "")
-    nbr_jour_uo=models.CharField(max_length=5)
+    nbr_jour_uo=models.CharField(max_length=5,)
     prix_uo=models.CharField(max_length=20)
 
     def __str__(self):
@@ -133,12 +133,14 @@ class Lot(models.Model):
 # class pointage qui permet aux utilisateur de pointer sur l'uo
 class Pointage(models.Model):
     pilote=models.ForeignKey(Pilote,on_delete=models.CASCADE,default = "")
-    excutant=models.ManyToManyField(Executant,default = "")
+    executant=models.ManyToManyField(Executant,default = "")
     semaine= models.DateTimeField(default=timezone.now(),blank=True, null=True)
     point_pilote=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5)])
-    point_exceutant=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5)])
+    point_executant=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(
+        5)])
+
     def __str__(self):
-       return str(self.point)
+       return str(self.semaine)
 
 
 # class note de cadrage pour chaque uo une note de cadrage 'reflichir pour apres si on peut ajouter des numero pour les modification de note de cadrage  '
@@ -154,7 +156,8 @@ class NotedeCadrage(models.Model):
 class Uo(models.Model):
     num_uo = models.CharField(max_length=20)
     type_uo = models.ForeignKey(Typeuo,default = "",on_delete=models.CASCADE,blank=True, null=True)
-    nivea_uo = models.ForeignKey(Niveauuo,default = "",on_delete=models.CASCADE,blank=True, null=True)
+    niveau_uo = models.ForeignKey(Niveauuo,default = "",on_delete=models.CASCADE,blank=True,
+                                  null=True)
     projet = models.ForeignKey(Projet,default = "",on_delete=models.CASCADE,blank=True, null=True)
     fonction = models.ForeignKey(Fonction,default = "",on_delete=models.CASCADE,blank=True, null=True)
     statut_uo = models.ForeignKey(Statutuo,default = "",on_delete=models.CASCADE,blank=True, null=True)
@@ -169,18 +172,18 @@ class Uo(models.Model):
     date_debut_uo=models.DateTimeField(default=timezone.now(),blank=True, null=True)
     date_livraison=models.DateTimeField(default=timezone.now(),blank=True, null=True)
     avancement=models.FloatField(default=0,blank=True, null=True)
+    #Ajouter Pointage au form et view
     pointage =models.ForeignKey(Pointage,on_delete=models.CASCADE,default = "",blank=True, null=True)
     note_de_cadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "",blank=True, null=True)
     pilote_activitees=models.ForeignKey(Pilote,default = "",on_delete=models.CASCADE,blank=True, null=True)
+    # Modifier form pour pilote qui n'est plus un charfield mais un modelfield
     client=models.ForeignKey(Client, default = "", on_delete=models.CASCADE,blank=True, null=True)
+    # Modifier form pour client qui n'est plus un charfield mais un modelfield
 
-
-    
     def __str__(self):
         return self.numuo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet
 
 
-  
 # classe activités pour chaque note de cadrage plusieurs activitées
 class Activites(models.Model):
     note_de_cadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "")

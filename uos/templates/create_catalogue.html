@@ -2,15 +2,18 @@
 {% block content %}
 {% include "nav_bar.html" %}
 
-{% if form.errors %}
-    {% for field in form %}
+{% if form_catalogue_uo.errors %}
+    {% for field in form_catalogue_uo %}
         {% for error in field.errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
+            <div class="alert alert-danger text-center">
+                <p>
+                    <strong> Erreur : </strong> Vous avez saisie <strong> "{{ field.value }}"</strong>  pour le champ <strong> {{ field.label }}</strong>
+                </p> <br>
+                <strong> {{ error|escape }}</strong>
             </div>
         {% endfor %}
     {% endfor %}
-    {% for error in form.non_field_errors %}
+    {% for error in form_catalogue_uo.non_field_errors %}
         <div class="alert alert-danger">
             <strong>{{ error|escape }}</strong>
         </div>
@@ -20,6 +23,15 @@
 <div class="container ">
     <div class="panel-heading">
         <h2 class="panel-title mt-2 text-center">Création catalogue</h2>
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+
+                 <li {% if message.tags %} class="{{ message.tags }} text-center"{% endif %}>
+                    {{ message }} </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
     </div>
     <div class="row centered-form d-flex justify-content-start">
     <div class="col-sm-12 col-md-9 ">
@@ -43,8 +55,8 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-4">
                                 <div class="form-group d-flex flex-column">
-                                   {{ form_catalogue_uo.catalogue_select_type_uo.label }}
-                                    {{form_catalogue_uo.catalogue_select_type_uo}}
+                                   {{ form_catalogue_uo.type_uo.label }}
+                                    {{form_catalogue_uo.type_uo}}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-4">
@@ -53,11 +65,9 @@
                                     {{form_catalogue_uo.niveau_uo}}
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-4">
                                 <div class="form-group d-flex flex-column">
+
                                     {{ form_catalogue_uo.nombre_jours_uo.label }}
                                     {{form_catalogue_uo.nombre_jours_uo}}
                                 </div>
