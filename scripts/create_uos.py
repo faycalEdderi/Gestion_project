@@ -1,5 +1,6 @@
 from profil.models import *
 from uos.models import *
+from io import *
 import traceback, sys, os, random
 
 from django.contrib.auth.models import User
@@ -12,15 +13,23 @@ def create_obj(object_name, list):
         )
 
 
+def ju_creation():
+     j = 0
+
+     while j< 27 :
+         print('SA'+str(j))
+
+         j += j+5
+
+
+ju_creation()
+
+
 def run ():
     try:
 
-        type_uo_list = ['PREPA', 'NUM', 'UNIT', 'SYST']
-        for indice in type_uo_list:
-
-            Typeuo.objects.create(
-                nom= indice
-            )
+        type_uo_list = ['PREPA', 'NUM', 'UNIT', 'SYST', 'SYNTH', 'PVAL']
+        create_obj(Typeuo, type_uo_list)
 
         niveau_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
         create_obj(Niveauuo, niveau_uo_list)
@@ -31,12 +40,12 @@ def run ():
         lot_uo_list = ['WP', 'Z']
         create_obj(Lot, lot_uo_list)
 
+        plateform_uo_list = ['Square SUV', 'Euro6D-T','Edison', 'VU', 'CEV', 'CMFB', '1540²', 'CMF1', 'CMF1 ph1', 'CMF1 ph2']
+        create_obj(Plateforme, plateform_uo_list)
+
         # valeur à changer
         etat_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
         create_obj(Etatuo, etat_uo_list)
-
-        plateform_uo_list = ['Square SUV', 'Euro6D-T','Edison']
-        create_obj(Plateforme, plateform_uo_list)
 
         # Valeur à changer
         uet_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
@@ -45,6 +54,18 @@ def run ():
         # Valeur a changer
         workpackage_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
         create_obj(WorkPackage, workpackage_uo_list)
+
+        jalon_debut_list = ['VPC', 'TGA', 'MA', 'VPC-15s', 'ABPT1', 'SOP']
+        jalon_fin_list = ['PPC', 'MA', 'VPC-15s', 'ABPT1', 'SOP+15s']
+        projet_list = ['HHN', 'X82²', 'HCC', 'HJB PHEV', 'BJA HEV', 'KFB² PHEV', 'BFB²', 'Euro6-DFull', 'HJB ICE']
+        for projet_name in projet_list:
+            for plateforme_name in plateform_uo_list:
+                get_platform = Plateforme.objects.get(nom = plateforme_name)
+                Projet.objects.create(
+                    nom = projet_name ,
+                    plateforme = get_platform
+                )
+                break
 
         i = 0
 
