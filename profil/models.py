@@ -72,8 +72,7 @@ class Client(models.Model):
 
     phone_number = models.PositiveIntegerField(
         blank=True,
-        max_length=10
-    )
+        )
 
     image = models.ImageField(
         upload_to=upload_location,

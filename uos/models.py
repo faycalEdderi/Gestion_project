@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP,Client
 from django.utils import timezone
+import django
 from datetime import date
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.validators import RegexValidator
@@ -93,7 +94,7 @@ class Fonction(models.Model):
     uet = models.ForeignKey(Uet,default = "",on_delete=models.CASCADE)
 
     def __str__(self):
-       return self.nom  
+       return self.nom + "( " +self.uet.nom + " )"
 
 # création de statut uo comme une table pour qu'il puisse rajouter des statut ou modifier ou
 # suprrimer
@@ -120,8 +121,7 @@ class Projet(models.Model):
     plateforme = models.ForeignKey(Plateforme,default = "",on_delete=models.CASCADE)
 
     def __str__(self):
-       return self.nom
-
+       return self.nom + "( "+ self.plateforme.nom +" )"
 
 class Lot(models.Model):
     nom=models.CharField(max_length=50)
@@ -134,7 +134,7 @@ class Lot(models.Model):
 class Pointage(models.Model):
     pilote=models.ForeignKey(Pilote,on_delete=models.CASCADE,default = "")
     executant=models.ManyToManyField(Executant,default = "")
-    semaine= models.DateTimeField(default=timezone.now(),blank=True, null=True)
+    semaine= models.DateTimeField(default=django.utils.timezone.now,blank=True, null=True)
     point_pilote=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5)])
     point_executant=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(
         5)])
@@ -169,8 +169,8 @@ class Uo(models.Model):
     jalon_d= models.CharField(max_length=20,default="",blank=True, null=True)
     jalon_f = models.CharField(max_length=20,default="",blank=True, null=True)
     ju = models.CharField(max_length=20,default="",blank=True, null=True)
-    date_debut_uo=models.DateTimeField(default=timezone.now(),blank=True, null=True)
-    date_livraison=models.DateTimeField(default=timezone.now(),blank=True, null=True)
+    date_debut_uo=models.DateTimeField(default=django.utils.timezone.now,blank=True, null=True)
+    date_livraison=models.DateTimeField(default=django.utils.timezone.now,blank=True, null=True)
     avancement=models.FloatField(default=0,blank=True, null=True)
     #Ajouter Pointage au form et view
     pointage =models.ForeignKey(Pointage,on_delete=models.CASCADE,default = "",blank=True, null=True)

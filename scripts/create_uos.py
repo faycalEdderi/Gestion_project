@@ -41,15 +41,33 @@ def run ():
         create_obj(Lot, lot_uo_list)
 
         plateform_uo_list = ['Square SUV', 'Euro6D-T','Edison', 'VU', 'CEV', 'CMFB', '1540²', 'CMF1', 'CMF1 ph1', 'CMF1 ph2']
+        projet_list = ['HHN', 'X82²', 'HCC', 'HJB PHEV', 'BJA HEV', 'KFB² PHEV', 'BFB²', 'Euro6-DFull', 'HJB ICE']
         create_obj(Plateforme, plateform_uo_list)
+        for projet_name in projet_list:
+            for plateforme_name in plateform_uo_list:
+                get_platform = Plateforme.objects.get(nom=plateforme_name)
+                Projet.objects.create(
+                    nom=projet_name,
+                    plateforme=get_platform
+                )
+
 
         # valeur à changer
         etat_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
         create_obj(Etatuo, etat_uo_list)
 
-        # Valeur à changer
-        uet_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
+        uet_uo_list = ['LONGI', 'AD1', 'AWR', 'MANŒUVRE', 'LATERAL']
+        fonction_list = ['AEB', 'ACC', 'AD1', 'ACC-MT', 'HFP', 'LSS 2018', 'TSR/OSP', 'HFP', 'BSW']
         create_obj(Uet, uet_uo_list)
+        for fonction_name in fonction_list:
+            for uet_name in uet_uo_list :
+                get_uet = Uet.objects.get(nom=uet_name)
+                Fonction.objects.create(
+                    nom=fonction_name,
+                    uet=get_uet
+                )
+
+
 
         # Valeur a changer
         workpackage_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
@@ -57,15 +75,8 @@ def run ():
 
         jalon_debut_list = ['VPC', 'TGA', 'MA', 'VPC-15s', 'ABPT1', 'SOP']
         jalon_fin_list = ['PPC', 'MA', 'VPC-15s', 'ABPT1', 'SOP+15s']
-        projet_list = ['HHN', 'X82²', 'HCC', 'HJB PHEV', 'BJA HEV', 'KFB² PHEV', 'BFB²', 'Euro6-DFull', 'HJB ICE']
-        for projet_name in projet_list:
-            for plateforme_name in plateform_uo_list:
-                get_platform = Plateforme.objects.get(nom = plateforme_name)
-                Projet.objects.create(
-                    nom = projet_name ,
-                    plateforme = get_platform
-                )
-                break
+
+
 
         i = 0
 
