@@ -40,6 +40,7 @@ def run ():
         lot_uo_list = ['WP', 'Z']
         create_obj(Lot, lot_uo_list)
 
+
         plateform_uo_list = ['Square SUV', 'Euro6D-T','Edison', 'VU', 'CEV', 'CMFB', '1540²', 'CMF1', 'CMF1 ph1', 'CMF1 ph2']
         projet_list = ['HHN', 'X82²', 'HCC', 'HJB PHEV', 'BJA HEV', 'KFB² PHEV', 'BFB²', 'Euro6-DFull', 'HJB ICE']
         create_obj(Plateforme, plateform_uo_list)
@@ -67,45 +68,63 @@ def run ():
                     uet=get_uet
                 )
 
-
+        ref_note_cadrage = ['LOG', 'SWITCH', 'NLGT', 'LUFF', 'NAR']
+        reponse_rsa = ['OUI', 'NON', 'NON', 'OUI' , 'NON']
+        i=0
+        while i < len(ref_note_cadrage):
+            NotedeCadrage.objects.create(
+                nom = ref_note_cadrage[i],
+                reponseRSA = reponse_rsa[i],
+            )
+            i += 1
 
         # Valeur a changer
         workpackage_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
+        perimetre_list = ['BLH', 'J2J','HHL','WW', 'DLH', 'EFG']
         create_obj(WorkPackage, workpackage_uo_list)
+
+        for perimetre in perimetre_list:
+            for workpackage in workpackage_uo_list:
+                Perimetre.objects.create(
+                    nom = perimetre,
+                    workPackage = WorkPackage.objects.get(nom=workpackage)
+                )
+
+
+
 
         jalon_debut_list = ['VPC', 'TGA', 'MA', 'VPC-15s', 'ABPT1', 'SOP']
         jalon_fin_list = ['PPC', 'MA', 'VPC-15s', 'ABPT1', 'SOP+15s']
 
 
-
         i = 0
 
         while i < 5:
+            get_pilote = Pilote.objects.get(email="user" + str(i * 125) + "@user.fr", )
+            get_executant = Executant.objects.filter(email="user" + str(i * 4) + "@user.fr", )
 
-            '''
-            Pilote.objects.create(
-                username="username" + str(i*125),
-                email="user" + str(i*125) + "@user.fr",
-                password="user",
-                first_name="Prénom_pilote" + str(i*125),
-                last_name="Nom_pilote" + str(i*125),
-                role=pilote
+            pointage = Pointage.objects.create(
+                pilote=get_pilote,
+                semaine="2019-01-02",
+                point_pilote="4",
+                point_executant="2",
             )
-            Executant.objects.create(
-                username="username" + str(i * 255),
-                email="user" + str(i * 255) + "@user.fr",
-                password="user",
-                first_name="Prénom_Executant" + str(i * 255),
-                last_name="Nom_Executant" + str(i * 255),
-                role=executant
+            pointage.executant.set(get_executant)
+
+            get_perimetre = Perimetre.objects.get(id=i)
+            get_type = Typeuo.objects.get(id=i)
+            get_niveau = Niveauuo.objects.get(id=i)
+            CatalogueUo.objects.create(
+                nom=" Catalogue " + str(i),
+                perimetre=get_perimetre,
+                niveau=get_niveau,
+                typeuo=get_type,
+                nbr_jour_uo=3 * i,
+                prix_uo=1962 * i
             )
-            Client.objects.create(
-                first_name="Prénom_Client" + str(i+i*125),
-                last_name="Nom_Client" + str(i+i*125),
-                email="user" + str(i+i*125) + "@user.fr",
-                phone_number = "0654859632"
-            )
-            
+
+
+            '''         
 
             get_uet = Uet.objects.get(id = i)
             Fonction.objects.create(
@@ -122,32 +141,9 @@ def run ():
                 nom="Perimetre " + str(i),
                 workPackage = get_workpackage
             )
-            get_perimetre = Perimetre.objects.get(id= i)
-            get_type = Typeuo.objects.get(id=i)
-            get_niveau = Niveauuo.objects.get(id=i)
-            CatalogueUo.objects.create(
-                nom = " Catalogue " + str(i),
-                perimetre = get_perimetre,
-                niveau = get_niveau,
-                typeuo = get_type,
-                nbr_jour_uo = 3 * i,
-                prix_uo = 1962 * i
-            )
             
-            get_pilote = Pilote.objects.get( email="user" + str(i*125) + "@user.fr",)
-            get_executant = Executant.objects.filter(email="user" + str(i * 255) + "@user.fr",)
-
-            pointage = Pointage.objects.create(
-                pilote=get_pilote,
-                semaine="2019-01-02",
-                point_pilote="4",
-                point_executant="2",
-            )
-            pointage.executant.set(get_executant)
-            NotedeCadrage.objects.create(
-                nom = " Reference " + str(i),
-                reponseRSA = " Reponse " + str(i)
-            )
+            
+            
             '''
             i += 1
         print("Users created")

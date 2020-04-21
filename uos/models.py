@@ -149,7 +149,7 @@ class NotedeCadrage(models.Model):
     reponseRSA=models.CharField(max_length=600,default="",blank=True, null=True)
 
     def __str__(self):
-       return str(self.nom)
+       return str(self.nom) + " (" +str(self.reponseRSA) +")"
 
 
 # création d'uo avec possiblité de choisir les champs dans des table differente

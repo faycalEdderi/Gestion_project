@@ -72,6 +72,7 @@ class Client(models.Model):
 
     phone_number = models.PositiveIntegerField(
         blank=True,
+        null=True,
         )
 
     image = models.ImageField(

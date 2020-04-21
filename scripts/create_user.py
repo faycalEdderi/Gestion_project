@@ -1,5 +1,6 @@
 from profil.models import *
 import traceback, sys, os, random
+import bcrypt
 
 
 def run ():
@@ -44,12 +45,37 @@ def run ():
                 last_name="user_nom",
                 role=rt
             )
+            i = 0
+            while i < 5:
+                Client.objects.create(
+
+                    first_name = random.choice(list_prenom),
+                    last_name = random.choice(list_nom),
+                    email = "email" + str(i) + "@live.fr",
+                )
+                Pilote.objects.create(
+                    username="username" + str(i * 125),
+                    email="user" + str(i * 125) + "@user.fr",
+                    password="user",
+                    first_name=random.choice(list_prenom),
+                    last_name=random.choice(list_nom),
+                    role=pilote
+                )
+                Executant.objects.create(
+                    username="username" + str(i+1),
+                    email="user" + str(i * 4) + "@user.fr",
+                    password="user",
+                    first_name=random.choice(list_prenom),
+                    last_name=random.choice(list_nom),
+                    role=executant
+                )
+                i += 1
 
             def creation_users(object, user_role):
                 object.objects.create(
                     username=username,
                     email=adresse_mail,
-                    password="user",
+                    password=hashed,
                     first_name=prenom,
                     last_name=nom,
                     role=user_role
@@ -62,6 +88,8 @@ def run ():
                 nom = random.choice(list_nom)
                 username = nom + "_" + prenom
                 adresse_mail = nom.lower() + "." + prenom.lower() + "@expleogroup.com"
+                password = b'user'
+                hashed = bcrypt.hashpw(password, bcrypt.gensalt())
 
                 print(prenom)
                 print(nom)
@@ -71,10 +99,12 @@ def run ():
                 check_user = User.objects.filter(username=username)
                 if not check_user:
                     creation_users(MyUsers, rt)
+
+
                 else:
                     continue
 
-            return prenom, nom, username, adresse_mail
+            return prenom, nom, username, adresse_mail, hashed
 
         create_user()
 

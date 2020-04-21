@@ -281,7 +281,7 @@ class UoForm(forms.Form):
 
 class PointageForm(forms.Form):
     select_pilote = forms.ModelChoiceField(
-        label="Selectionner une UO",
+        label="Selectionner un pilote",
         queryset=Pilote.objects.all(),
     )
     select_executant = forms.ModelMultipleChoiceField(
@@ -320,7 +320,8 @@ class NoteCadrageForm(forms.Form):
     )
     select_activite = forms.ModelMultipleChoiceField(
         label="Selectionner activité ",
-        queryset=Activites.objects.all()
+        queryset=Activites.objects.all(),
+        required= False,
     )
 
     class Meta:
