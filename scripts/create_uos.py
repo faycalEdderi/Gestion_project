@@ -81,17 +81,34 @@ def run ():
         # Valeur a changer
         workpackage_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
         perimetre_list = ['BLH', 'J2J','HHL','WW', 'DLH', 'EFG']
+
+
         create_obj(WorkPackage, workpackage_uo_list)
+        j = 0
+        while j < 4:
+            get_workpackage = WorkPackage.objects.get(nom=workpackage_uo_list[j])
 
-        for perimetre in perimetre_list:
-            for workpackage in workpackage_uo_list:
-                Perimetre.objects.create(
-                    nom = perimetre,
-                    workPackage = WorkPackage.objects.get(nom=workpackage)
-                )
+            Perimetre.objects.create(
+                nom = perimetre_list[j],
+                workPackage =get_workpackage
+            )
+            j +=1
 
-
-
+        catalogue_list = ['CATA', 'LOG', 'WORK', 'PACK', 'SIS', 'MAI']
+        k=0
+        while k < 4:
+            get_perimetre = Perimetre.objects.get(nom=perimetre_list[k])
+            get_niveau = Niveauuo.objects.get(nom=niveau_uo_list[k])
+            get_type = Typeuo.objects.get(nom=type_uo_list[k])
+            CatalogueUo.objects.create(
+                nom=catalogue_list[k],
+                perimetre=get_perimetre,
+                niveau=get_niveau,
+                typeuo=get_type,
+                nbr_jour_uo=2,
+                prix_uo=1000,
+            )
+            k+=1
 
         jalon_debut_list = ['VPC', 'TGA', 'MA', 'VPC-15s', 'ABPT1', 'SOP']
         jalon_fin_list = ['PPC', 'MA', 'VPC-15s', 'ABPT1', 'SOP+15s']
@@ -111,40 +128,6 @@ def run ():
             )
             pointage.executant.set(get_executant)
 
-            get_perimetre = Perimetre.objects.get(id=i)
-            get_type = Typeuo.objects.get(id=i)
-            get_niveau = Niveauuo.objects.get(id=i)
-            CatalogueUo.objects.create(
-                nom=" Catalogue " + str(i),
-                perimetre=get_perimetre,
-                niveau=get_niveau,
-                typeuo=get_type,
-                nbr_jour_uo=3 * i,
-                prix_uo=1962 * i
-            )
-
-
-            '''         
-
-            get_uet = Uet.objects.get(id = i)
-            Fonction.objects.create(
-                nom = "Fonction " + str(i),
-                uet = get_uet
-            )
-            get_plateforme = Plateforme.objects.get(id=i)
-            Projet.objects.create(
-                nom="Projet " + str(i),
-                plateforme=get_plateforme
-            )
-            get_workpackage = WorkPackage.objects.get(id=i)
-            Perimetre.objects.create(
-                nom="Perimetre " + str(i),
-                workPackage = get_workpackage
-            )
-            
-            
-            
-            '''
             i += 1
         print("Users created")
         print("Uos created")
