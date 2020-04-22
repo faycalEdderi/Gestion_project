@@ -54,6 +54,7 @@ urlpatterns = [
     path('activite/creation', uos_views.create_activite, name="create_activite"),
     path('pointages', uos_views.pointages, name='pointages'),
     path('historique', uos_views.historique_pointage),
+    path('uo/<int:pk>/update', uos_views.update_uos, name='update_uos'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

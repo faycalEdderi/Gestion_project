@@ -41,7 +41,7 @@
                     <tbody>
                         {% for u in Uo %}
                       <tr>
-                        <td>{{u.num_uo}}</td>
+                        <td><a href="{% url 'update_uos' u.id %}">{{u.num_uo}}</a></td>
                         <td>{{u.plateforme}}</td>
                         <td>{{u.type_uo}}</td>
                         <td>{{u.niveau_uo}}</td>

@@ -181,7 +181,7 @@ class Uo(models.Model):
     # Modifier form pour client qui n'est plus un charfield mais un modelfield
 
     def __str__(self):
-        return self.numuo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet
+        return self.num_uo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet
 
 
 # classe activités pour chaque note de cadrage plusieurs activitées

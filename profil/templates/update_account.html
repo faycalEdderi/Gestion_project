@@ -11,7 +11,20 @@
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <p>
-                            {{ form_update_account.as_p }}
+                            {{ form_update_account.phone_number.label }}
+                            {{ form_update_account.phone_number }}
+
+                            {{ form_update_account.email.label }}
+                            {{ form_update_account.email }}
+
+                            {{ form_update_account.first_name.label }}
+                            {{ form_update_account.first_name }}
+
+                            {{ form_update_account.last_name.label }}
+                            {{ form_update_account.last_name }}
+
+                            {{ form_update_account.role.label }}
+                            {{ form_update_account.role }}
 
                             {{form_new_poste.as_p}}
 

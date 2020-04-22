@@ -279,28 +279,28 @@ def create_uo(request):
         if uo_creation_form.is_valid():
 
             number_uo = request.POST['num_uo']
-            jalon_d = request.POST['jalonD']
-            jalon_f = request.POST['jalonF']
+            jalon_d = request.POST['jalon_d']
+            jalon_f = request.POST['jalon_f']
             ju = request.POST['ju']
             date_uo_start = request.POST['date_debut_uo']
-            date_uo_delivery = request.POST['date_livraison_uo']
+            date_uo_delivery = request.POST['date_livraison']
             avancement = request.POST['avancement']
 
-            type_uo_id = request.POST['select_type_uo']
-            niveau_uo_id = request.POST['select_niveau_uo']
-            projet_id = request.POST['select_projet']
-            fonction_id = request.POST['select_fonction']
-            satut_uo_id = request.POST['select_statut_uo']
-            etat_uo_id = request.POST['select_etat_uo']
-            plateform_id = request.POST['select_plateform']
-            uet_id = request.POST['select_uet']
-            catalogue_id = request.POST['select_catalogue']
-            lot_id = request.POST['select_lot']
+            type_uo_id = request.POST['type_uo']
+            niveau_uo_id = request.POST['niveau_uo']
+            projet_id = request.POST['projet']
+            fonction_id = request.POST['fonction']
+            satut_uo_id = request.POST['statut_uo']
+            etat_uo_id = request.POST['etat_uo']
+            plateform_id = request.POST['plateforme']
+            uet_id = request.POST['uet']
+            catalogue_id = request.POST['catalogue']
+            lot_id = request.POST['lot']
 
             client_id = request.POST['client']
             pointage_id = request.POST['pointage']
-            pilote_id = request.POST['pilote_uo']
-            cadrage_id = request.POST['note_cadrage']
+            pilote_id = request.POST['pilote_activitees']
+            cadrage_id = request.POST['note_de_cadrage']
 
             result = find_object(Typeuo, type_uo_id)
             print("object : ", result)

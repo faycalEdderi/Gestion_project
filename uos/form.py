@@ -1,5 +1,6 @@
 from django import forms
 from uos.models import *
+from django.forms import ModelForm
 
 
 class TypeUoForm(forms.Form):
@@ -187,62 +188,62 @@ class UetForm(forms.Form):
         ]
 
 
-class UoForm(forms.Form):
+class UoForm(forms.ModelForm):
     num_uo = forms.CharField(
         label="Numéro de l'UO"
     )
-    select_type_uo = forms.ModelChoiceField(
+    type_uo= forms.ModelChoiceField(
         label="Selectionner Type d'uo",
         queryset= Typeuo.objects.all()
     )
-    select_niveau_uo = forms.ModelChoiceField(
+    niveau_uo = forms.ModelChoiceField(
         label="Selectionner un niveau d'uo",
         queryset=Niveauuo.objects.all()
     )
-    select_projet = forms.ModelChoiceField(
+    projet = forms.ModelChoiceField(
         label="Selectionner un projet",
         queryset=Projet.objects.all(),
 
     )
-    select_fonction = forms.ModelChoiceField(
+    fonction = forms.ModelChoiceField(
         label="Selectionner une fonction",
         queryset=Fonction.objects.all(),
 
     )
-    select_statut_uo = forms.ModelChoiceField(
+    statut_uo = forms.ModelChoiceField(
         label="Selectionner un statut d'UO",
         queryset=Statutuo.objects.all(),
 
     )
-    select_etat_uo = forms.ModelChoiceField(
+    etat_uo = forms.ModelChoiceField(
         label="Selectionner un etat d'UO",
         queryset=Etatuo.objects.all(),
 
     )
-    select_plateform = forms.ModelChoiceField(
+    plateforme = forms.ModelChoiceField(
         label="Selectionner une plateform",
         queryset=Plateforme.objects.all(),
 
     )
-    select_uet = forms.ModelChoiceField(
+    uet = forms.ModelChoiceField(
         label="Selectionner une UET",
         queryset=Uet.objects.all(),
 
     )
-    select_catalogue = forms.ModelChoiceField(
+    catalogue = forms.ModelChoiceField(
         label="Selectionner un catalogue UO",
         queryset=CatalogueUo.objects.all(),
 
     )
-    select_lot = forms.ModelChoiceField(
+    lot = forms.ModelChoiceField(
         label="Selectionner un lot",
         queryset=Lot.objects.all(),
 
     )
-    jalonD = forms.CharField(
+    jalon_d = forms.CharField(
         label="Jalon D",
     )
-    jalonF = forms.CharField(
+    jalon_f = forms.CharField(
         label="Jalon F",
     )
     ju = forms.CharField(
@@ -251,7 +252,7 @@ class UoForm(forms.Form):
     date_debut_uo = forms.DateField(
         label="Date de debut UO"
     )
-    date_livraison_uo = forms.DateField(
+    date_livraison = forms.DateField(
         label="Date de livraison UO"
     )
     client = forms.ModelChoiceField(
@@ -261,7 +262,7 @@ class UoForm(forms.Form):
     avancement = forms.FloatField(
         label="Avancement "
     )
-    pilote_uo = forms.ModelChoiceField(
+    pilote_activitees = forms.ModelChoiceField(
         label="Pilote UO",
         queryset= Pilote.objects.all(),
     )
@@ -269,14 +270,38 @@ class UoForm(forms.Form):
         label = "Pointage : ",
         queryset = Pointage.objects.all()
     )
-    note_cadrage = forms.ModelChoiceField(
+    note_de_cadrage = forms.ModelChoiceField(
         label="Note de cadrage : ",
         queryset = NotedeCadrage.objects.all()
     )
 
     class Meta:
         model = Uo
-        fields='__all__'
+        fields=(
+            "num_uo",
+            "type_uo",
+            "niveau_uo",
+            "projet",
+            "fonction",
+            "statut_uo",
+            "etat_uo",
+            "plateforme",
+            "uet",
+            "catalogue",
+            "lot",
+            "jalon_d",
+            "jalon_f",
+            "ju",
+            "date_debut_uo",
+            "date_livraison",
+            "client",
+            "avancement",
+            "pilote_activitees",
+            "pointage",
+            "note_de_cadrage",
+
+        )
+
 
 
 class PointageForm(forms.Form):
