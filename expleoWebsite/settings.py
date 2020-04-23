@@ -36,8 +36,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'django_cleanup.apps.CleanupConfig',
+    'django_filters',
+
+
+
     'profil.apps.ProfilConfig',
     'uos.apps.UosConfig',
+
+    # other apps
+    'django_q',
 
 
 ]

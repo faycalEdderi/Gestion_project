@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Uo, Typeuo , Niveauuo ,Etatuo,Fonction, Projet, Statutuo,Uet , Plateforme ,WorkPackage,Perimetre,CatalogueUo , Pointage , Lot ,Activites,NotedeCadrage , Livraison
+from .models import Uo, Typeuo , Niveauuo ,Etatuo,Fonction, Projet, Statutuo,Uet , Plateforme ,WorkPackage,Perimetre,CatalogueUo , Pointage , Lot ,Activites,NotedeCadrage , Livraison,Avancement
 # Register your models here.
 admin.site.register(Uo)
 admin.site.register(Typeuo)
@@ -18,3 +18,4 @@ admin.site.register(Lot)
 admin.site.register(Activites)
 admin.site.register(NotedeCadrage)
 admin.site.register(Livraison)
+admin.site.register(Avancement)

@@ -8,6 +8,18 @@
         <a href="{% url 'create_uo' %}" ><button class="btn btn-primary" > Créer nouvelle UO
          </button></a>
 
+         <div class="row">
+          <div class="col">
+            <div class="card card-body">
+        
+              <form method="get">
+                {{myFilter.form}}
+        
+                <button class="btn btn-primary" type="submit">Search</button>
+              </form>
+        
+            </div>
+          </div>
      
         <div class="col-md-12">
             <div class="card">
@@ -39,25 +51,26 @@
                     
                     </thead>
                     <tbody>
-                        {% for u in Uo %}
+                      {% for u in uos %}
                       <tr>
-                        <td>{{u.numuo}}</td>
+                        <td>{{u.num_uo}}</td>
                         <td>{{u.plateforme}}</td>
-                        <td>{{u.typeuo}}</td>
-                        <td>{{u.niveauo}}</td>
+                        <td>{{u.type_uo}}</td>
+                        <td>{{u.nivea_uo}}</td>
                         <td>{{u.fonction}}</td>
                         <td>{{u.projet}}</td>
                         <td>{{u.lot}}</td>
-                        <td>{{u.jalonD}}</td>
-                        <td>{{u.jalonF}}</td>
+                        <td>{{u.jalon_d}}</td>
+                        <td>{{u.jalon_f}}</td>
                         <td>{{u.ju}}</td>
-                        <td>{{u.statutuo}}</td>
-                        <td>{{u.piloteUo}}</td>
+                        <td>{{u.statut_uo}}</td>
+                        <td>{{u.pilote_uo}}</td>
                         <td>{{u.Client}}</td>
                         <td>{{u.DateDebutUO}}</td>
                         <td>{{u.DateLivraison}}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{u.pointage}}</td>
+                        <td>{{u.total}}</td>
+                        
                         <td></td>
                         <td></td>
                       </tr>

@@ -1,0 +1,48 @@
+{% extends 'theme.html' %}
+{% block content %}
+
+<div class="row">
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Total uos</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{total_Uos}}</h3>
+			  	</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" >
+			  	<div class="card-header">
+			  		<h5 class="card-title">uos livrées</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{livree}}</h3>
+			  	</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" >
+			  	<div class="card-header">
+			  		<h5 class="card-title">uos viviers</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{vivier}}</h3>
+			  	</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+
+
+{% endblock content %}

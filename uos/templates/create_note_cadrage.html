@@ -31,6 +31,12 @@
                     {% csrf_token %}
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-4">
+                                <div  class="form-group d-flex flex-column">
+                                    {{form_note_cadrage.nom.label}}
+                                    {{form_note_cadrage.nom}}
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4">
                                 <div class="form-group d-flex flex-column">
                                     {{form_note_cadrage.select_uo.label}}
                                     {{form_note_cadrage.select_uo}}

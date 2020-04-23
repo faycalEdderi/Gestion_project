@@ -5,6 +5,13 @@ from uos.form import *
 from django.contrib import messages
 from django.views import generic 
 from django.views.generic.edit import CreateView
+from django.views.generic import ListView
+from django.views.generic import DetailView
+from django.shortcuts import get_object_or_404
+from .filters import Activitesfilter,Uosfilter,Projetfilter,Fonctionfilter,Uetfilter,Plateformefilter,Cadragefilter,Pointagefilter,Pointagefilter2
+from django.db.models import Q
+from django.db.models import Avg , Count, Sum
+from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP,Client, MyUsers
 
 
 def choix(objectmodel):
@@ -12,12 +19,32 @@ def choix(objectmodel):
     return liste
 
 
-
-
+# fonction KPI 
+def uo_statistique(request):
+    uos = Uo.objects.all()
+    total_Uos = uos.count()
+    v = uos.filter(statut_uo__nom="VIVIER").count()
+    l = uos.filter(statut_uo__nom="livree").count()
+    #point=Pointage.objects.annotate(sum(Pointage.point_pilote,Pointage.point_exceutant))
+    context = {'uos':uos,
+    'total_Uos':total_Uos ,'vivier':v
+	,'livree':l }
+    return render(request, 'kpi.html', context)
 
 def pointages(request):
+    pointages= Pointage.objects.all()
+    pointage_count=pointages.count()
+    myFilter =Pointagefilter(request.GET, queryset=pointages)
+    pointages = myFilter.qs 
+    context = {
+        'pointages': pointages,'pointage_count':pointage_count,
+        'myFilter': myFilter
+    }
+    return render(request,'table_pointage.html',context)
+    
+def administration(request):
 
-    return render(request,'table_pointage.html')
+    return render(request,'administration.html')
 
 def historique_pointage(request):
 
@@ -25,11 +52,83 @@ def historique_pointage(request):
 
 # Affichage de tous les uos
 def uo_list(request):
-    uo_liste= Uo.objects.all()
+    uos= Uo.objects.all()
+    uo_count=uos.count()
+    myFilter =Uosfilter(request.GET, queryset=uos)
+    uos = myFilter.qs 
     context = {
-        "Uo": uo_liste,
+        'uos': uos,'uo_count':uo_count,
+        'myFilter': myFilter
     }
     return render(request, "uos_list.html", context)
+
+def cadrage_list(request):
+    cadrages= NotedeCadrage.objects.all()
+    cadrage_count=cadrages.count()
+    myFilter =Cadragefilter(request.GET, queryset=cadrages)
+    cadrages = myFilter.qs 
+    context = {
+        'cadrages': cadrages,'cadrage_count':cadrage_count,
+        'myFilter': myFilter
+    }
+    return render(request, "notedecadrage_list.html", context)
+
+def projet_list(request):
+    projets= Projet.objects.all()
+    projet_count=projets.count()
+    myFilter =Projetfilter(request.GET, queryset=projets)
+    projets = myFilter.qs 
+    context = {
+        'projets': projets,'projet_count':projet_count,
+        'myFilter': myFilter
+    }
+    return render(request, "projet_list.html", context)
+
+def fonction_list(request):
+    fonctions= Fonction.objects.all()
+    fonction_count=fonctions.count()
+    myFilter =Fonctionfilter(request.GET, queryset=fonctions)
+    fonctions = myFilter.qs 
+    context = {
+        'fonctions': fonctions,'fonction_count':fonction_count,
+        'myFilter': myFilter
+    }
+    return render(request, "fonction_list.html", context)
+
+def plateforme_list(request):
+    plateformes= Plateforme.objects.all()
+    plateforme_count=plateformes.count()
+    myFilter =Fonctionfilter(request.GET, queryset=plateformes)
+    plateformes = myFilter.qs 
+    context = {
+        'plateformes': plateformes,'plateforme_count':plateforme_count,
+        'myFilter': myFilter
+    }
+    return render(request, "plateforme_list.html", context)
+
+def uet_list(request):
+    uets= Uet.objects.all()
+    uet_count=uets.count()
+    myFilter =Fonctionfilter(request.GET, queryset=uets)
+    uets = myFilter.qs 
+    context = {
+        'uets': uets,'uet_count':uet_count,
+        'myFilter': myFilter
+    }
+    return render(request, "uet_list.html", context)
+
+def ActivitessList(request):
+    activities = Activites.objects.all()
+    activities_count = activities.count()
+    myFilter = Activitesfilter(request.GET, queryset=activities)
+    activities = myFilter.qs 
+    context={'activities':activities,'activities_count':activities_count,
+    'myFilter': myFilter}
+    return render(request, 'activites_list.html',context)
+
+#def Pointer(request):
+   # pointages=Pointage.objects.all()
+   # point=pointages.annotate(Sum(Ponitages.point))
 
 
 def creation_uet(request):
@@ -95,9 +194,7 @@ def creation_parametre_uo(request):
 
     if request.method == 'POST':
         type_uo_form = TypeUoForm(request.POST)
-        projet_form = ProjetForm(request.POST)
         niveau_uo_form = NiveauUoForm(request.POST)
-        fonction_form = FonctionForm(request.POST)
         statut_uo_form = StatutUoForm(request.POST)
         etat_uo_form = EtatUoForm(request.POST)
         lot_uo_form = LotUoForm(request.POST)
@@ -108,16 +205,13 @@ def creation_parametre_uo(request):
 
             type_uo_name = request.POST['nom_type_uo']
             niveau_uo_name = request.POST['nom_niveau_uo']
-            projet_name = request.POST['nom_projet']
-            fonction_name = request.POST['nom_fonction']
             statut_uo_name = request.POST['nom_statut_uo']
             etat_uo_name = request.POST['nom_etat_uo']
             lot_uo_name = request.POST['nom_lot_uo']
 
             str_type_name = str(type_uo_name)
             str_niv_name = str(niveau_uo_name)
-            str_projet_name = str(projet_name)
-            str_fonction_name= str(fonction_name)
+            
             str_statut_name = str(statut_uo_name)
             str_etat_name = str(etat_uo_name)
             str_lot_name = str(lot_uo_name)
@@ -218,22 +312,22 @@ def create_uo(request):
             get_lot = Lot.objects.get(id = lot_id )
 
             create_uo = Uo(
-                numuo=number_uo,
-                jalonD=jalon_d,
-                jalonF=jalon_f,
+                num_uo=number_uo,
+                jalon_d=jalon_d,
+                jalon_f=jalon_f,
                 ju=ju,
-                DateDebutUO=date_uo_start,
-                DateLivraison=date_uo_delivery,
+                date_debut_uo=date_uo_start,
+                date_livraison=date_uo_delivery,
                 Client=client,
                 avancement=avancement,
-                piloteUo=pilote_uo,
+                #pilote_activitees=pilote_uo,
 
-                typeuo= get_type_uo ,
-                niveauo= get_niveau_uo,
+                type_uo= get_type_uo ,
+                nivea_uo= get_niveau_uo,
                 projet= get_projet,
                 fonction= get_fonction,
-                statutuo= get_statut_uo,
-                etatuo= get_etat_uo,
+                statut_uo= get_statut_uo,
+                etat_uo= get_etat_uo,
                 plateforme= get_plateform,
                 uet=get_uet,
                 catalogue= get_catalogue_uo,
@@ -315,7 +409,7 @@ def create_pointage(request):
             add_point = request.POST['point']
 
             recover_uo = Uo.objects.get(id = selected_uo_id )
-            recover_user = User.objects.get(id=selected_user_id)
+            recover_user = MyUsers.objects.get(id=selected_user_id)
 
             add_pointage = Pointage(
                 uo = recover_uo,
@@ -348,12 +442,14 @@ def create_note_cadrage(request):
 
             selected_uo_id = request.POST['select_uo']
             answer_rsa = request.POST['reponse_rsa']
+            nom=request.POST['nom']
 
             recover_uo = Uo.objects.get(id = selected_uo_id )
 
             add_note_cadrage = NotedeCadrage(
                 uo = recover_uo,
-                reponseRSA = answer_rsa
+                reponseRSA = answer_rsa,
+                nom=nom
             )
             add_note_cadrage.save()
 
@@ -406,7 +502,7 @@ def create_activite(request):
             )
             add_activite.save()
 
-            return redirect('create_activite')
+            return redirect('activitelist')
     else:
         activite_form = ActivitesForm()
 
@@ -420,12 +516,22 @@ def create_activite(request):
 
 
 
+def ActivitessList(request):
+    activities = Activites.objects.all()
+    activities_count = activities.count()
+    myFilter = Activitesfilter(request.GET, queryset=activities)
+    activities = myFilter.qs 
+    context={'activities':activities,'activities_count':activities_count,
+    'myFilter': myFilter}
+    return render(request, 'activites_list.html',context)
 
 
 
 
 
-    
+
+
+        
 
 
 

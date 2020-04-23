@@ -5,7 +5,18 @@
     <a href="./pointages" class="btn expleoColorB">Pointage</a>
     <a href="./historique" class="btn expleoColorB ">Historique</a>
           <div class="row">
-      {% include 'filtresPointage.html' %}
+            <div class="row">
+              <div class="col">
+                <div class="card card-body">
+            
+                  <form method="get">
+                    {{myFilter.form}}
+            
+                    <button class="btn btn-primary" type="submit">Search</button>
+                  </form>
+            
+                </div>
+              </div>
 
             <div class="col-md-12">
               <div class="card">
@@ -46,6 +57,18 @@
 
                       </thead>
                       <tbody>
+                      {% for u in pointages %}
+                      
+                      <tr>
+                        <td>{{u.uo}}</td>
+                        <td>{{u.uo.plateforme}}</td>
+                        <td>{{u.point}}</td>
+                        <td>{{a}}</td>
+                        <td>{{u.user}}</td>
+                        <td>{{u.semaine}}</td>
+                      </tr>
+                      
+                      {% endfor %}
                         <tr>
                           <td>191164</td>
                           <td>UNIT</td>

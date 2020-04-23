@@ -1,4 +1,5 @@
 from django import forms
+from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP,Client, MyUsers
 from uos.models import *
 
 
@@ -226,7 +227,7 @@ class PointageForm(forms.Form):
     )
     select_user = forms.ModelChoiceField(
         label="Selectionner un utilisateur",
-        queryset=User.objects.all(),
+        queryset=MyUsers.objects.all(),
     )
     semaine = forms.IntegerField(
         label="Semaine"
@@ -252,13 +253,17 @@ class NoteCadrageForm(forms.Form):
     )
 
     reponse_rsa = forms.CharField(
-        label="Reponse RSA"
+        label="Reponse RSA" ,required=False
+    )
+    nom=forms.CharField(
+        label="numero" 
     )
     class Meta:
-        model = Pointage
+        model = NotedeCadrage
         fields =[
             'uo',
             'reponseRSA',
+            'nom',
         ]
 
 
