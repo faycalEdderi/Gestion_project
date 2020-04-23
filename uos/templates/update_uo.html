@@ -19,7 +19,7 @@
 
 <div class="container ">
     <div class="panel-heading">
-        <h2 class="panel-title mt-2 text-center">Création UO</h2>
+        <h2 class="panel-title mt-2 text-center">Modification UO</h2>
         {% if messages %}
             <ul class="messages">
             {% for message in messages %}
@@ -188,6 +188,10 @@
 
                         <div class="d-flex justify-content-start">
                            <input type="submit" value="Valider" class="btn center-block btn-primary col-md-3 btn-block">
+
+                           <button class="btn btn-success"><a href="{% url 'excel_generator' uo.pk %}" class=" col-md-3 "> Exporter vers Excel</a></button>
+
+
                         </div>
                     </form>
                 </div>

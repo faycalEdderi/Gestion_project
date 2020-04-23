@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 
 def update_uos(request, pk=None):
     select_uo = Uo.objects.get(id=pk)
-    if request.method =="POST":
+    if request.method == "POST":
         uo_update_form = UoForm(request.POST or None, instance=select_uo)
         print("Request : ", request.POST)
 
@@ -20,8 +20,17 @@ def update_uos(request, pk=None):
             return redirect("uo_list")
     else:
         uo_update_form = UoForm(instance=select_uo)
+        uo_liste = Uo.objects.get(id=pk)
+        context = {
+            "uo": uo_liste,
+            'form_update_uo': uo_update_form
+        }
 
-        args={'form_update_uo' : uo_update_form}
+    return render(request, 'update_uo.html', context)
 
-        return render(request, 'update_uo.html', args)
+
+
+
+
+
 

@@ -55,6 +55,7 @@ urlpatterns = [
     path('pointages', uos_views.pointages, name='pointages'),
     path('historique', uos_views.historique_pointage),
     path('uo/<int:pk>/update', uos_views.update_uos, name='update_uos'),
+    path('uo/<int:pk>/export', uos_views.excel_generator, name='excel_generator'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
