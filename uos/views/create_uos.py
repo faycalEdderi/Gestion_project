@@ -506,16 +506,16 @@ def create_activite(request):
             get_note_cadrage = NotedeCadrage.objects.get(id = select_note_cadrage_id )
 
             add_activite = Activites(
-                notedeCadrage = get_note_cadrage,
-                donnesdentree = data,
-                activiteAttendue = activity ,
-                pourcentagedactivite = percentage ,
-                Conditionsdereussite = success_condition ,
-                Datedonnéesdentrees = data_date ,
-                DatedeDemarragedActivite = activity_start ,
-                LivrableAttendu = expected_deliverable ,
-                DatedeReceptionAttenduduLivrable = delivery_date_available ,
-                CommentairesSurAttendu = commentary ,
+                note_de_cadrage = get_note_cadrage,
+                donnees_dentree = data,
+                activite_attendue = activity ,
+                pourcentage_dactivite = percentage ,
+                conditions_de_reussite = success_condition ,
+                date_donnees_dentrees = data_date ,
+                date_de_demarrage_dactivite = activity_start ,
+                livrable_attendu = expected_deliverable ,
+                date_reception_attendu_du_Livrable = delivery_date_available ,
+                commentaires_sur_attendu = commentary ,
 
             )
             add_activite.save()

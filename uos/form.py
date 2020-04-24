@@ -370,7 +370,7 @@ class ActivitesForm(forms.Form):
         label="Activité attendue"
     )
     pourcentage_activite = forms.FloatField(
-        label="Donnée entrée"
+        label="Pourcentage d'activité"
     )
     conditions_reussite = forms.CharField(
         label="Condition de reussite"

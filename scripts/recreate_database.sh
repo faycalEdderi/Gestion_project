@@ -6,3 +6,5 @@ python ../manage.py makemigrations profil
 python ../manage.py migrate
 python ../manage.py runscript create_user
 python ../manage.py runscript create_uos
+
+
