@@ -253,23 +253,28 @@ def creation_parametre_uo(request):
         statut_uo_form = StatutUoForm(request.POST)
         etat_uo_form = EtatUoForm(request.POST)
         lot_uo_form = LotUoForm(request.POST)
+        fonction_form = FonctionForm(request.POST)
+        projet_form = ProjetForm(request.POST)
 
         print("request : ", request.POST)
 
         if type_uo_form.is_valid():
 
             type_uo_name = request.POST['nom_type_uo']
+            
             niveau_uo_name = request.POST['nom_niveau_uo']
             statut_uo_name = request.POST['nom_statut_uo']
             etat_uo_name = request.POST['nom_etat_uo']
             lot_uo_name = request.POST['nom_lot_uo']
-
+            projet_name = request.POST['nom_projet']
+            fonction_name = request.POST['nom_fonction']
             select_uet = request.POST['uet']
             select_plateforme = request.POST['plateforme']
 
             str_type_name = str(type_uo_name)
             str_niv_name = str(niveau_uo_name)
-            
+            str_projet_name = str(projet_name)
+            str_fonction_name= str(fonction_name)
             str_statut_name = str(statut_uo_name)
             str_etat_name = str(etat_uo_name)
             str_lot_name = str(lot_uo_name)
@@ -338,16 +343,19 @@ def creation_parametre_uo(request):
             return redirect('creation_parametre_uo')
     else:
         type_uo_form = TypeUoForm()
-        
+        fonction_form = FonctionForm()
         niveau_uo_form = NiveauUoForm()
-       
+        projet_form = ProjetForm()
         statut_uo_form = StatutUoForm()
         etat_uo_form = EtatUoForm()
         lot_uo_form = LotUoForm()
+        
+       
 
     context = {
         'form_type_uo': type_uo_form,
-        
+        'form_projet': projet_form,
+        'form_fonction' : fonction_form,
         'form_niveau_uo': niveau_uo_form,
       
         'form_statut_uo' : statut_uo_form,
