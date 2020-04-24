@@ -52,7 +52,8 @@
                         <th>Description</th>
                         <th>Pilote UO</th>
                         -->
-                        <th>Etat </th>
+                        <th>user</th>
+                        <th>semaine</th>
 
 
                       </thead>
@@ -61,101 +62,21 @@
                       
                       <tr>
                         <td>{{u.uo}}</td>
-                        <td>{{u.uo.plateforme}}</td>
+                        <td>{{u.uo.type_uo}}</td>
+                        <td>{{u.uo.nivea_uo}}</td>
+                        <td>{{u.uo.projet}}</td>
+                        <td>{{u.uo.fonction}}</td>
+                        <td></td>
+                        <td></td>
                         <td>{{u.point}}</td>
-                        <td>{{a}}</td>
+                        <td>{{u.uo.avancement}}</td>
                         <td>{{u.user}}</td>
                         <td>{{u.semaine}}</td>
                       </tr>
                       
                       {% endfor %}
-                        <tr>
-                          <td>191164</td>
-                          <td>UNIT</td>
-                          <td>F</td>
-                          <td> HHN</td>
-                          <td>ACC</td>
-                          <td>60</td>
-                          <td>30</td>
-                          <td> 20 </td>
-                          <td><div class="w-75 progressbar" ><div class="progress-label"></div>  </div>
-
-                            <!--<button class="moins">-</button><button class="plus">+</button>-->
-
-                            <!--CHANGER LES BOUTON PAR UN INPUT QUI PREND ET AFFICHE LA VALEUR DIRECMENT DANS LA PROGRESSBAR-->
-
-                          </td>
-                          <td><button class="btn btn-danger"> </button></td>
-
-                          <!--POUR RT
-                          <td> <a class="btn btn-success" href="">Valider</a> </td>
-                          <td> <a class="btn btn-danger" href="">Rejeter</a> </td>
-                           -->
-                        </tr>
-                        <tr>
-                            <td>191165</td>
-                            <td> PVAL</td>
-                            <td>C</td>
-                            <td>BJA</td>
-                            <td>AEB</td>
-                            <td>75</td>
-                            <td>60</td>
-                            <td> 15 </td>
-                            <td><div class="w-75 progressbar" ><div class="progress-label"></div>  </div>
-
-                             <!--<button class="moins">-</button><button class="plus">+</button>-->
-
-                            </td>
-                            <td><button class="btn btn-success"> </button></td>
-
-
-                            <!--POUR RT
-                            <td> <a class="btn btn-success" href="">Valider</a> </td>
-                            <td> <a class="btn btn-danger" href="">Rejeter</a> </td>
-                             -->
-                          </tr>
-                          <tr>
-                              <td>191166</td>
-                              <td> NUM</td>
-                              <td> B</td>
-                              <td>JFC²</td>
-                              <td>BSW</td>
-                              <td>30</td>
-                              <td>10</td>
-                              <td> 5 </td>
-                              <td><div class="w-75 progressbar" ><div class="progress-label"></div>  </div>
-
-                                <!--<button class="moins">-</button><button class="plus">+</button>-->
-
-                              </td>
-                              <td><button class="btn btn-warning"> </button></td>
-
-                              <!--POUR RT
-                              <td> <a class="btn btn-success" href="">Valider</a> </td>
-                              <td> <a class="btn btn-danger" href="">Rejeter</a> </td>
-                               -->
-                            </tr>
-                            <tr>
-                                <td>191167</td>
-                                <td>SYST</td>
-                                <td>D</td>
-                                <td>HJB</td>
-                                <td> LSS</td>
-                                <td>35</td>
-                                <td>70</td>
-                                <td> 45 </td>
-                                <td><div class="w-75 progressbar" ><div class="progress-label"></div>  </div>
-
-                                  <!--<button class="moins">-</button><button class="plus">+</button>-->
-
-                                </td>
-                                <td><button class="btn btn-danger"> </button></td>
-
-                                <!--POUR RT
-                                <td> <a class="btn btn-success" href="">Valider</a> </td>
-                                <td> <a class="btn btn-danger" href="">Rejeter</a> </td>
-                                 -->
-                              </tr>
+                        
+                          
 
 
 

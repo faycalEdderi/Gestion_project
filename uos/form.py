@@ -225,15 +225,12 @@ class PointageForm(forms.Form):
         label="Selectionner une UO",
         queryset=Uo.objects.all(),
     )
-    select_user = forms.ModelChoiceField(
-        label="Selectionner un utilisateur",
-        queryset=MyUsers.objects.all(),
-    )
+    
     semaine = forms.IntegerField(
         label="Semaine"
     )
     point = forms.FloatField(
-        label="Nombre de points"
+        label="Nombre de Jours"
     )
 
     class Meta:
@@ -244,7 +241,27 @@ class PointageForm(forms.Form):
             'semaine',
             'point'
         ]
+class AvancementForm(forms.Form):
+    select_uo = forms.ModelChoiceField(
+        label="Selectionner une UO",
+        queryset=Uo.objects.all(),
+    )
+    
+    semaine = forms.IntegerField(
+        label="Semaine"
+    )
+    avancement = forms.FloatField(
+        label="Poucentage d'avancement "
+    )
 
+    class Meta:
+        model = Avancement
+        fields =[
+            'uo',
+            'user',
+            'semaine',
+            'avancement'
+        ]
 
 class NoteCadrageForm(forms.Form):
     select_uo = forms.ModelChoiceField(
@@ -279,7 +296,7 @@ class ActivitesForm(forms.Form):
         label="Activité attendue"
     )
     pourcentage_activite = forms.FloatField(
-        label="Donnée entrée"
+        label="Pourcentage d'activitée"
     )
     conditions_reussite = forms.CharField(
         label="Condition de reussite"

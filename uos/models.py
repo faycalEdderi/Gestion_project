@@ -152,11 +152,10 @@ class Uo(models.Model):
     ju = models.CharField(max_length=20,default="",blank=True, null=True)
     date_debut_uo=models.DateTimeField(default=timezone.now(),blank=True, null=True)
     date_livraison=models.DateTimeField(default=timezone.now(),blank=True, null=True)
-    avancement_total=models.FloatField(default=0,blank=True, null=True)
     note_de_cadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "",blank=True, null=True)
     pilote_activitees=models.ForeignKey(Pilote,default = "",on_delete=models.CASCADE,blank=True, null=True)
     client=models.ForeignKey(Client, default = "", on_delete=models.CASCADE,blank=True, null=True)
-    Pointage_total=models.FloatField(default=0,blank=True, null=True)
+    
     #recuper ele pointage total par uo 
     @property
     def total(self):
@@ -170,13 +169,21 @@ class Uo(models.Model):
         for q in self.points.filter(semaine):
                 t+=q.point     
         return t
+        
+    #recupere avancement de chaque uo 
+    @property
+    def avancement(self):
+        a=0
+        for q in self.avancement.all():
+                a=q.avancement
+        return a
     
     def __str__(self):
         return self.num_uo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet
 
 # class pointage qui permet aux utilisateur de pointer sur l'uo
 class Pointage(models.Model):
-    user=models.ForeignKey(MyUsers,on_delete=models.CASCADE,default = "",related_name="points")
+    user=models.ForeignKey(User,on_delete=models.CASCADE,default = "",related_name="points")
     uo=models.ForeignKey(Uo,on_delete=models.CASCADE,default = "",related_name="points")
     semaine= models.IntegerField(default = 0)
     point=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5)])
@@ -187,12 +194,13 @@ class Pointage(models.Model):
 
 # class avancement 
 class Avancement(models.Model):
-    user=models.ForeignKey(Pilote,on_delete=models.CASCADE,default = "")
-    uo=models.ForeignKey(Uo,on_delete=models.CASCADE,default = "")
+    user=models.OneToOneField(User,on_delete=models.CASCADE,default = "",related_name="avancement")
+    uo=models.OneToOneField(Uo,on_delete=models.CASCADE,default = "",related_name="avancement")
     semaine= models.IntegerField(default = 0)
-    point=models.FloatField()
+    avancement=models.FloatField()
+
     def __str__(self):
-       return str(self.point)
+       return str(self.avancement)
   
 # classe activités pour chaque note de cadrage plusieurs activitées
 class Activites(models.Model):

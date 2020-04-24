@@ -12,7 +12,7 @@ from .filters import Activitesfilter,Uosfilter,Projetfilter,Fonctionfilter,Uetfi
 from django.db.models import Q
 from django.db.models import Avg , Count, Sum
 from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP,Client, MyUsers
-
+from django.contrib.auth import authenticate, login
 
 def choix(objectmodel):
     liste = objectmodel.objects.all()  
@@ -24,11 +24,11 @@ def uo_statistique(request):
     uos = Uo.objects.all()
     total_Uos = uos.count()
     v = uos.filter(statut_uo__nom="VIVIER").count()
-    l = uos.filter(statut_uo__nom="livree").count()
+    l = uos.filter(statut_uo__nom="livrée").count()
     #point=Pointage.objects.annotate(sum(Pointage.point_pilote,Pointage.point_exceutant))
     context = {'uos':uos,
     'total_Uos':total_Uos ,'vivier':v
-	,'livree':l }
+	,'livrée':l }
     return render(request, 'kpi.html', context)
 
 def pointages(request):
@@ -218,8 +218,6 @@ def creation_parametre_uo(request):
 
             uo_type =   Typeuo( nom = type_uo_name )
             uo_niveau = Niveauuo( nom = niveau_uo_name )
-            project =   Projet( nom = projet_name )
-            fonction =  Fonction( nom = fonction_name)
             uo_statu =  Statutuo(nom = statut_uo_name)
             uo_state =  Etatuo(nom = etat_uo_name)
             lot =       Lot(nom = lot_uo_name)
@@ -230,11 +228,7 @@ def creation_parametre_uo(request):
             if str_niv_name and not str_niv_name.isspace():
                 uo_niveau.save()
 
-            if str_projet_name and not str_projet_name.isspace():
-                project.save()
-
-            if str_fonction_name and not str_fonction_name.isspace():
-                fonction.save()
+            
 
             if str_statut_name and not str_statut_name.isspace():
                 uo_statu.save()
@@ -248,18 +242,18 @@ def creation_parametre_uo(request):
             return redirect('creation_parametre_uo')
     else:
         type_uo_form = TypeUoForm()
-        projet_form = ProjetForm()
+        
         niveau_uo_form = NiveauUoForm()
-        fonction_form = FonctionForm()
+       
         statut_uo_form = StatutUoForm()
         etat_uo_form = EtatUoForm()
         lot_uo_form = LotUoForm()
 
     context = {
         'form_type_uo': type_uo_form,
-        'form_projet': projet_form,
+        
         'form_niveau_uo': niveau_uo_form,
-        'form_fonction' : fonction_form,
+      
         'form_statut_uo' : statut_uo_form,
         'form_etat_uo' : etat_uo_form,
         'form_lot_uo' : lot_uo_form,
@@ -404,13 +398,12 @@ def create_pointage(request):
         if pointage_form.is_valid():
 
             selected_uo_id = request.POST['select_uo']
-            selected_user_id = request.POST['select_user']
             week = request.POST['semaine']
             add_point = request.POST['point']
 
             recover_uo = Uo.objects.get(id = selected_uo_id )
-            recover_user = MyUsers.objects.get(id=selected_user_id)
-
+            recover_user = request.user
+            
             add_pointage = Pointage(
                 uo = recover_uo,
                 user = recover_user,
@@ -430,6 +423,42 @@ def create_pointage(request):
 
     return render(request, "create_pointage.html", context)
 
+
+#creation d'avancement
+def create_avancement(request):
+
+    if request.method == 'POST':
+        avancement_form = AvancementForm(request.POST)
+
+        print("request : ", request.POST)
+
+        if avancement_form.is_valid():
+
+            selected_uo_id = request.POST['select_uo']
+            week = request.POST['semaine']
+            add_avc = request.POST['avancement']
+
+            recover_uo = Uo.objects.get(id = selected_uo_id )
+            recover_user = request.user
+            
+            add_avancement = Avancement(
+                uo = recover_uo,
+                user = recover_user,
+                semaine = week,
+                avancement = add_avc
+            )
+            add_avancement.save()
+
+            return redirect('create_avancement')
+    else:
+        avancement_form = AvancementForm()
+
+    context = {
+        'form_avancement': avancement_form,
+
+    }
+
+    return render(request, "create_avancement.html", context)
 
 def create_note_cadrage(request):
 
@@ -487,18 +516,17 @@ def create_activite(request):
 
             get_note_cadrage = NotedeCadrage.objects.get(id = select_note_cadrage_id )
 
-            add_activite = Activites(
-                notedeCadrage = get_note_cadrage,
-                donnesdentree = data,
-                activiteAttendue = activity ,
-                pourcentagedactivite = percentage ,
-                Conditionsdereussite = success_condition ,
-                Datedonnéesdentrees = data_date ,
-                DatedeDemarragedActivite = activity_start ,
-                LivrableAttendu = expected_deliverable ,
-                DatedeReceptionAttenduduLivrable = delivery_date_available ,
-                CommentairesSurAttendu = commentary ,
-
+            add_activite= Activites(
+                note_de_cadrage = get_note_cadrage,
+                donnees_dentree = data,
+                activite_attendue = activity ,
+                pourcentage_dactivite = percentage ,
+                conditions_de_reussite = success_condition ,
+                date_donnees_dentrees = data_date ,
+                date_de_demarrage_dactivite = activity_start ,
+                livrable_attendu = expected_deliverable ,
+                date_reception_attendu_du_Livrable = delivery_date_available ,
+                commentaires_sur_attendu = commentary ,
             )
             add_activite.save()
 

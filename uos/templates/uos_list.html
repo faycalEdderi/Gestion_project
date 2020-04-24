@@ -46,6 +46,7 @@
                         <th>Client</th>
                         <th>Date début UO</th>
                         <th>Date livraison</th>
+                        <th>Pointage</th>
                         <th>Avancement</th>
 
                     
@@ -64,15 +65,15 @@
                         <td>{{u.jalon_f}}</td>
                         <td>{{u.ju}}</td>
                         <td>{{u.statut_uo}}</td>
-                        <td>{{u.pilote_uo}}</td>
-                        <td>{{u.Client}}</td>
-                        <td>{{u.DateDebutUO}}</td>
-                        <td>{{u.DateLivraison}}</td>
-                        <td>{{u.pointage}}</td>
-                        <td>{{u.total}}</td>
+                        <td>{{u.pilote_activitees}}</td>
+                        <td>{{u.client}}</td>
+                        <td>{{u.date_debut_uo}}</td>
                         
-                        <td></td>
-                        <td></td>
+                        <td>{{u.date_livraison}}</td>
+                        <td>{{u.total}}</td>
+                        <td>{{u.avancement}}</td>
+                        
+                        
                       </tr>
                       {% endfor %}
                     </tbody>
