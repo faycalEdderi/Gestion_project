@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'profil.apps.ProfilConfig',
     'uos.apps.UosConfig',
 
-
 ]
 
 MIDDLEWARE = [

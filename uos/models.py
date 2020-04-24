@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
-from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP,Client
+from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP,Client, MyUsers
 from django.utils import timezone
 import django
 from datetime import date
@@ -130,23 +130,11 @@ class Lot(models.Model):
        return self.nom
 
 
-# class pointage qui permet aux utilisateur de pointer sur l'uo
-class Pointage(models.Model):
-    pilote=models.ForeignKey(Pilote,on_delete=models.CASCADE,default = "")
-    executant=models.ManyToManyField(Executant,default = "")
-    semaine= models.DateTimeField(default=django.utils.timezone.now,blank=True, null=True)
-    point_pilote=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5)])
-    point_executant=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(
-        5)])
-
-    def __str__(self):
-       return str(self.semaine)
-
 
 # class note de cadrage pour chaque uo une note de cadrage 'reflichir pour apres si on peut ajouter des numero pour les modification de note de cadrage  '
 class NotedeCadrage(models.Model):
     nom=models.CharField(max_length=20)
-    reponseRSA=models.CharField(max_length=600,default="",blank=True, null=True)
+    reponseRSA=models.CharField(max_length=600,default="",blank=True ,null=True)
 
     def __str__(self):
        return str(self.nom) + " (" +str(self.reponseRSA) +")"
@@ -169,26 +157,65 @@ class Uo(models.Model):
     jalon_d= models.CharField(max_length=20,default="",blank=True, null=True)
     jalon_f = models.CharField(max_length=20,default="",blank=True, null=True)
     ju = models.CharField(max_length=20,default="",blank=True, null=True)
-    date_debut_uo=models.DateTimeField(default=django.utils.timezone.now,blank=True, null=True)
-    date_livraison=models.DateTimeField(default=django.utils.timezone.now,blank=True, null=True)
-    avancement=models.FloatField(default=0,blank=True, null=True)
-    #Ajouter Pointage au form et view
-    pointage =models.ForeignKey(Pointage,on_delete=models.CASCADE,default = "",blank=True, null=True)
+    date_debut_uo=models.DateTimeField(default=timezone.now(),blank=True, null=True)
+    date_livraison=models.DateTimeField(default=timezone.now(),blank=True, null=True)
+    
     note_de_cadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "",blank=True, null=True)
     pilote_activitees=models.ForeignKey(Pilote,default = "",on_delete=models.CASCADE,blank=True, null=True)
     # Modifier form pour pilote qui n'est plus un charfield mais un modelfield
     client=models.ForeignKey(Client, default = "", on_delete=models.CASCADE,blank=True, null=True)
-    # Modifier form pour client qui n'est plus un charfield mais un modelfield
-
+    
+    #recuper ele pointage total par uo 
+    @property
+    def total(self):
+        t=0
+        for q in self.points.all():
+                t+=q.point   
+        return t
+    #recupere le pointag  total par semaine 
+    def total_semaine(self,semaine):
+        t=0
+        for q in self.points.filter(semaine):
+                t+=q.point     
+        return t
+        
+    #recupere avancement de chaque uo 
+    @property
+    def avancement(self):
+        a=0
+        for q in self.avancement.all():
+                a=q.avancement
+        return a
+    
     def __str__(self):
         return self.num_uo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet
 
+# class pointage qui permet aux utilisateur de pointer sur l'uo
+class Pointage(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,default = "",related_name="points")
+    uo=models.ForeignKey(Uo,on_delete=models.CASCADE,default = "",related_name="points")
+    semaine= models.IntegerField(default = 0)
+    point=models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5)])
 
+    def __str__(self):
+       return str(self.point) + str(self.uo)
+
+
+# class avancement 
+class Avancement(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE,default = "",related_name="avancement")
+    uo=models.OneToOneField(Uo,on_delete=models.CASCADE,default = "",related_name="avancement")
+    semaine= models.IntegerField(default = 0)
+    avancement=models.FloatField()
+
+    def __str__(self):
+       return str(self.avancement)
+  
 # classe activités pour chaque note de cadrage plusieurs activitées
 class Activites(models.Model):
     note_de_cadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "")
     donnees_dentree=models.CharField(max_length=600,default="")
-    activite_attendue=models.CharField(max_length=600,default="")	
+    activite_attendue = models.CharField(max_length=600,default="")	
     pourcentage_dactivite=models.FloatField()
     conditions_de_reussite=models.CharField(max_length=600,default="")	
     date_donnees_dentrees=models.DateTimeField(default="", blank=True)
@@ -198,7 +225,7 @@ class Activites(models.Model):
     commentaires_sur_attendu=models.CharField(max_length=600,default="")	
 
     def __str__(self):
-       return str(self.activiteAttendue)
+       return str(self.donnees_dentree)
 
 
     
@@ -216,4 +243,4 @@ class Livraison(models.Model):
     commentaire  = models.CharField(max_length=600,default="")
 
     def __str__(self):
-       return str(self.nomduLivrable)
+       return str(self.nom_livrable)

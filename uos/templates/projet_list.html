@@ -1,0 +1,54 @@
+{% extends 'theme.html' %}
+{% block content %}
+
+<div class="content">
+    <div class="container-fluid">
+      <a href="{% url 'creation_parametre_uo' %}" ><button class="btn btn-primary" > Créer nouveau Projet
+      </button></a>
+      <!--MENU DRODPDOWN FILTRES UO-->
+      <div class="row">
+        <div class="col">
+          <div class="card card-body">
+      
+            <form method="get">
+              {{myFilter.form}}
+      
+              <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+      
+          </div>
+        </div>
+        
+      </div>
+        <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title ">Projets </h4>
+                <p class="card-category"> </p>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" expleoColorT">
+                        <th>Projet</th>
+                        
+                    </thead>
+                    <tbody>
+                      
+                        {% for a in projets %}
+                      <tr>
+                        <td>{{a.nom}}</td>
+                       
+                      </tr>
+                        {% endfor %}
+                         
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+{% endblock content %}

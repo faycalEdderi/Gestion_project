@@ -8,6 +8,18 @@
         <a href="{% url 'create_uo' %}" ><button class="btn btn-primary" > Créer nouvelle UO
          </button></a>
 
+         <div class="row">
+          <div class="col">
+            <div class="card card-body">
+        
+              <form method="get">
+                {{myFilter.form}}
+        
+                <button class="btn btn-primary" type="submit">Search</button>
+              </form>
+        
+            </div>
+          </div>
      
         <div class="col-md-12">
             <div class="card">
@@ -34,17 +46,18 @@
                         <th>Client</th>
                         <th>Date début UO</th>
                         <th>Date livraison</th>
+                        <th>Pointage</th>
                         <th>Avancement</th>
 
                     
                     </thead>
                     <tbody>
-                        {% for u in Uo %}
+                      {% for u in uos %}
                       <tr>
                         <td><a href="{% url 'update_uos' u.id %}">{{u.num_uo}}</a></td>
                         <td>{{u.plateforme}}</td>
-                          <td>{{u.type_uo}}</td>
-                        <td>{{u.niveau_uo}}</td>
+                        <td>{{u.type_uo}}</td>
+                        <td>{{u.nivea_uo}}</td>
                         <td>{{u.fonction}}</td>
                         <td>{{u.projet}}</td>
                         <td>{{u.lot}}</td>
@@ -55,11 +68,12 @@
                         <td>{{u.pilote_activitees}}</td>
                         <td>{{u.client}}</td>
                         <td>{{u.date_debut_uo}}</td>
+                        
                         <td>{{u.date_livraison}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{u.total}}</td>
+                        <td>{{u.avancement}}</td>
+                        
+                        
                       </tr>
                       {% endfor %}
                     </tbody>

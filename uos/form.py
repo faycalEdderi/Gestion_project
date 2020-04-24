@@ -1,4 +1,5 @@
 from django import forms
+from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP,Client, MyUsers
 from uos.models import *
 from django.forms import ModelForm
 
@@ -259,21 +260,11 @@ class UoForm(forms.ModelForm):
         label="Client ",
         queryset= Client.objects.all()
     )
-    avancement = forms.FloatField(
-        label="Avancement "
-    )
     pilote_activitees = forms.ModelChoiceField(
         label="Pilote UO",
         queryset= Pilote.objects.all(),
     )
-    pointage = forms.ModelChoiceField(
-        label = "Pointage : ",
-        queryset = Pointage.objects.all()
-    )
-    note_de_cadrage = forms.ModelChoiceField(
-        label="Note de cadrage : ",
-        queryset = NotedeCadrage.objects.all()
-    )
+    
 
     class Meta:
         model = Uo
@@ -295,9 +286,7 @@ class UoForm(forms.ModelForm):
             "date_debut_uo",
             "date_livraison",
             "client",
-            "avancement",
             "pilote_activitees",
-            "pointage",
             "note_de_cadrage",
 
         )
@@ -309,18 +298,12 @@ class PointageForm(forms.Form):
         label="Selectionner un pilote",
         queryset=Pilote.objects.all(),
     )
-    select_executant = forms.ModelMultipleChoiceField(
-        label="Selectionner un utilisateur",
-        queryset=Executant.objects.all(),
-    )
-    semaine = forms.DateTimeField(
+    
+    semaine = forms.IntegerField(
         label="Semaine"
     )
-    point_pilote = forms.FloatField(
-        label="Nombre de points pilote"
-    )
-    point_executant = forms.FloatField(
-        label="Nombre de points executant"
+    point = forms.FloatField(
+        label="Nombre de Jours"
     )
 
     class Meta:
@@ -332,29 +315,49 @@ class PointageForm(forms.Form):
             'point_pilote',
             'point_executant'
         ]
-
-
-class NoteCadrageForm(forms.Form):
-    nom_cadrage = forms.CharField(
-        label="Entrer reference note de cadrage",
+class AvancementForm(forms.Form):
+    select_uo = forms.ModelChoiceField(
+        label="Selectionner une UO",
+        queryset=Uo.objects.all(),
     )
-
-    reponse_rsa = forms.CharField(
-        label="Reponse RSA",
-        required=False,
+    
+    semaine = forms.IntegerField(
+        label="Semaine"
     )
-    select_activite = forms.ModelMultipleChoiceField(
-        label="Selectionner activité ",
-        queryset=Activites.objects.all(),
-        required= False,
+    avancement = forms.FloatField(
+        label="Poucentage d'avancement "
     )
 
     class Meta:
-        model = Pointage
+        model = Avancement
         fields =[
-            'nom_cadrage',
+            'uo',
+            'user',
+            'semaine',
+            'avancement'
+        ]
+
+class NoteCadrageForm(forms.Form):
+  
+    select_uo = forms.ModelChoiceField(
+        label="Selectionner une UO",
+        queryset=Uo.objects.all(),
+    )
+    reponse_rsa = forms.CharField(
+        label="Reponse RSA" ,
+        required=False
+    )
+    nom=forms.CharField(
+        label="numero" 
+    )
+   
+
+    class Meta:
+        model = NotedeCadrage
+        fields =[
+            
             'reponseRSA',
-            'select_activite',
+            'nom',
         ]
 
 

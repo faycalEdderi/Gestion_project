@@ -31,9 +31,6 @@ def excel_generator(request, pk=None):
         ju = select_uo.ju
         date_debut_uo = str(select_uo.date_debut_uo)
         date_livraison = str(select_uo.date_livraison)
-        avancement = select_uo.avancement
-        pointage = select_uo.pointage
-        note_de_cadrage = select_uo.note_de_cadrage
         pilote_activitees = select_uo.pilote_activitees
         client = select_uo.client
 
@@ -56,9 +53,6 @@ def excel_generator(request, pk=None):
                 'JU': [ju],
                 'Date debut': [date_debut_uo],
                 'Date livraison': [date_livraison],
-                'Avancement': [avancement],
-                'Pointage': [pointage],
-                'Note de cadrage': [note_de_cadrage],
                 'Pilote': [pilote_activitees],
                 'Client': [client],
             }

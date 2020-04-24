@@ -5,7 +5,14 @@ from uos.form import *
 from django.contrib import messages
 from django.views import generic 
 from django.views.generic.edit import CreateView
-
+from django.views.generic import ListView
+from django.views.generic import DetailView
+from django.shortcuts import get_object_or_404
+from .filters import Activitesfilter,Uosfilter,Projetfilter,Fonctionfilter,Uetfilter,Plateformefilter,Cadragefilter,Pointagefilter,Pointagefilter2
+from django.db.models import Q
+from django.db.models import Avg , Count, Sum
+from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP,Client, MyUsers
+from django.contrib.auth import authenticate, login
 
 
 def choix(objectmodel):
@@ -13,9 +20,32 @@ def choix(objectmodel):
     return liste
 
 
-def pointages(request):
+# fonction KPI 
+def uo_statistique(request):
+    uos = Uo.objects.all()
+    total_Uos = uos.count()
+    v = uos.filter(statut_uo__nom="VIVIER").count()
+    l = uos.filter(statut_uo__nom="livrée").count()
+    #point=Pointage.objects.annotate(sum(Pointage.point_pilote,Pointage.point_exceutant))
+    context = {'uos':uos,
+    'total_Uos':total_Uos ,'vivier':v
+	,'livrée':l }
+    return render(request, 'kpi.html', context)
 
-    return render(request,'table_pointage.html')
+def pointages(request):
+    pointages= Pointage.objects.all()
+    pointage_count=pointages.count()
+    myFilter =Pointagefilter(request.GET, queryset=pointages)
+    pointages = myFilter.qs 
+    context = {
+        'pointages': pointages,'pointage_count':pointage_count,
+        'myFilter': myFilter
+    }
+    return render(request,'table_pointage.html',context)
+    
+def administration(request):
+
+    return render(request,'administration.html')
 
 
 def historique_pointage(request):
@@ -25,11 +55,83 @@ def historique_pointage(request):
 
 # Affichage de tous les uos
 def uo_list(request):
-    uo_liste= Uo.objects.all()
+    uos= Uo.objects.all()
+    uo_count=uos.count()
+    myFilter =Uosfilter(request.GET, queryset=uos)
+    uos = myFilter.qs 
     context = {
-        "Uo": uo_liste,
+        'uos': uos,'uo_count':uo_count,
+        'myFilter': myFilter
     }
     return render(request, "uos_list.html", context)
+
+def cadrage_list(request):
+    cadrages= NotedeCadrage.objects.all()
+    cadrage_count=cadrages.count()
+    myFilter =Cadragefilter(request.GET, queryset=cadrages)
+    cadrages = myFilter.qs 
+    context = {
+        'cadrages': cadrages,'cadrage_count':cadrage_count,
+        'myFilter': myFilter
+    }
+    return render(request, "notedecadrage_list.html", context)
+
+def projet_list(request):
+    projets= Projet.objects.all()
+    projet_count=projets.count()
+    myFilter =Projetfilter(request.GET, queryset=projets)
+    projets = myFilter.qs 
+    context = {
+        'projets': projets,'projet_count':projet_count,
+        'myFilter': myFilter
+    }
+    return render(request, "projet_list.html", context)
+
+def fonction_list(request):
+    fonctions= Fonction.objects.all()
+    fonction_count=fonctions.count()
+    myFilter =Fonctionfilter(request.GET, queryset=fonctions)
+    fonctions = myFilter.qs 
+    context = {
+        'fonctions': fonctions,'fonction_count':fonction_count,
+        'myFilter': myFilter
+    }
+    return render(request, "fonction_list.html", context)
+
+def plateforme_list(request):
+    plateformes= Plateforme.objects.all()
+    plateforme_count=plateformes.count()
+    myFilter =Fonctionfilter(request.GET, queryset=plateformes)
+    plateformes = myFilter.qs 
+    context = {
+        'plateformes': plateformes,'plateforme_count':plateforme_count,
+        'myFilter': myFilter
+    }
+    return render(request, "plateforme_list.html", context)
+
+def uet_list(request):
+    uets= Uet.objects.all()
+    uet_count=uets.count()
+    myFilter =Fonctionfilter(request.GET, queryset=uets)
+    uets = myFilter.qs 
+    context = {
+        'uets': uets,'uet_count':uet_count,
+        'myFilter': myFilter
+    }
+    return render(request, "uet_list.html", context)
+
+def ActivitessList(request):
+    activities = Activites.objects.all()
+    activities_count = activities.count()
+    myFilter = Activitesfilter(request.GET, queryset=activities)
+    activities = myFilter.qs 
+    context={'activities':activities,'activities_count':activities_count,
+    'myFilter': myFilter}
+    return render(request, 'activites_list.html',context)
+
+#def Pointer(request):
+   # pointages=Pointage.objects.all()
+   # point=pointages.annotate(Sum(Ponitages.point))
 
 
 def creation_uet(request):
@@ -147,9 +249,7 @@ def creation_parametre_uo(request):
 
     if request.method == 'POST':
         type_uo_form = TypeUoForm(request.POST)
-        projet_form = ProjetForm(request.POST)
         niveau_uo_form = NiveauUoForm(request.POST)
-        fonction_form = FonctionForm(request.POST)
         statut_uo_form = StatutUoForm(request.POST)
         etat_uo_form = EtatUoForm(request.POST)
         lot_uo_form = LotUoForm(request.POST)
@@ -160,8 +260,6 @@ def creation_parametre_uo(request):
 
             type_uo_name = request.POST['nom_type_uo']
             niveau_uo_name = request.POST['nom_niveau_uo']
-            projet_name = request.POST['nom_projet']
-            fonction_name = request.POST['nom_fonction']
             statut_uo_name = request.POST['nom_statut_uo']
             etat_uo_name = request.POST['nom_etat_uo']
             lot_uo_name = request.POST['nom_lot_uo']
@@ -171,15 +269,13 @@ def creation_parametre_uo(request):
 
             str_type_name = str(type_uo_name)
             str_niv_name = str(niveau_uo_name)
-            str_projet_name = str(projet_name)
-            str_fonction_name= str(fonction_name)
+            
             str_statut_name = str(statut_uo_name)
             str_etat_name = str(etat_uo_name)
             str_lot_name = str(lot_uo_name)
 
             uo_type =   Typeuo( nom = type_uo_name )
             uo_niveau = Niveauuo( nom = niveau_uo_name )
-
             uo_statu =  Statutuo(nom = statut_uo_name)
             uo_state =  Etatuo(nom = etat_uo_name)
             lot =       Lot(nom = lot_uo_name)
@@ -242,18 +338,18 @@ def creation_parametre_uo(request):
             return redirect('creation_parametre_uo')
     else:
         type_uo_form = TypeUoForm()
-        projet_form = ProjetForm()
+        
         niveau_uo_form = NiveauUoForm()
-        fonction_form = FonctionForm()
+       
         statut_uo_form = StatutUoForm()
         etat_uo_form = EtatUoForm()
         lot_uo_form = LotUoForm()
 
     context = {
         'form_type_uo': type_uo_form,
-        'form_projet': projet_form,
+        
         'form_niveau_uo': niveau_uo_form,
-        'form_fonction' : fonction_form,
+      
         'form_statut_uo' : statut_uo_form,
         'form_etat_uo' : etat_uo_form,
         'form_lot_uo' : lot_uo_form,
@@ -284,7 +380,7 @@ def create_uo(request):
             ju = request.POST['ju']
             date_uo_start = request.POST['date_debut_uo']
             date_uo_delivery = request.POST['date_livraison']
-            avancement = request.POST['avancement']
+
 
             type_uo_id = request.POST['type_uo']
             niveau_uo_id = request.POST['niveau_uo']
@@ -298,9 +394,9 @@ def create_uo(request):
             lot_id = request.POST['lot']
 
             client_id = request.POST['client']
-            pointage_id = request.POST['pointage']
+          
             pilote_id = request.POST['pilote_activitees']
-            cadrage_id = request.POST['note_de_cadrage']
+            
 
             result = find_object(Typeuo, type_uo_id)
             print("object : ", result)
@@ -318,8 +414,7 @@ def create_uo(request):
 
             get_pilote = Pilote.objects.get(id=pilote_id)
             get_client = Client.objects.get(id=client_id)
-            get_pointage = Pointage.objects.get(id=pointage_id)
-            get_cadrage = NotedeCadrage.objects.get(id = cadrage_id )
+           
             
             create_uo = Uo(
                 num_uo=number_uo,
@@ -328,9 +423,6 @@ def create_uo(request):
                 ju=ju,
                 date_debut_uo=date_uo_start,
                 date_livraison=date_uo_delivery,
-                avancement=avancement,
-
-
                 type_uo= get_type_uo ,
                 niveau_uo= get_niveau_uo,
                 projet= get_projet,
@@ -341,9 +433,6 @@ def create_uo(request):
                 uet=get_uet,
                 catalogue= get_catalogue_uo,
                 lot=get_lot,
-
-                pointage = get_pointage,
-                note_de_cadrage = get_cadrage,
                 pilote_activitees=get_pilote,
                 client=get_client,
             )
@@ -355,8 +444,11 @@ def create_uo(request):
                 'L\'UO a etais créée correctement ')
 
             return redirect('uo_list')
+        else:
+            print("error")
+            messages.error(request, form.errors)
     else:
-
+        
         uo_creation_form = UoForm()
 
     context = {
@@ -422,20 +514,19 @@ def create_pointage(request):
 
         if pointage_form.is_valid():
 
-            selected_pilote = request.POST['select_pilote']
-            select_executant = request.POST['select_executant']
+            selected_uo_id = request.POST['select_uo']
             week = request.POST['semaine']
             add_point_pil = request.POST['point_pilote']
             add_point_exec = request.POST['point_executant']
 
-            get_pilote = Pilote.objects.get(id = selected_pilote )
-            get_executant = Executant.objects.filter(id=select_executant)
-
-            pointage = Pointage.objects.create(
-                pilote=get_pilote,
-                semaine=week,
-                point_pilote=add_point_pil,
-                point_executant=add_point_exec
+            recover_uo = Uo.objects.get(id = selected_uo_id )
+            recover_user = request.user
+            
+            add_pointage = Pointage(
+                uo = recover_uo,
+                user = recover_user,
+                semaine = week,
+                point = add_point
             )
             pointage.executant.set(get_executant)
 
@@ -452,6 +543,42 @@ def create_pointage(request):
     return render(request, "create_pointage.html", context)
 
 
+#creation d'avancement
+def create_avancement(request):
+
+    if request.method == 'POST':
+        avancement_form = AvancementForm(request.POST)
+
+        print("request : ", request.POST)
+
+        if avancement_form.is_valid():
+
+            selected_uo_id = request.POST['select_uo']
+            week = request.POST['semaine']
+            add_avc = request.POST['avancement']
+
+            recover_uo = Uo.objects.get(id = selected_uo_id )
+            recover_user = request.user
+            
+            add_avancement = Avancement(
+                uo = recover_uo,
+                user = recover_user,
+                semaine = week,
+                avancement = add_avc
+            )
+            add_avancement.save()
+
+            return redirect('create_avancement')
+    else:
+        avancement_form = AvancementForm()
+
+    context = {
+        'form_avancement': avancement_form,
+
+    }
+
+    return render(request, "create_avancement.html", context)
+
 def create_note_cadrage(request):
 
     if request.method == 'POST':
@@ -462,14 +589,21 @@ def create_note_cadrage(request):
 
         if note_cadrage_form.is_valid():
 
-            cadrage_name = request.POST['nom_cadrage']
+            
+            selected_uo_id = request.POST['select_uo']
             answer_rsa = request.POST['reponse_rsa']
+            nom=request.POST['nom']
+ 
+            recover_uo = Uo.objects.get(id = selected_uo_id )
 
             add_note_cadrage = NotedeCadrage(
-                nom = cadrage_name,
-                reponseRSA = answer_rsa
+                uo = recover_uo,
+                reponseRSA = answer_rsa,
+                nom=nom
             )
             add_note_cadrage.save()
+
+           
 
             return redirect('create_note_cadrage')
     else:
@@ -505,7 +639,7 @@ def create_activite(request):
 
             get_note_cadrage = NotedeCadrage.objects.get(id = select_note_cadrage_id )
 
-            add_activite = Activites(
+            add_activite= Activites(
                 note_de_cadrage = get_note_cadrage,
                 donnees_dentree = data,
                 activite_attendue = activity ,
@@ -516,11 +650,10 @@ def create_activite(request):
                 livrable_attendu = expected_deliverable ,
                 date_reception_attendu_du_Livrable = delivery_date_available ,
                 commentaires_sur_attendu = commentary ,
-
             )
             add_activite.save()
 
-            return redirect('create_activite')
+            return redirect('activitelist')
     else:
         activite_form = ActivitesForm()
 
@@ -534,12 +667,22 @@ def create_activite(request):
 
 
 
+def ActivitessList(request):
+    activities = Activites.objects.all()
+    activities_count = activities.count()
+    myFilter = Activitesfilter(request.GET, queryset=activities)
+    activities = myFilter.qs 
+    context={'activities':activities,'activities_count':activities_count,
+    'myFilter': myFilter}
+    return render(request, 'activites_list.html',context)
 
 
 
 
 
-    
+
+
+        
 
 
 

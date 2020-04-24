@@ -1,0 +1,72 @@
+{% extends 'theme.html' %}
+{% block content %}
+
+<div class="content">
+    <div class="container-fluid">
+      <a href="{% url 'create_activite' %}" ><button class="btn btn-primary" > Créer nouvelle activitée
+      </button></a>
+      <!--MENU DRODPDOWN FILTRES UO-->
+      <div class="row">
+        <div class="col">
+          <div class="card card-body">
+      
+            <form method="get">
+              {{myFilter.form}}
+      
+              <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+      
+          </div>
+        </div>
+        
+      </div>
+        <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title ">Activitées </h4>
+                <p class="card-category"> </p>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" expleoColorT">
+                        <th>Donnees d'entree</th>
+                        <th>Activite attendue</th>
+                        <th>Pourcentage d'activitée</th>
+                        <th>Conditions de reussite</th>
+                        <th>Date données d'entrees</th>
+                        <th>Date de démarrage d'activitée</th>
+                        <th>Livrable attendu</th>
+                        <th>Date de reception attendu du Livrable</th>
+                        <th>Commentaires sur l'attendu</th>
+                     
+
+                    
+                    </thead>
+                    <tbody>
+                      
+                        {% for a in activities %}
+                      <tr>
+                        <td>{{a.donnees_dentree}}</td>
+                        <td>{{a.activite_attendue}}</td>
+                        <td>{{a.pourcentage_dactivite}}</td>
+                        <td>{{a.conditions_de_reussite}}</td>
+                        <td>{{a.date_donnees_dentrees}}</td>
+                        <td>{{a.date_de_demarrage_dactivite}}</td>
+                        <td>{{a.livrable_attendu}}</td>
+                        <td>{{a.date_reception_attendu_du_Livrable}}</td>
+                        <td>{{a.commentaires_sur_attendu}}</td>
+                       
+                      </tr>
+                        {% endfor %}
+                         
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+{% endblock content %}

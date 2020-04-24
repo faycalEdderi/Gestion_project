@@ -1,0 +1,55 @@
+{% extends 'theme.html' %}
+{% block content %}
+
+<div class="content">
+    <div class="container-fluid">
+
+      <!--MENU DRODPDOWN FILTRES UO-->
+        <a href="{% url 'create_note_cadrage' %}" ><button class="btn btn-primary" > Créer un nouveau Cadrage
+         </button></a>
+
+         <div class="row">
+          <div class="col">
+            <div class="card card-body">
+        
+              <form method="get">
+                {{myFilter.form}}
+        
+                <button class="btn btn-primary" type="submit">Search</button>
+              </form>
+        
+            </div>
+          </div>
+     
+        <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title ">Liste des Cadrages</h4>
+                <p class="card-category"> </p>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" expleoColorT">
+                        <th>Nom</th>
+                        
+
+                    
+                    </thead>
+                    <tbody>
+                      {% for u in cadrages %}
+                      <tr>
+                        <td>{{u.nom}}</td>
+                      
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+{% endblock content %}
