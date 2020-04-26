@@ -94,7 +94,7 @@ class Fonction(models.Model):
     uet = models.ForeignKey(Uet,default = "",on_delete=models.CASCADE)
 
     def __str__(self):
-       return self.nom + "( " +self.uet.nom + " )"
+       return self.nom
 
 # création de statut uo comme une table pour qu'il puisse rajouter des statut ou modifier ou
 # suprrimer
@@ -121,7 +121,7 @@ class Projet(models.Model):
     plateforme = models.ForeignKey(Plateforme,default = "",on_delete=models.CASCADE)
 
     def __str__(self):
-       return self.nom + "( "+ self.plateforme.nom +" )"
+       return self.nom
 
 class Lot(models.Model):
     nom=models.CharField(max_length=50)
@@ -137,7 +137,7 @@ class NotedeCadrage(models.Model):
     reponseRSA=models.CharField(max_length=600,default="",blank=True ,null=True)
 
     def __str__(self):
-       return str(self.nom) + " (" +str(self.reponseRSA) +")"
+       return str(self.nom)
 
 
 # création d'uo avec possiblité de choisir les champs dans des table differente
@@ -157,8 +157,8 @@ class Uo(models.Model):
     jalon_d= models.CharField(max_length=20,default="",blank=True, null=True)
     jalon_f = models.CharField(max_length=20,default="",blank=True, null=True)
     ju = models.CharField(max_length=20,default="",blank=True, null=True)
-    date_debut_uo=models.DateTimeField(default=timezone.now(),blank=True, null=True)
-    date_livraison=models.DateTimeField(default=timezone.now(),blank=True, null=True)
+    date_debut_uo=models.DateTimeField(default=django.utils.timezone.now,blank=True, null=True)
+    date_livraison=models.DateTimeField(default=django.utils.timezone.now,blank=True, null=True)
     
     note_de_cadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "",blank=True, null=True)
     pilote_activitees=models.ForeignKey(Pilote,default = "",on_delete=models.CASCADE,blank=True, null=True)
@@ -210,7 +210,8 @@ class Avancement(models.Model):
 
     def __str__(self):
        return str(self.avancement)
-  
+
+
 # classe activités pour chaque note de cadrage plusieurs activitées
 class Activites(models.Model):
     note_de_cadrage=models.ForeignKey(NotedeCadrage,on_delete=models.CASCADE,default = "")

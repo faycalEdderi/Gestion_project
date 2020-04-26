@@ -1,22 +1,113 @@
 {% extends 'theme.html' %}
+{% load static %}
 {% block content %}
 {% include "nav_bar.html" %}
-{% if form.errors %}
-    {% for field in form %}
-        {% for error in field.errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <h2 class="text-center col-md-12 d-inline  w-100" >Administration</h2>
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">Créer une UO</h5>
+                    <p class="card-text">Interface de création d'UO</p>
+                    <a href="{%url 'create_uo'%}" class="btn btn-primary">Créer une UO</a>
+                </div>
             </div>
-        {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">Création de Projet</h5>
+                    <p class="card-text">Interface de création de Projet</p>
+                    <a href="{%url 'creation_parametre_uo'%}" class="btn btn-primary">Créer un projet</a>
+                </div>
+            </div>
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">Créer une Fonction</h5>
+                    <p class="card-text">Interface de création d'un Fonction</p>
+                    <a href="{%url 'creation_parametre_uo'%}" class="btn btn-primary">Créer une Fonction</a>
+                </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+               <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">Créer une Plateforme</h5>
+                    <p class="card-text">Interface de création d'un Plateforme</p>
+                    <a href="{%url 'create_plateforme'%}" class="btn btn-primary">Créer une UO</a>
+                </div>
+            </div>
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">UET</h5>
+                    <p class="card-text">Interface de création d'UET</p>
+                    <a href="{%url 'creation_uet'%}" class="btn btn-primary">Créer une UET</a>
+                </div>
+            </div>
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">Pointage</h5>
+                    <p class="card-text">Interface de Pointage</p>
+                    <a href="{%url 'create_pointage'%}" class="btn btn-primary">Créer un Pointage</a>
+                </div>
+            </div>
+            <div class="card text-center" style="width: 18rem;">
+               <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">Avancement</h5>
+                    <p class="card-text">Interface de création d'Avancement</p>
+                    <a href="{%url 'create_avancement'%}" class="btn btn-primary">Création Avancement</a>
+                </div>
+            </div>
+            <div class="card text-center" style="width: 18rem;">
+               <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">Note de cadrage</h5>
+                    <p class="card-text">Interface de création d'une note de cadrage</p>
+                    <a href="{%url 'create_note_cadrage'%}" class="btn btn-primary">Création Note de Cadrage</a>
+                </div>
+            </div>
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">Périmètre</h5>
+                    <p class="card-text">Interface de création de Périmètre</p>
+                    <a href="{%url 'create_perimetre'%}" class="btn btn-primary">Créer un Périmètre</a>
+                </div>
+            </div>
+            <div class="card text-center" style="width: 18rem;">
+               <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">Workpackage</h5>
+                    <p class="card-text">Interface de création de  Workpackage</p>
+                    <a href="{%url 'create_workpackage'%}" class="btn btn-primary">Création Workpackage</a>
+                </div>
+            </div>
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">Activité</h5>
+                    <p class="card-text">Création d'activités</p>
+                    <a href="{%url 'create_activite'%}" class="btn btn-primary">Créer une Activité</a>
+                </div>
+            </div>
+            <div class="card text-center" style="width: 18rem;">
+               <img class="card-img-top w-25 mx-auto" src="{% static 'img/a.png' %}" alt="Expleo Logo">
+                <div class="card-body">
+                    <h5 class="card-title">Paramètres UO</h5>
+                    <p class="card-text">Cration de Type d'UO, Niveau d'UO, Statut UO et Lot UO</p>
+                    <a href="{%url 'creation_parametre_uo'%}" class="btn btn-primary">Creatione Parametres UO</a>
+                </div>
+            </div>
+
         </div>
-    {% endfor %}
-{% endif %}
-
-
+    </div>
+</div>
 
 
 {% endblock content %}

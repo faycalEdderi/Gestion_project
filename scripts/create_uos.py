@@ -34,7 +34,7 @@ def run ():
         niveau_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
         create_obj(Niveauuo, niveau_uo_list)
 
-        statut_uo_list = ['Vivier', 'Cadré', 'Abandonné', 'Livré', ]
+        statut_uo_list = ['Vivier', 'Cadré','En Cours',  'Livré', 'Terminé', 'Abandonné' ]
         create_obj(Statutuo, statut_uo_list)
 
         lot_uo_list = ['WP', 'Z']
@@ -44,39 +44,35 @@ def run ():
         plateform_uo_list = ['Square SUV', 'Euro6D-T','Edison', 'VU', 'CEV', 'CMFB', '1540²', 'CMF1', 'CMF1 ph1', 'CMF1 ph2']
         projet_list = ['HHN', 'X82²', 'HCC', 'HJB PHEV', 'BJA HEV', 'KFB² PHEV', 'BFB²', 'Euro6-DFull', 'HJB ICE']
         create_obj(Plateforme, plateform_uo_list)
-        for projet_name in projet_list:
-            for plateforme_name in plateform_uo_list:
-                get_platform = Plateforme.objects.get(nom=plateforme_name)
-                Projet.objects.create(
-                    nom=projet_name,
-                    plateforme=get_platform
-                )
+        o =0
+        while o < 9:
+
+            get_platform = Plateforme.objects.get(nom=plateform_uo_list[o])
+            Projet.objects.create(
+                nom=projet_list[o],
+                plateforme=get_platform
+            )
+            o += 1
 
 
         # valeur à changer
-        etat_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
+        etat_uo_list = ['Vivier', ' En cours Cadré',  'En cours Non Cadré', 'A temps',  'En retard',  'Terminé',  'Abandonné',  'Livré',  'Refusé']
         create_obj(Etatuo, etat_uo_list)
 
         uet_uo_list = ['LONGI', 'AD1', 'AWR', 'MANŒUVRE', 'LATERAL']
         fonction_list = ['AEB', 'ACC', 'AD1', 'ACC-MT', 'HFP', 'LSS 2018', 'TSR/OSP', 'HFP', 'BSW']
         create_obj(Uet, uet_uo_list)
-        for fonction_name in fonction_list:
-            for uet_name in uet_uo_list :
-                get_uet = Uet.objects.get(nom=uet_name)
-                Fonction.objects.create(
-                    nom=fonction_name,
-                    uet=get_uet
-                )
+        y = 0
+        while y < 5:
 
-        ref_note_cadrage = ['LOG', 'SWITCH', 'NLGT', 'LUFF', 'NAR']
-        reponse_rsa = ['OUI', 'NON', 'NON', 'OUI' , 'NON']
-        i=0
-        while i < len(ref_note_cadrage):
-            NotedeCadrage.objects.create(
-                nom = ref_note_cadrage[i],
-                reponseRSA = reponse_rsa[i],
+            get_uet = Uet.objects.get(nom=uet_uo_list[y])
+            Fonction.objects.create(
+                nom=fonction_list[y],
+                uet=get_uet
             )
-            i += 1
+            y += 1
+
+
 
         # Valeur a changer
         workpackage_uo_list = ['A', 'B', 'C', 'D', 'E', 'F']
@@ -114,21 +110,6 @@ def run ():
         jalon_fin_list = ['PPC', 'MA', 'VPC-15s', 'ABPT1', 'SOP+15s']
 
 
-        i = 0
-
-        while i < 5:
-            get_pilote = Pilote.objects.get(email="user" + str(i * 125) + "@user.fr", )
-            get_executant = Executant.objects.filter(email="user" + str(i * 4) + "@user.fr", )
-
-            pointage = Pointage.objects.create(
-                pilote=get_pilote,
-                semaine="2019-01-02",
-                point_pilote="4",
-                point_executant="2",
-            )
-            pointage.executant.set(get_executant)
-
-            i += 1
         print("Users created")
         print("Uos created")
     except NameError:
