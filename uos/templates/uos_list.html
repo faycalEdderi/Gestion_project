@@ -4,6 +4,15 @@
 
 <div class="content">
     <div class="container-fluid">
+         {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+
+                 <li {% if message.tags %} class="{{ message.tags }} text-center"{% endif %}>
+                    {{ message }} </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
 
       <!--MENU DRODPDOWN FILTRES UO-->
         <a href="{% url 'create_uo' %}" ><button class="btn btn-primary" > Créer nouvelle UO
@@ -58,7 +67,7 @@
                         <td><a href="{% url 'update_uos' u.id %}">{{u.num_uo}}</a></td>
                         <td>{{u.plateforme}}</td>
                         <td>{{u.type_uo}}</td>
-                        <td>{{u.nivea_uo}}</td>
+                        <td>{{u.niveau_uo}}</td>
                         <td>{{u.fonction}}</td>
                         <td>{{u.projet}}</td>
                         <td>{{u.lot}}</td>

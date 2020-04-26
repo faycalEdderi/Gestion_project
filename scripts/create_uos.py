@@ -90,9 +90,9 @@ def run ():
             )
             j +=1
 
-        catalogue_list = ['CATA', 'LOG', 'WORK', 'PACK', 'SIS', 'MAI']
+        catalogue_list = ['Wp3000']
         k=0
-        while k < 4:
+        while k < 1:
             get_perimetre = Perimetre.objects.get(nom=perimetre_list[k])
             get_niveau = Niveauuo.objects.get(nom=niveau_uo_list[k])
             get_type = Typeuo.objects.get(nom=type_uo_list[k])

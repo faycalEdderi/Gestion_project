@@ -449,7 +449,7 @@ def create_uo(request):
             messages.add_message(
                 request,
                 messages.INFO,
-                'L\'UO a etais créée correctement ')
+                'L\'UO a été créée correctement ')
 
             return redirect('uo_list')
         else:
@@ -551,7 +551,7 @@ def create_pointage(request):
     return render(request, "create_pointage.html", context)
 
 
-#creation d'avancement
+# creation d'avancement
 def create_avancement(request):
 
     if request.method == 'POST':
@@ -586,6 +586,7 @@ def create_avancement(request):
     }
 
     return render(request, "create_avancement.html", context)
+
 
 def create_note_cadrage(request):
 
@@ -671,8 +672,6 @@ def create_activite(request):
     }
 
     return render(request, "create_activite.html", context)
-
-
 
 
 def ActivitessList(request):
