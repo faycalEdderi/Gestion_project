@@ -454,7 +454,7 @@ def create_uo(request):
             return redirect('uo_list')
         else:
             print("error")
-            messages.error(request, form.errors)
+            messages.error(request, uo_creation_form.errors)
     else:
         
         uo_creation_form = UoForm()

@@ -60,7 +60,7 @@ urlpatterns = [
     path('pointages', uos_views.pointages, name='pointages'),
     path('historique', uos_views.historique_pointage),
     path('uo/<int:pk>/update', uos_views.update_uos, name='update_uos'),
-    path('uo/<int:pk>/export', uos_views.excel_generator, name='excel_generator'),
+    path('uo/export', uos_views.excel_generator, name='excel_generator'),
     path('act/',uos_views.ActivitessList,name='activitelist'),
     path('projetlist/',uos_views.projet_list,name='projet_list'),
     path('fonctionlist/',uos_views.fonction_list,name='fonction_list'),
