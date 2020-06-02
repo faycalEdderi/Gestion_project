@@ -13,6 +13,8 @@ from django.db.models import Q
 from django.db.models import Avg , Count, Sum
 from profil.models import Executant, Pilote, RespTechnique,ChefdeProjet, RespSOP,Client, MyUsers
 from django.contrib.auth import authenticate, login
+from .functions import *
+from tablib import Dataset
 
 
 def choix(objectmodel):
@@ -55,14 +57,17 @@ def historique_pointage(request):
 
 # Affichage de tous les uos
 def uo_list(request):
+
     uos= Uo.objects.all()
     uo_count=uos.count()
     myFilter =Uosfilter(request.GET, queryset=uos)
-    uos = myFilter.qs 
+    uos = myFilter.qs
     context = {
         'uos': uos,'uo_count':uo_count,
-        'myFilter': myFilter
+        'myFilter': myFilter,
+
     }
+
     return render(request, "uos_list.html", context)
 
 def cadrage_list(request):

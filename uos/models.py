@@ -123,12 +123,12 @@ class Projet(models.Model):
     def __str__(self):
        return self.nom
 
+
 class Lot(models.Model):
     nom=models.CharField(max_length=50)
 
     def __str__(self):
        return self.nom
-
 
 
 # class note de cadrage pour chaque uo une note de cadrage 'reflichir pour apres si on peut ajouter des numero pour les modification de note de cadrage  '

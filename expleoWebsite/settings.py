@@ -46,8 +46,10 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'profil.apps.ProfilConfig',
     'uos.apps.UosConfig',
+    'import_export'
 
 ]
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

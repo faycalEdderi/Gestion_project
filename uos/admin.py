@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Uo, Typeuo , Niveauuo ,Etatuo,Fonction, Projet, Statutuo,Uet , Plateforme ,WorkPackage,Perimetre,CatalogueUo , Pointage , Lot ,Activites,NotedeCadrage , Livraison,Avancement
+from .models import *
+
+
+
+
 # Register your models here.
 admin.site.register(Uo)
 admin.site.register(Typeuo)

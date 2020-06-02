@@ -397,3 +397,9 @@ class ActivitesForm(forms.Form):
     class Meta:
         model = Activites
         fields = '__all__'
+
+
+class ExcelForm(forms.Form):
+    import_excel = forms.FileField(
+        label="Importer un fichier"
+    )

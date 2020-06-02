@@ -1,0 +1,18 @@
+dataset = UoResource().export()
+print(dataset.csv)
+
+
+from uos.admin import UoResource
+
+
+importer donnée
+
+import tablib
+>>> from import_export import resources
+>>> from uos.models import Lot
+>>> lot_resource = resources.modelresource_factory(model=Lot)()
+>>> dataset = tablib.Dataset(['','MPW'], headers=['id','nom'])
+>>> result = lot_resource.import_data(dataset, dry_run=True)
+>>> print(result.has_errors())
+False
+>>> result = lot_resource.import_data(dataset, dry_run=False)

@@ -1,0 +1,11 @@
+{% extends 'theme.html' %}
+{% block content %}
+{% include "nav_bar.html" %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="excel_file">
+    <button type="submit">Upload</button>
+</form>
+
+{% endblock %}
