@@ -195,73 +195,90 @@ class UoForm(forms.ModelForm):
     )
     type_uo= forms.ModelChoiceField(
         label="Selectionner Type d'uo",
+        required= False,
         queryset= Typeuo.objects.all()
     )
     niveau_uo = forms.ModelChoiceField(
         label="Selectionner un niveau d'uo",
+        required=False,
         queryset=Niveauuo.objects.all()
     )
     projet = forms.ModelChoiceField(
         label="Selectionner un projet",
+        required=False,
         queryset=Projet.objects.all(),
 
     )
     fonction = forms.ModelChoiceField(
         label="Selectionner une fonction",
+        required=False,
         queryset=Fonction.objects.all(),
 
     )
     statut_uo = forms.ModelChoiceField(
         label="Selectionner un statut d'UO",
+        required=False,
         queryset=Statutuo.objects.all(),
 
     )
     etat_uo = forms.ModelChoiceField(
         label="Selectionner un etat d'UO",
+        required=False,
         queryset=Etatuo.objects.all(),
 
     )
     plateforme = forms.ModelChoiceField(
         label="Selectionner une plateform",
+        required=False,
         queryset=Plateforme.objects.all(),
 
     )
     uet = forms.ModelChoiceField(
         label="Selectionner une UET",
+        required=False,
         queryset=Uet.objects.all(),
 
     )
     catalogue = forms.ModelChoiceField(
         label="Selectionner un catalogue UO",
+        required=False,
         queryset=CatalogueUo.objects.all(),
 
     )
     lot = forms.ModelChoiceField(
         label="Selectionner un lot",
+        required=False,
         queryset=Lot.objects.all(),
 
     )
     jalon_d = forms.CharField(
         label="Jalon D",
+        required=False,
     )
     jalon_f = forms.CharField(
         label="Jalon F",
+        required=False,
     )
     ju = forms.CharField(
         label="JU",
+        required=False,
     )
     date_debut_uo = forms.DateField(
-        label="Date de debut UO"
+        label="Date de debut UO",
+        required=False,
     )
     date_livraison = forms.DateField(
-        label="Date de livraison UO"
+        label="Date de livraison UO",
+        required=False,
     )
     client = forms.ModelChoiceField(
         label="Client ",
+        required=False,
         queryset= Client.objects.all()
     )
     pilote_activitees = forms.ModelChoiceField(
         label="Pilote UO",
+        required=False,
         queryset= Pilote.objects.all(),
     )
     

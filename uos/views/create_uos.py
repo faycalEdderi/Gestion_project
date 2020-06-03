@@ -219,6 +219,7 @@ def create_workpackage(request):
 
     return render(request, "create_workpackage.html", context)
 
+
 def create_perimetre(request):
 
     if request.method == 'POST':
@@ -354,8 +355,6 @@ def creation_parametre_uo(request):
         statut_uo_form = StatutUoForm()
         etat_uo_form = EtatUoForm()
         lot_uo_form = LotUoForm()
-        
-       
 
     context = {
         'form_type_uo': type_uo_form,
@@ -409,26 +408,46 @@ def create_uo(request):
             client_id = request.POST['client']
           
             pilote_id = request.POST['pilote_activitees']
+
+            create_uo = Uo(num_uo=number_uo)
             
+            if type_uo_id != '':
+                create_uo.type_uo = find_object(Typeuo, type_uo_id)
 
-            result = find_object(Typeuo, type_uo_id)
-            print("object : ", result)
+            if niveau_uo_id != '':
+                create_uo.niveau_uo = find_object(Niveauuo,niveau_uo_id )
 
-            get_type_uo = Typeuo.objects.get(id = type_uo_id )
-            get_niveau_uo = Niveauuo.objects.get(id = niveau_uo_id)
-            get_projet = Projet.objects.get(id = projet_id)
-            get_fonction = Fonction.objects.get(id = fonction_id )
-            get_statut_uo = Statutuo.objects.get(id = satut_uo_id)
-            get_etat_uo = Etatuo.objects.get(id = etat_uo_id )
-            get_plateform = Plateforme.objects.get(id = plateform_id )
-            get_uet = Uet.objects.get(id=uet_id)
-            get_catalogue_uo = CatalogueUo.objects.get(id = catalogue_id )
-            get_lot = Lot.objects.get(id = lot_id )
+            if projet_id != '':
+                create_uo.projet = find_object(Projet, projet_id)
 
-            get_pilote = Pilote.objects.get(id=pilote_id)
-            get_client = Client.objects.get(id=client_id)
-           
-            
+            if fonction_id != '':
+                create_uo.fonction = find_object(Fonction, fonction_id)
+
+            if satut_uo_id != '':
+                create_uo.statut_uo = find_object(Statutuo, satut_uo_id)
+
+            if etat_uo_id != '':
+                create_uo.etat_uo = find_object(Etatuo, etat_uo_id)
+
+            if plateform_id != '':
+                create_uo.plateforme = find_object(Plateforme, plateform_id)
+
+            if uet_id != '':
+                create_uo.uet = find_object(Uet, uet_id)
+
+            if catalogue_id != '':
+                create_uo.catalogue = find_object(CatalogueUo, catalogue_id)
+
+            if lot_id != '':
+                create_uo.lot = find_object(Lot, lot_id)
+
+            if pilote_id != '':
+                create_uo.pilote_activitees = find_object(Pilote, pilote_id)
+            if client_id != '':
+                create_uo.client = find_object(Client, client_id)
+
+
+            '''
             create_uo = Uo(
                 num_uo=number_uo,
                 jalon_d=jalon_d,
@@ -449,11 +468,12 @@ def create_uo(request):
                 pilote_activitees=get_pilote,
                 client=get_client,
             )
+            '''
             create_uo.save()
 
             messages.add_message(
                 request,
-                messages.INFO,
+                messages.SUCCESS,
                 'L\'UO a été créée correctement ')
 
             return redirect('uo_list')

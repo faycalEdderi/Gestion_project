@@ -57,6 +57,7 @@ def excel_import(request):
 
         if not result.has_errors():
             uo_ressource.import_data(dataset, dry_run=False) # Actually import now
+            return redirect('uo_list')
 
     return render(request, 'excel/import.html')
 

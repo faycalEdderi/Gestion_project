@@ -21,7 +21,6 @@ class FonctionResource(resources.ModelResource):
 
 class UoResource(resources.ModelResource):
 
-
     num_uo = fields.Field(
         column_name='num_uo',
         attribute='num_uo',

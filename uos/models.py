@@ -80,11 +80,13 @@ class Plateforme(models.Model):
     def __str__(self):
        return self.nom
 
+
 # création d'uet et pour chaque uet des fonctions differentes
 class Uet(models.Model):
     nom=models.CharField(max_length=20) 
 
     def __str__(self):
+
        return self.nom
 
 
@@ -95,6 +97,7 @@ class Fonction(models.Model):
 
     def __str__(self):
        return self.nom
+
 
 # création de statut uo comme une table pour qu'il puisse rajouter des statut ou modifier ou
 # suprrimer
