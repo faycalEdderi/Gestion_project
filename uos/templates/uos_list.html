@@ -41,6 +41,10 @@
               <div class="card-body">
                    <button class="btn btn-success"><a href="{% url 'excel_generator'%}" class=" col-md-3 "> Exporter vers Excel</a></button>
                     <button class="btn btn-success"><a href="{% url 'excel_import'%}" class=" col-md-3 "> Importer UO</a></button>
+                    <form action="{% url 'pointage_reminder'  %}">
+
+                      <input type="submit" value="Rappel Pointage" />
+                    </form>
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" expleoColorT">

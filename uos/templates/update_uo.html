@@ -20,6 +20,7 @@
 <div class="container ">
     <div class="panel-heading">
         <h2 class="panel-title mt-2 text-center">Modification UO</h2>
+         <button class="btn btn-success"><a href="{% url 'import_data_uo' uo.id %}" class=" col-md-3 "> Importer données</a></button>
         {% if messages %}
             <ul class="messages">
             {% for message in messages %}

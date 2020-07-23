@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from django.contrib.messages import constants as messages
+import os
+os.environ.setdefault('FORKED_BY_MULTIPROCESSING', '1')
+
 
 MESSAGE_TAGS = {
     messages.SUCCESS: 'alert alert-success',
@@ -46,10 +49,25 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'profil.apps.ProfilConfig',
     'uos.apps.UosConfig',
-    'import_export'
+    'automatic.apps.AutomaticConfig',
+    'send_mail.apps.SendMailConfig',
 
+
+    'import_export',
+    
+    
 ]
 IMPORT_EXPORT_USE_TRANSACTIONS = True
+CRONJOBS=[
+    ('*/5****',
+    'expleowebsite.automatic.my_scheduled_job')
+]
+CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_RESULT_BACKEND = "amqp"
+CELERY_ACCEPT_CONTENT =['json']
+CELERY_TASK_SERIALIZE = 'json'
+CELERY_RESULT_SERIALIZE = 'json'
+CELERY_AMQP_TASK_RESULT_EXPIRES = 1000
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,6 +79,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'profil.views.LoginRequiredMiddleware',
 ]
+
 
 ROOT_URLCONF = 'expleoWebsite.urls'
 

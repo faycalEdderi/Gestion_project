@@ -28,10 +28,12 @@ def uo_statistique(request):
     total_Uos = uos.count()
     v = uos.filter(statut_uo__nom="VIVIER").count()
     l = uos.filter(statut_uo__nom="livrée").count()
-    #point=Pointage.objects.annotate(sum(Pointage.point_pilote,Pointage.point_exceutant))
+
+    # point=Pointage.objects.annotate(sum(Pointage.point_pilote,Pointage.point_exceutant))
     context = {'uos':uos,
     'total_Uos':total_Uos ,'vivier':v
 	,'livrée':l }
+
     return render(request, 'kpi.html', context)
 
 def pointages(request):
@@ -63,7 +65,8 @@ def uo_list(request):
     myFilter =Uosfilter(request.GET, queryset=uos)
     uos = myFilter.qs
     context = {
-        'uos': uos,'uo_count':uo_count,
+        'uos': uos,
+        'uo_count':uo_count,
         'myFilter': myFilter,
 
     }
@@ -124,6 +127,7 @@ def uet_list(request):
         'myFilter': myFilter
     }
     return render(request, "uet_list.html", context)
+
 
 def ActivitessList(request):
     activities = Activites.objects.all()
@@ -446,29 +450,6 @@ def create_uo(request):
             if client_id != '':
                 create_uo.client = find_object(Client, client_id)
 
-
-            '''
-            create_uo = Uo(
-                num_uo=number_uo,
-                jalon_d=jalon_d,
-                jalon_f=jalon_f,
-                ju=ju,
-                date_debut_uo=date_uo_start,
-                date_livraison=date_uo_delivery,
-                type_uo= get_type_uo ,
-                niveau_uo= get_niveau_uo,
-                projet= get_projet,
-                fonction= get_fonction,
-                statut_uo= get_statut_uo,
-                etat_uo= get_etat_uo,
-                plateforme= get_plateform,
-                uet=get_uet,
-                catalogue= get_catalogue_uo,
-                lot=get_lot,
-                pilote_activitees=get_pilote,
-                client=get_client,
-            )
-            '''
             create_uo.save()
 
             messages.add_message(

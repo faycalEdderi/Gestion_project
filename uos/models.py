@@ -8,6 +8,7 @@ from datetime import date
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.validators import RegexValidator
 
+
 # fonction qui prends tout les objets d'une classe et les renvoi dans une liste
 def choix(objectmodel):
     liste = objectmodel.objects.all()  
@@ -168,21 +169,22 @@ class Uo(models.Model):
     # Modifier form pour pilote qui n'est plus un charfield mais un modelfield
     client=models.ForeignKey(Client, default = "", on_delete=models.CASCADE,blank=True, null=True)
     
-    #recuper ele pointage total par uo 
+    # recupere le pointage total par uo
     @property
     def total(self):
         t=0
         for q in self.points.all():
                 t+=q.point   
         return t
-    #recupere le pointag  total par semaine 
+
+    # recupere le pointag  total par semaine
     def total_semaine(self,semaine):
         t=0
         for q in self.points.filter(semaine):
                 t+=q.point     
         return t
         
-    #recupere avancement de chaque uo 
+    # recupere avancement de chaque uo
     @property
     def avancement(self):
         a=0
@@ -192,6 +194,7 @@ class Uo(models.Model):
     
     def __str__(self):
         return self.num_uo  #+ "  " + self.typeuo + "   " + self.niveauo + "   " + self.projet + "   " + self.fonction + "   " + self.platforme + "   " + self.uet
+
 
 # class pointage qui permet aux utilisateur de pointer sur l'uo
 class Pointage(models.Model):
@@ -232,9 +235,7 @@ class Activites(models.Model):
        return str(self.donnees_dentree)
 
 
-    
-   
-##class livraison d'activité 
+# class livraison d'activité
 class Livraison(models.Model):
     nom_livrable=models.ForeignKey(Activites,on_delete=models.CASCADE,default="")
     systeme_adas=models.ForeignKey(Fonction,default = "",on_delete=models.CASCADE)	

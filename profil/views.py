@@ -16,10 +16,15 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
+
+
+
+
 # fonction restriction d'accès
 def login_exempt(view):
     view.login_exempt = True
     return view
+
 
 
 # Class restriction accès pour user connecté
@@ -44,6 +49,10 @@ class LoginRequiredMiddleware:
 def display_profil(request):
     return render(request, "user_profil.html")
 
+
+
+
+
 # Fonction d'identification
 # login_exempt : acceder a cette page sans etre connecté
 @login_exempt
@@ -58,6 +67,9 @@ def connexion(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                
+               
+                    
                 return redirect('uoslist')
 
         else:
@@ -144,7 +156,7 @@ def create_account(request):
                         NewPostName.objects.get_or_create(post_name = get_new_poste )
 
                     except:
-                        print("Ce poste n'exste pas")
+                        print("Ce poste n'existe pas")
 
                 if select_poste != "" and get_new_poste == "" :
                     get_poste = NewPostName.objects.get(id = select_poste )

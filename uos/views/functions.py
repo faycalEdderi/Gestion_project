@@ -13,8 +13,6 @@ from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 
 
-
-
 # Creer, remplis et exporte un fichier excel a partir des champs d'uo
 def excel_generator(request):
 
@@ -60,5 +58,23 @@ def excel_import(request):
             return redirect('uo_list')
 
     return render(request, 'excel/import.html')
+
+# Import de data dans une UO deja créé
+def excel_import_data(request,pk=None):
+    get_obj = Uo.objects.get(id=pk)
+    if request.method == 'POST' and get_obj:
+
+        print("Request", request)
+
+        new_import = request.FILES['excel_file']
+        data = pd.read_excel(new_import)
+        column_type = pd.DataFrame(data, columns= ['type'])
+        print(column_type)
+
+
+        return redirect('uo_list')
+
+    return render(request, 'excel/uo_data.html')
+
 
 

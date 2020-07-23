@@ -2,7 +2,7 @@ import django_filters
 from uos.models import *
 
 
-class   Activitesfilter(django_filters.FilterSet):
+class Activitesfilter(django_filters.FilterSet):
     class Meta:
         model =  Activites
         fields=['note_de_cadrage']
