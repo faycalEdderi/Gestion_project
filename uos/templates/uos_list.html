@@ -39,12 +39,18 @@
                 </ul>
                 {% endif %}
               <div class="card-body">
+          
                    <button class="btn btn-success"><a href="{% url 'excel_generator'%}" class=" col-md-3 "> Exporter vers Excel</a></button>
                     <button class="btn btn-success"><a href="{% url 'excel_import'%}" class=" col-md-3 "> Importer UO</a></button>
-                    <form action="{% url 'pointage_reminder'  %}">
+                    <p>
+                    <!-- Le formulaire ci dessous doit apparaitre uniquement pour le responsable qui fait un rappel a ses LIV et chargé de Valid-->
+                    <form action="{% url 'pointage_reminder'%}">
+                      <div class="form-group">
 
-                      <input type="submit" value="Rappel Pointage" />
+                          <input type="submit" class="w-25 btn btn-danger" value="Rappel Pointage" />
+                        </div>
                     </form>
+                    
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" expleoColorT">
